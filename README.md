@@ -1,3 +1,7 @@
+Pessol clonem o projeto e baixem o github na máquina de vocês.
+
+
+
 ZendSkeletonApplication
 =======================
 
