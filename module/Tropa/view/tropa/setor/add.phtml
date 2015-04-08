@@ -1,0 +1,12 @@
+
+<h1><?=$this->escapeHtml($title)?></h1>
+
+<?php
+$form = $this->form;    
+$form->setAttribute('action', $this->urlAction);
+$form->prepare();
+?>
+
+<?=$this->form()->openTag($form)?>
+<?=$this->formCollection($this->form)?>
+<?=$this->form()->closeTag()?>

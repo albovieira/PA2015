@@ -1,0 +1,152 @@
+<h1 class="text-center text-success"><?=$this->escapeHtml($title) ?></h1>
+
+<div class="col-lg-12">
+
+    <div class="col-sm-2 pull-right" style="margin-bottom: 1%">
+    <label class="text-info">Valor Atual</label>
+        <input type="text" class="form-control text" value="<?=$this->difSalario?>" disabled>
+
+        <button style="margin-top: 2%" type="button" id="novaDespesa" class="btn btn-success btn-small" data-toggle="modal" data-target="#myModal">
+            <i class="glyphicon glyphicon-plus"></i>
+            Nova Despesa
+        </button>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="col-sm-6">
+            <label class="text-info">Buscar Despesa</label>
+            <input type="text" class="form-control" id="buscaDespesa" style="" />
+        </div>
+
+        <div class="col-sm-3" style="margin-top: 25px;margin-left: -50px">
+            <button id="pesqDespesa" class="btn btn-info btn-small">
+                <i class="glyphicon glyphicon-search"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="col-sm-12">
+
+    </div>
+
+</div>
+
+<table class="table table-bordered">
+    <tr class="label-success" style="color: #fff">
+        <th>Acoes</th>
+        <th>Despesa</th>
+        <th>Valor</th>
+        <th>Data Gasto</th>
+        <th>Tipo Gasto</th>
+        <!--<th style="display: none;">Mes Ref</th>
+        <th style="display: none;">Fixa</th>
+        <th style="display: none;">Data Fim</th>
+        <th>&nbsp;</th> -->
+    </tr>
+
+    <?=$this->partialLoop('despesas/despesa/despesas.phtml', $this->paginator) ?>
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel"></h4>
+                </div>
+                <div id="despesas" class="modal-body">
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</table>
+
+<p>
+    <?=$this->paginationControl($this->paginator,
+        'Sliding',
+        'pagination', array('route' => 'despesa')); ?>
+</p>
+
+
+<script>
+
+    //ver requisição do botao ao salvar e ao alterar
+    $(document).ready(function(){
+
+
+
+        $("#novaDespesa").click(function() {
+            limpaModal();
+
+            $.get("add", function(data) {
+                $('#myModalLabel').text('Adicionar Despesas');
+                $('#despesas').html(data);
+            });
+        });
+
+        $(".excluirDespesa").click(function() {
+            limpaModal();
+            event.preventDefault ? event.preventDefault() : event.returnValue = false;
+            despesaId = $(this).attr('despesaId');
+
+            console.log(despesaId);
+            $.get("delete/" + despesaId, function(data) {
+                $('#myModalLabel').text('Deseja deletar a despesa?');
+                $('#despesas').html(data);
+            });
+        });
+
+        $('.alterarDespesa').click(function(event) {
+            limpaModal();
+            event.preventDefault ? event.preventDefault() : event.returnValue = false;
+            despesaId = $(this).attr('despesaId');
+
+            $.get("edit/" + despesaId, function(data) {
+                $('#myModalLabel').text('Alterar Despesa');
+                $('.modal-body').html(data);
+            });
+        });
+
+    });
+
+    $('#buscaDespesa').autocomplete({
+
+        minLength: 1,
+        source: function (request, response) {
+            var DTO = { "term": request.term };
+            $.ajax({
+                data: DTO,
+                type: 'GET',
+                url:'http://despesas/despesa/listarAutoComplete',
+                success: function (data) {
+                    console.log(data);
+                    return response(data);
+                }
+            });
+        }
+    });
+
+    $('#pesqDespesa').click(function () {
+        var desc = {'descricao' : $('#buscaDespesa').val()};
+        $.ajax({
+            data: desc,
+            type: 'GET',
+            url:'http://despesas/despesa/pesquisaRapida',
+            success: function (data) {
+                console.log(data);
+                return response(data);
+            }
+        });
+    });
+
+
+
+    function limpaModal(){
+        $('#despesas').html('');
+        $('#myModalLabel').text('');
+    }
+
+</script>

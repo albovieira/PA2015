@@ -1,0 +1,26 @@
+<h1><?=$this->escapeHtml($title) ?></h1>
+<p>
+    <a href="<?=$this->urlAdd?>">Novo Lanterna</a>
+</p>
+<table class="table">
+    <tr>
+        <th>Codigo</th>
+        <th>Nome</th>
+        <th>Setor</th>
+        <th>&nbsp;</th>
+    </tr>
+
+    <?=$this->partialLoop('tropa/lanterna/lanternas.phtml', $this->paginator) ?>
+</table>
+
+<p>
+
+    <?=$this->paginationControl($this->paginator,
+        'Sliding',
+        'pagination', array('route' => 'lanterna')); ?>
+</p>
+
+<p>
+    <a href="<?=$this->urlHomepage?>">Voltar</a>
+</p>
+

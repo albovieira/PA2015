@@ -1,0 +1,20 @@
+
+<?=$this->form()->openTag($form)?>
+<?=$this->formLabel($form->get('lbllogin'));?>
+<?=$this->formRow($form->get('login'))?>
+
+<?=$this->formLabel($form->get('lblPass'));?>
+<?=$this->formRow($form->get('senha'))?>
+
+<div class="checkbox">
+    <label>
+        <input type="checkbox" value="remember-me"> Esqueceu a senha?
+    </label>
+</div>
+
+<?=$this->formRow($form->get('loginBtn'))?>
+<a href="application\index\cadastrar">Cadastrar</a>
+<?=$this->messages?>
+
+<?=$this->form()->closeTag()?>
+

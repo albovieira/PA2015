@@ -1,0 +1,9 @@
+<tr>
+    <td><?=$this->escapeHtml($this->model->getValor())?></td>
+    <td><?=$this->model->getTipoRenda()->getDesc()?></td>
+    <td><?=$this->model->getMes()?></td>
+    <td>
+        <a href="<?=$this->placeholder('url')->edit . '/'. $this->model->getId()?>">Editar</a>
+        <a href="<?=$this->placeholder('url')->delete . '/'. $this->model->getId()?>">Remover</a>
+    </td>
+</tr>

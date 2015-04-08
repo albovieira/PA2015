@@ -1,0 +1,32 @@
+<?php
+$title= 'Minha conta';
+$this->headTitle($title);
+
+
+?>
+<div class="row">
+    <h1><?=$this->escapeHtml($title) ?></h1>
+    <?php
+    //exibe os itens em arvore, para realibitar é necessario alterar em global.php
+    //=$this->navigation('Navigation')->menu()?>
+</div>
+
+<div class="row">
+    <p><?=$this->messages ?></p>
+
+    <?=$this->form()->openTag($form)?>
+
+    <?=$this->formRow($form->get('id'))?>
+    <?=$this->formRow($form->get('login'))?>
+    <?=$this->formRow($form->get('senha'))?>
+    <?=$this->formRow($form->get('confirmarCredencial'))?>
+
+    <?=$this->formRow($form->get('cadastrar'))?>
+
+
+    <?=$this->messages?>
+
+    <?=$this->form()->closeTag()?>
+
+
+</div>

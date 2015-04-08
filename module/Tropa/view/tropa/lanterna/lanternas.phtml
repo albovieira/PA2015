@@ -1,0 +1,9 @@
+<tr>
+    <td><?=$this->model->getCodigo()?></td>
+    <td><?=$this->escapeHtml($this->model->getNome())?></td>
+    <td><?=$this->escapeHtml($this->model->getSetor()->nome)?></td>
+    <td>
+        <a href="<?=$this->placeholder('url')->edit . '/'. $this->model->getCodigo()?>">Editar</a>
+        <a href="<?=$this->placeholder('url')->delete . '/'. $this->model->getCodigo()?>">Remover</a>
+    </td>
+</tr>
