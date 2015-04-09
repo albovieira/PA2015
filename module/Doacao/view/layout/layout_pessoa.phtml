@@ -88,12 +88,15 @@
 
             </div>
             <div class="collapse navbar-collapse" id="navbar-collapse2">
-                <ul id="menu" class="nav navbar-nav navbar-right">
-                    <li class="active"><a href="/pessoa">Minha Página</a></li>
-                    <li><a href="/pessoa/instituicao">Instituições</a></li>
-                    <li><a href="#" role="button" data-toggle="modal">Eventos</a></li>
-                    <li><a href="#" role="button" data-toggle="modal">Denunciar Abusos</a></li>
+                <?php
+                    $uri = $_SERVER['REQUEST_URI'];
+                ?>
 
+                <ul id="menu" class="nav navbar-nav navbar-right">
+                    <li class="<?php echo  $uri == '/pessoa' ? 'active' : '' ?>"><a href="/pessoa">Minha Página</a></li>
+                    <li class="<?php echo  $uri == '/pessoa/instituicao' ? 'active' : '' ?>"><a href="/pessoa/instituicao">Instituições</a></li>
+                    <li class="<?php echo  $uri == '/pessoa/eventos' ? 'active' : '' ?>"><a href="#" role="button" data-toggle="modal">Eventos</a></li>
+                    <li class="<?php echo  $uri == '/pessoa/denunciar-abusos' ? 'active' : '' ?>"><a href="#" role="button" data-toggle="modal">Denunciar Abusos</a></li>
                 </ul>
             </div>
         </div>
@@ -110,15 +113,6 @@
         </footer>
 
     </div> <!-- /container -->
-
-    <script>
-        $(document).ready(function () {
-            $('#menu li').click(function(){
-                $('#menu li').removeClass('active');
-                console.log(this.target);
-            });
-        });
-    </script>
 
     </body>
 </html>
