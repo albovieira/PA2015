@@ -7,10 +7,11 @@
             ->appendName('viewport', 'width=device-width, initial-scale=1.0')
             ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
         ?>
-
+        
         <!-- Le styles -->
         <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
                         ->prependStylesheet($this->basePath() . '/css/style.css')
+                        ->prependStylesheet($this->basePath() . '/css/flat.css')
                         ->prependStylesheet($this->basePath() . '/css/bootstrap-theme.min.css')
                         ->prependStylesheet($this->basePath() . '/css/bootstrap.css')
                         ->prependStylesheet($this->basePath() . '/css/jquery-ui.css')
@@ -30,27 +31,14 @@
 
     </head>
     <body>
-    <nav class="navbar navbar-fixed-top header">
-        <div class="col-md-12">
-            <div class="navbar-header">
-
-                <a href="#" class="navbar-brand padrao-header">Doação</a>
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse1">
-                    <i class="glyphicon glyphicon-search"></i>
-                </button>
-
-            </div>
-            <div class="collapse navbar-collapse" id="navbar-collapse1">
-                <form class="navbar-form pull-left">
-                    <div class="input-group" style="max-width:470px;">
-                        <input type="text" class="form-control" placeholder="Pesquisar" name="srch-term" id="srch-term">
-                        <div class="input-group-btn">
-                            <button class="btn btn-default btn-primary" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-                        </div>
-                    </div>
-                </form>
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
+    <nav class="navbar navbar-fixed-top header navbar-default">
+        <div class="navbar-inverse-flat">
+            <a href="<?php echo $this->url("instituicao")?>" class="navbar-brand padrao-header"><img src="/img/logo.png" height="30" /></a>
+             <ul class="btn-group-lg navbar navbar-right margin-bottom-zero">
+		            <li type="button" class="btn navbar-toggle btn-toggle-navbar" data-toggle="collapse" data-target="#navbar-collapse1">
+		            	<a class="glyphicon glyphicon-search"></a>
+		            </li>             		
+                    <li class="btn">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-bell"></i></a>
                         <ul class="dropdown-menu">
                             <li><a href="#"><span class="badge pull-right">40</span>Link</a></li>
@@ -60,13 +48,26 @@
                             <li><a href="#"><span class="badge pull-right">13</span>Link</a></li>
                         </ul>
                     </li>
-                    <li><a href="#" id="btnToggle"><i class="glyphicon glyphicon-th-large"></i></a></li>
-                    <li><a href="\application\index\logout"><i class="glyphicon glyphicon-user"></i></a></li>
+                    <li class="btn">
+                    	<a href="#" id="btnToggle"><i class="glyphicon glyphicon-th-large"></i></a>
+                    </li>
+                    <li class="btn">
+                    	<a href="\application\index\logout"><i class="glyphicon glyphicon-user"></i></a>
+                    </li>
                 </ul>
+            <div class="collapse navbar-collapse" id="navbar-collapse1">
+                <form class="navbar-form">
+                    <div class="input-group" style="max-width:470px;">
+                        <input type="text" class="form-control" placeholder="Pesquisar" name="srch-term" id="srch-term">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default btn-primary" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
 
-    <div class="navbar navbar-default" id="subnav">
+    <div class="col-md-12" id="subnav">
         <div class="col-md-12">
             <div class="navbar-header">
 
@@ -100,18 +101,18 @@
         </div>
     </div>
     </nav>
-    <div class="container-flid" id="main">
+    <div style="height: 60px; width: 1px;"></div>
+    <div class="container" id="main">
             <?php echo $this->content; ?>
-
-        <footer>
-
-            <hr>
-            <div style="outline: 1px solid #ccc" class="col-md-12 text-center"><p><a href="http://www.bootply.com/download/90113" target="_ext">Colocar redes sociais aqui</a></p></div>
-            <hr>
-        </footer>
-
     </div> <!-- /container -->
-
-
+    <footer>
+    	<hr>
+    	<div style="outline: 1px solid #ccc" class="col-md-12 text-center">
+    		<p><a href="http://www.bootply.com/download/90113" target="_ext">
+    			Colocar redes sociais aqui
+    		</a></p>
+    	</div>
+	    <hr>
+    </footer>
     </body>
 </html>
