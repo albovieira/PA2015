@@ -15,7 +15,7 @@ class Base extends ProvidesEventsForm
         $this->add(array(
             'name' => 'username',
             'options' => array(
-                'label' => 'Username',
+                'label' => 'Usuário',
             ),
             'attributes' => array(
                 'type' => 'text'
@@ -28,7 +28,8 @@ class Base extends ProvidesEventsForm
                 'label' => 'Email',
             ),
             'attributes' => array(
-                'type' => 'text'
+                'type' => 'text',
+                'class' => 'form-control'
             ),
         ));
 
@@ -38,27 +39,30 @@ class Base extends ProvidesEventsForm
                 'label' => 'Display Name',
             ),
             'attributes' => array(
-                'type' => 'text'
+                'type' => 'text',
+                'class' => 'form-control'
             ),
         ));
 
         $this->add(array(
             'name' => 'password',
             'options' => array(
-                'label' => 'Password',
+                'label' => 'Senha',
             ),
             'attributes' => array(
-                'type' => 'password'
+                'type' => 'password',
+                'class' => 'form-control'
             ),
         ));
 
         $this->add(array(
             'name' => 'passwordVerify',
             'options' => array(
-                'label' => 'Password Verify',
+                'label' => 'Confirmar Senha',
             ),
             'attributes' => array(
-                'type' => 'password'
+                'type' => 'password',
+                'class' => 'form-control'
             ),
         ));
 

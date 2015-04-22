@@ -33,7 +33,7 @@
                 </div>
                 <div class="navbar-header  pull-right">
                     <button id="btnLogin" role="button" data-toggle="modal" data-target="#loginModal" class="navbar-brand btn btn-primary padrao-login">Já sou cadastrado</button>
-                    <a href="/application/index/cadastrar" class="navbar-brand  padrao-login btn btn-info">Cadastre-se</a>
+                    <a href="/user/register" class="navbar-brand  padrao-login btn btn-info">Cadastre-se</a>
                 </div>
             </div>
 
@@ -98,7 +98,7 @@
 
         $(document).ready(function(){
             $('#btnLogin').click(function(event) {
-                $.get("http://pa2015/application/index/modal-login", function(data) {
+                $.get("/user/login", function(data) {
                     $('.modal-body').html(data);
                 });
             });

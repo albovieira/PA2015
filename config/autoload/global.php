@@ -16,6 +16,9 @@
 
 return array(
   'service_manager' => array(
+      'invokables' => array(
+          'Zend\Session\SessionManager' => 'Zend\Session\SessionManager',
+      ),
       'factories' => array(
           'Navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory',
       ),
@@ -26,32 +29,5 @@ return array(
        'password' => '',
        'dbname' => 'doacao_sistema'
    ) ,
-  /*'navigation' => array(
-      'default' => array(
-          array(
-              'label' => 'Setores Espaciais',
-              'route' => 'setor',
-              'pages' => array(
-                  array(
-                  'label' => 'Incluir',
-                  'route' => 'setor',
-                  'action' => 'add'
-                  )
-              )
-          ),
-        array(
-            'label' => 'Lanterna',
-            'route' => 'lanterna',
-            'pages' => array(
-                array(
-                    'label' => 'Incluir',
-                    'route' => 'lanterna',
-                    'action' => 'add'
-                )
-            )
-        )
-      ),
-
-  )*/
 
 );

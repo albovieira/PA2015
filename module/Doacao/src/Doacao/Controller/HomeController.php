@@ -24,176 +24,18 @@ use Zend\View\Model\ViewModel;
 class HomeController extends AbstractDoctrineCrudController
 {
     public function __construct(){
-        /* $this->formClass = 'Despesas\Form\DespesaForm';
-         $this->modelClass = 'Despesas\Model\Despesa';
-         $this->route = 'despesa';
-         $this->title = 'Cadastro de Despesas';
-         $this->label['yes'] = 'Sim';
-         $this->label['no'] = 'Não';
-         $this->label['add'] = 'Incluir';
-         $this->label['edit'] = 'Alterar';
-        */
-     }
+
+    }
 
      public function indexAction()
      {
-         return new ViewModel();
+         /*TODO validar se o usuario é pessoa ou instituicao e redirecionar */
+         return $this->redirect()->toRoute('pessoa');
      }
 
-     /*  */
-    public function addAction(){
+     public function getTipoUsuario(){
 
-        $modelClass = $this->modelClass;
-        $model = new $modelClass(
-            $this->getTableGateway()->getPrimaryKey(),
-            $this->getTableGateway()->getTable(),
-            $this->getTableGateway()->getAdapter(), false);
+     }
 
 
-        $formClass = $this->formClass;
-
-        $form = new $formClass();
-        $form->get('submit')->setAttributes(
-            array(
-                'value' => $this->label['add'],
-                'class' => 'btn bt btn-success'
-            )
-        );
-
-
-        $form->bind($model);
-
-        $urlAction = $this->url()->fromRoute($this->route, array('action' => 'add'));
-
-        $this->layout()->setTemplate('layout/layout_modal');
-
-        return $this->save($model, $form, $urlAction, null);
-
-    }
-
-
-    public function editAction()
-    {
-        $key = (int) $this->params()->fromRoute('key', null);
-
-        if ($key == null)
-        {
-            return $this->redirect()->toRoute($this->route, array(
-                'action' => 'add'
-            ));
-        }
-
-        $model = $this->getModel($key);
-        $formClass = $this->formClass;
-        $form  = new $formClass();
-
-        $form->bind($model);
-        $valorSelect = $form->get('tipoDespesa')->getValue()->getId();
-        $form->get('tipoDespesa')->setValue($valorSelect);
-
-        $form->get('submit')->setAttributes(
-            array(
-                'value' => $this->label['edit'],
-                'class' => 'btn bt btn-primary'
-            )
-        );
-
-        $urlAction = $this->url()->fromRoute($this->route, array(
-            'action' => 'edit',
-            'key' => $key
-        ));
-
-        $this->layout()->setTemplate('layout/layout_modal');
-
-        return $this->save($model, $form, $urlAction, $key);
-    }
-
-    public function deleteAction(){
-
-        $key = (int) $this->params()->fromRoute('key', null);
-        if (is_null($key))
-        {
-            return $this->redirect()->toRoute($this->route);
-        }
-
-        $request = $this->getRequest();
-        if ($request->isPost())
-        {
-            $del = $request->getPost('del', $this->label['no']);
-
-            if ($del == $this->label['yes'])
-            {
-                $em = $GLOBALS['entityManager'];
-                $em->remove($this->getModel($key));
-                $em->flush();
-            }
-
-            return $this->redirect()->toRoute($this->route);
-        }
-
-        $urlAction = $this->url()->fromRoute($this->route, array('action' => 'delete','key'=> $key));
-
-        $viewModel = new ViewModel();
-        $viewModel->setTemplate('/despesa/despesa/delete');
-        $this->layout()->setTemplate('layout/layout_modal');
-
-        return array(
-            'form' => $this->getDeleteForm($key),
-            'urlAction' => $urlAction,
-            'title' => $this->setAndGetTitle()
-        );
-    }
-
-    public function listarAutoCompleteAction(){
-
-        $this->layout()->setTemplate('layout/layout_modal');
-
-
-        $em = $GLOBALS['entityManager'];
-        $authentication = new AuthenticationService();
-        $user = $authentication->getIdentity();
-
-        $term = $this->params()->fromQuery('term');
-
-        $query = $em->createQuery(
-            "SELECT des.descDespesa FROM Despesas\Model\Despesa des
-                     LEFT JOIN des.salario ren
-                     WHERE des.user = :id
-                     and
-                     des.data BETWEEN
-                     CURRENT_DATE()-7 AND CURRENT_DATE()
-                     AND
-                     des.descDespesa LIKE :termoAuto
-                     ORDER BY des.descDespesa ASC
-                ");
-
-        $query->setParameters(
-            array(
-                'id' => $user->uid,
-                'termoAuto' => '%' .$term. '%'
-            ));
-
-
-        $resultFim = [];
-        $result = $query->getResult();
-
-        foreach($result as $itens){
-            foreach($itens as $i){
-                $resultFim[] = $i;
-            }
-        }
-
-        $this->layout()->setTemplate('layout/layout_modal');
-
-
-        return new JsonModel($resultFim);
-    }
-
-    public function pesquisaRapidaAction(){
-        $descricao = $this->params()->fromQuery('descricao');
-        $this->layout()->setTemplate('layout/layout_modal');
-
-        //var_dump($descricao);
-        return new JsonModel($descricao);
-    }
 }

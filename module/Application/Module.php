@@ -35,7 +35,6 @@ class Module
                 'namespaces' => array(
                     __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
                 'Components' => realpath(__DIR__ . '/../../vendor/generalcomponents/generalcomponents/library/Components'),
-
                 ),
             ),
         );

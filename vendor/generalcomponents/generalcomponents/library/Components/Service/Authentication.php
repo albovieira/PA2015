@@ -31,7 +31,7 @@ class Authentication
 
         $uri = empty($uri) ? $baseUrl : $uri;
 
-        if ($uri == $baseUrl || $uri == 'login' || $uri == 'cadastrar' || $uri == "modal-login")
+        //if ($uri == $baseUrl || $uri == 'login' || $uri == 'cadastrar' || $uri == "modal-login")
             return;
 
 

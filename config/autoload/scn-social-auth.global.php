@@ -42,7 +42,7 @@ $settings = array(
      *
      * Please specify if Facebook is enabled
      */
-    //'facebook_enabled' => true,
+     'facebook_enabled' => true,
 
     /**
      * Facebook Scope
@@ -189,7 +189,7 @@ $settings = array(
      * Set to true if you want to display only the social login buttons without
      * the username/password etc. from ZfcUser.
      */
-    //'social_login_only' => false,
+    'social_login_only' => false,
 
     /**
      * Allow users to register their new account with social login
@@ -197,7 +197,7 @@ $settings = array(
      * Default: true
      * Accepted Values: boolean (true or false)
      */
-    // 'enable_social_registration' => true,
+     'enable_social_registration' => true,
 
     /**
      * End of ScnSocialAuth configuration

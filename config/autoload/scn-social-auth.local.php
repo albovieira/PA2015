@@ -21,14 +21,14 @@ $settings = array(
      *
      * Please specify a Facebook Client ID
      */
-    //'facebook_client_id' => 'your-client-id',
+    'facebook_client_id' => '822464164514417',
 
     /**
      * Facebook Secret
      *
      * Please specify a Facebook Secret
      */
-    //'facebook_secret' => 'your-secret',
+    'facebook_secret' => 'e3bfcbad2deb306e4fa47dc1ff5e8f6f',
 
     /**
      * Foursquare Client ID
@@ -218,7 +218,7 @@ $settings = array(
      *
      * Default: false
      * Accepted Values: boolean (true or false)
-     * 
+     *
      * @see http://hybridauth.sourceforge.net/userguide/Debugging_and_Logging.html
      */
     // 'debug_mode' => false,
@@ -229,7 +229,7 @@ $settings = array(
      *
      * Default: "/tmp/hybridauth.log"
      * Accepted Values: string
-     * 
+     *
      * @see http://hybridauth.sourceforge.net/userguide/Debugging_and_Logging.html
      */
     // 'debug_file' => "/tmp/hybridauth.log",
