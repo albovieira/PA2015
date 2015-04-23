@@ -1,36 +1,44 @@
-<?php 
-use DoctrineORMModuleTest\Assets\Entity\Date;
-$data_cadastro = $instituicao->__get('dataCadastro');
-if($data_cadastro instanceof  \DateTime)
-	$data_cadastro = $data_cadastro->format('d/m/Y');
-?>
-
-<title><?php echo $pageTitle." ".$instituicao->__get('razaoSocial')?></title>
-<!-- Seção do Perfil  -->
-<div class="col-lg-3 col-md-4 col-sm-12 label-primary padding-zero">
-	<br>
-	<div class="center-block label-default img-circle" style="width: 150px; height: 150px;">
-	</div>
-	<br>
-	<li class="list-group-item" data-toggle="collapse" href="#collapsePerfil" aria-expanded="false" aria-controls="collapsePerfil" style="cursor:pointer;">
-		<b>Perfil</b> <span class="glyphicon glyphicon-chevron-down"></span>
-	</li>
-	<ul class="list-flat list-group collapse in" id="collapsePerfil">
-		<li class="list-group-item"><?php echo '<i class="glyphicon glyphicon-user"></i> '.$instituicao->__get('razaoSocial');?></li>
-		<li class="list-group-item"><?php echo '<i class="glyphicon glyphicon-credit-card"></i> '.$instituicao->__get('nomeFantasia');?></li>
-		<li class="list-group-item"><?php echo '<i class="glyphicon glyphicon-map-marker"></i> '.$instituicao->getEnderecoPrincipal($instituicao->__get('enderecos'))?>
-		<li class="list-group-item"><?php echo '<i class="glyphicon glyphicon-bookmark"></i> '.$instituicao->__get('site')?>
-		<li class="list-group-item"><?php echo '<i class="glyphicon glyphicon-calendar"></i> '.$data_cadastro?>
-	</ul>
-</div>
-<!-- Fim Perfil -->
-<!-- Inicio Atualização rápida -->
 <div class="col-sm-12 col-lg-5 col-md-6 padding-zero label-info">
 	<!-- Anula o first-child --><i></i>
-	<?php 
-		foreach ($donativos as $donativo):
-			echo $donativo;
-		endforeach;
-	?>
-<a href="<?php echo $this->url('instituicao',array('action'=>'add'));?>">Doacao</a>
+	<li class="list-group-item">
+		<b>Pedidos</b>
+	</li>
+	<li class="list-group-item" data-toggle="collapse" href="#collapsePedidos1" aria-expanded="false" aria-controls="collapsePerfil" style="cursor:pointer;">Baixo estoque de Nutren<span class="badge">100</span><br><sub>Pedido em: 20/04/2015</sub>
+     		| <sub>Expira em: 20/05/2015 | Categoria: Alimenticios</sub></li><ul class="list-flat list-group collapse in" id="collapsePedidos1"><li class="list-group-item">Precisamos de Nutren para 15 crian�as com bai</li><li class="list-group-item"><div class="btn-group btn-group-sm"><a class="btn btn-info">Editar <i class="glyphicon glyphicon-edit"></i></a><a class="btn btn-danger">Desativar <i class="glyphicon glyphicon-remove"></i></a></div></li></ul><li class="list-group-item" data-toggle="collapse" href="#collapsePedidos2" aria-expanded="false" aria-controls="collapsePerfil" style="cursor:pointer;">Produto de limpeza complementar<span class="badge">10</span><br><sub>Pedido em: 21/04/2015</sub>
+     		| <sub>Expira em: 21/05/2015 | Categoria: Higi�nicos</sub></li><ul class="list-flat list-group collapse in" id="collapsePedidos2"><li class="list-group-item">Estamos com necessidade de v�rios itens de limpeza. Detergentes, Sab�o em p� e diversos outros itens.</li><li class="list-group-item"><div class="btn-group btn-group-sm"><a class="btn btn-info">Editar <i class="glyphicon glyphicon-edit"></i></a><a class="btn btn-danger">Desativar <i class="glyphicon glyphicon-remove"></i></a></div></li></ul></div>
 
+<div class="col-sm-12 col-lg-6 col-md-4 padding-zero label-primary">
+<i></i>
+<li class="list-group-item"><b>Incluir novo donativo</b></li>
+<br>
+<form class="col-lg-12">
+	<div class="form-group">
+		<label>Título</label>
+		<input class="form-control"/>
+	</div>
+		<div class="form-group">
+		<label>Categoria</label>
+		<select class="form-control">
+			<option>Opção 1</option>
+			<option>Opção 2</option>
+			<option>Opção 3</option>
+			<option>Opção 4</option>
+			<option>Opção 5</option>
+		</select>
+	</div>
+		<div class="form-group">
+		<label>Descrição</label>
+		<textarea class="form-control" rows="5"></textarea>
+	</div>
+	<div class="form-group btn-group pull-right">
+		<button class="btn btn-success" type="submit">
+			Gravar
+			<span class="glyphicon glyphicon-ok"></span>
+		</button>
+		<button class="btn btn-danger" type="reset">
+			Limpar
+			<span class="glyphicon glyphicon-remove"></span>
+		</button>
+	</div>
+</form>
+</div>

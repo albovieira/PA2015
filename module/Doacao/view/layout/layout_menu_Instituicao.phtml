@@ -67,10 +67,9 @@
             </div>
         </div>
 
-    <div class="col-md-12" id="subnav">
-        <div class="col-md-12">
+    <div class="col-xs-12" id="subnav">
+        <div class="col-xs-12">
             <div class="navbar-header">
-
                 <a href="#" style="margin-left:15px;" class="navbar-btn btn btn-default btn-plus dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-home" style="color:#dd1111;"></i> Inicio<small><i class="glyphicon glyphicon-chevron-down"></i></small></a>
                 <ul class="nav dropdown-menu">
                     <li><a href="#"><i class="glyphicon glyphicon-user" style="color:#1111dd;"></i> Perfil</a></li>
@@ -91,10 +90,9 @@
             </div>
             <div class="collapse navbar-collapse" id="navbar-collapse2">
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="active"><a href="#">Minha Página</a></li>
-                    <li><a href="#">Meus Doadores</a></li>
-                    <li><a href="#loginModal" role="button" data-toggle="modal">Eventos</a></li>
-                    <li><a href="#aboutModal" role="button" data-toggle="modal">Lista de Desejos</a></li>
+                    <li class="active"><a href="<?php echo $this->url('instituicao')?>">Atualizações rápidas</a></li>
+                    <li><a href="<?php echo $this->url('instituicao',array('action'=>'doadores'));?>">Meus Doadores</a></li>
+                    <li><a href="<?php echo $this->url('donativo')?>" role="button" data-toggle="modal">Meus Pedidos</a></li>
                     <li><a href="#aboutModal" role="button" data-toggle="modal">Denunciar Abusos</a></li>
                 </ul>
             </div>

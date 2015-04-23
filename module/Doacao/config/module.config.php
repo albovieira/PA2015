@@ -33,7 +33,7 @@ return array(
             'instituicao' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route'    => '/instituicao[/][/:action]',
+                    'route'    => '/instituicao[/[:action]][/]',
                     'defaults' => array(
                         'controller' => 'Doacao\Controller\Instituicao',
                         'action'     => 'index',

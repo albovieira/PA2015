@@ -25,24 +25,10 @@ class Transacao extends AbstractEntity{
 	private $id;
 	
 	/**
-	 * @ORM\Column(type="integer", name="id_usuario")
+	 * @ORM\OneToOne(targetEntity="Donativo",inversedBy="transacao")
+	 * @ORM\JoinColumn(name="id_donativo",referencedColumnName="id_dnv")
 	 */
-	private $idUsario;
-	
-	/**
-	 * @ORM\Column(type="integer", name="id_donativo")
-	 */
-	private $idDonativo;
-	
-	/**
-	 * @ORM\Column(type="integer", name="quantidade_oferecida")
-	 */
-	private $quantidade;
-	
-	/**
-	 * @ORM\Column(type="datetime", name="dt_transacao")
-	 */
-	private $dtTransacao;
+	private $donativo;
 	
 	/**
 	 * @ORM\Column(type="datetime", name="dt_expiracao")
@@ -50,9 +36,15 @@ class Transacao extends AbstractEntity{
 	private $dtExpira;
 	
 	/**
-	 * @ORM\Column(type="datetime", name="dt_finalizacao")
+	 * @ORM\ManyToOne(targetEntity="Instituicao", inversedBy="transacoes")
+	 * @ORM\JoinColumn(name="id_instituicao", referencedColumnName="id_instituicao")
 	 */
-	private $dtFim;
+	private $instituicao;
+	
+	/**
+	 * @ORM\OneToMany(targetEntity="TransacaoEfetiva", mappedBy="transacao")
+	 */
+	private $transacaoEfetiva;
 	
 	/**
 	 * @param mixed $property

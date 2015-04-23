@@ -6,7 +6,7 @@
 	border-top-left-radius: 0px;
 }
 .navbar-inverse-flat{
-	background: rgb(0, 173, 255);
+	background: rgb(43, 148, 182);
 }
 body > nav > div.navbar-inverse-flat > ul > li > a{
 	color: #fff;
@@ -32,11 +32,16 @@ body > nav > div.navbar-inverse-flat > ul > li > a{
 		text-decoration: none;
 	}
 }
+
+@media (min-width: 1200px){
+	.col-lg-4 {
+		width: 30.63333333333333%;
+	}
+}
 .list-flat{
 	color: #fff;
 	-webkit-box-shadow: none;
-	box-shadown: none;
-	background-color: inherit;
+	box-shadow: 0 0px 0px;
 }
 .list-flat > .list-group-item{
 	background-color: transparent;
@@ -52,4 +57,7 @@ body > nav > div.navbar-inverse-flat > ul > li > a{
 }
 .navbar-brand{
 	padding: 10px 10px;	
+}
+.lista-doador > div.pull-left{
+	margin-left: 1.3px;
 }

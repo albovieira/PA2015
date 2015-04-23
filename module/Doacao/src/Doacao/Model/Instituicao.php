@@ -20,6 +20,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  */
 class Instituicao extends AbstractEntity{
+	
 	/**
 	 * @ORM\Id
 	 * @ORM\Column(type="integer", name="id_instituicao")
@@ -78,6 +79,11 @@ class Instituicao extends AbstractEntity{
 	 */
 	private $enderecos;
 	
+	/**
+	 * @ORM\OneToMany(targetEntity="Transacao", mappedBy="instituicao")
+	 */
+	private $transacoes;
+	
 	protected $inputFilter;
 	
 	/**
@@ -87,6 +93,7 @@ class Instituicao extends AbstractEntity{
 	public function __construct(){
 		$this->donativos = new ArrayCollection();
 		$this->enderecos = new ArrayCollection();
+		$this->transacoes = new ArrayCollection();
 	}
 	
 	/**
@@ -143,4 +150,61 @@ class Instituicao extends AbstractEntity{
 		return $endereco;
 	}
 	
+	/**
+	 * Parametro retorna o array de objetos donativos
+	 * @param array $objectArray
+	 * @return multitype:
+	 */
+	public function donativos($objectArray){
+		$donativos = array();
+		foreach($objectArray as $donativo):
+			array_push($donativos,$donativo);	
+		endforeach;
+		
+		return $donativos;
+	}
+	
+	/**
+	 * Parametro retorna o array de objetos transacoes
+	 * @param array $objectArray
+	 * @return multitype:
+	 */
+	public function transacoes($objectArray){
+		$transacoes = array();
+		
+		foreach($objectArray as $transacao):
+			array_push($transacoes, $transacao->__get('transacao'));
+		endforeach;
+		
+		return $transacoes;
+	}
+	
+	/**
+	 * Parametro retorna o array de objetos transaçoes efetivas
+	 * @param array $objectArray
+	 * @return multitype:
+	 */
+	public function tEfetiva($objectArray){
+		$tEfetivas = array();
+		foreach($objectArray as $tEfetiva):
+			array_push($tEfetivas, $tEfetiva->__get('transacaoEfetiva'));
+		endforeach;
+		
+		return $tEfetivas;
+	}
+	
+	/**
+	 * Parametro retorna o array de objetos dos doadores
+	 * @param array $objectArray
+	 * @return multitype:
+	 */
+	public function doadores($objectArray){
+		$doadores = array();
+		
+		foreach($objectArray as $doador):
+			array_push($objectArray, $doador->__get('pessoa'));
+		endforeach;
+		
+		return $doadores;
+	}
 }

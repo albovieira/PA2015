@@ -1,5 +1,4 @@
 <?php 
-use DoctrineORMModuleTest\Assets\Entity\Date;
 $data_cadastro = $instituicao->__get('dataCadastro');
 if($data_cadastro instanceof  \DateTime)
 	$data_cadastro = $data_cadastro->format('d/m/Y');
@@ -34,6 +33,10 @@ if($data_cadastro instanceof  \DateTime)
 <!-- Inicio Atualização rápida -->
 <div class="col-sm-12 col-lg-5 col-md-6 padding-zero label-info">
 	<!-- Anula o first-child --><i></i>
+	<li class="list-group-item">
+		<b>Ultimos Pedidos</b>
+		<button class="btn btn-xs btn-success pull-right"><span class="glyphicon glyphicon-plus"></span></button>
+	</li>
 	<?php 
 		foreach ($donativos as $donativo):
 			echo $donativo;
@@ -41,3 +44,32 @@ if($data_cadastro instanceof  \DateTime)
 	?>
 </div>
 
+<div class="col-sm-12 col-lg-4 col-md-6 padding-zero label-success">
+	<!-- Anula o first-child --><i></i>
+	<li class="list-group-item"><b>Doadores Recentes</b></li>
+	<!-- Anula o last-child --><i></i>
+	<li class="list-group-item">Silvanyo Santos<button class="btn btn-success btn-xs pull-right">Recebido <i class="glyphicon glyphicon-ok"></i></button></li>
+	<ul class="list-group list-flat">
+		<li class="list-group-item">
+			<b>Quantidade indicada:</b><span class="badge">10</span><br>
+			<b>Data abertura: 21-04-205</b></br>
+			<b>Donativo: Baixo estoque de nutren</b>
+		</li>
+	</ul>
+		<li class="list-group-item">Silvanyo Santos<button class="btn btn-success btn-xs pull-right">Recebido <i class="glyphicon glyphicon-ok"></i></button></li>
+	<ul class="list-group list-flat">
+		<li class="list-group-item">
+			<b>Quantidade indicada:</b><span class="badge">10</span><br>
+			<b>Data abertura: 21-04-205</b></br>
+			<b>Donativo: Baixo estoque de nutren</b>
+		</li>
+	</ul>
+		<li class="list-group-item">Silvanyo Santos<button class="btn btn-success btn-xs pull-right">Recebido <i class="glyphicon glyphicon-ok"></i></button></li>
+	<ul class="list-group list-flat">
+		<li class="list-group-item">
+			<b>Quantidade indicada:</b><span class="badge">10</span><br>
+			<b>Data abertura: 21-04-205</b></br>
+			<b>Donativo: Baixo estoque de nutren</b>
+		</li>
+	</ul>
+</div>

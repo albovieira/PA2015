@@ -62,6 +62,11 @@ class Donativo extends AbstractEntity{
 	protected $instituicao;
 	
 	/**
+	 * @ORM\OneToOne(targetEntity="Transacao", mappedBy="donativo")
+	 */
+	protected $transacao;
+	
+	/**
 	 * @return mixed
 	 */
 	public function __get($property){return $this->$property;}
