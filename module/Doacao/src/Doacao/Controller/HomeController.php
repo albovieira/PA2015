@@ -20,6 +20,7 @@ use Zend\Paginator\Paginator;
 use Zend\View\Helper\Json;
 use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
+use ZfcUser\Service\User;
 
 class HomeController extends AbstractDoctrineCrudController
 {
@@ -29,10 +30,13 @@ class HomeController extends AbstractDoctrineCrudController
 
      public function indexAction()
      {
+         //$auth = new AuthenticationService();
+          //var_dump($auth->getIdentity());die;
          /*TODO validar se o usuario é pessoa ou instituicao e redirecionar */
          return $this->redirect()->toRoute('pessoa');
      }
 
+    /*TODO verificar perfil do usuario */
      public function getTipoUsuario(){
 
      }
