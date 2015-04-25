@@ -34,9 +34,6 @@ class HomeController extends AbstractDoctrineCrudController
 
      public function indexAction()
      {
-         //$auth = new AuthenticationService();
-          //var_dump($auth->getIdentity());die;
-         /*TODO validar se o usuario é pessoa ou instituicao e redirecionar */
          $rota = null;
 
          $auth = new AuthenticationService();
@@ -51,11 +48,5 @@ class HomeController extends AbstractDoctrineCrudController
 
          return $this->redirect()->toRoute($rota);
      }
-
-    /*TODO verificar perfil do usuario */
-     public function getTipoUsuario(){
-
-     }
-
 
 }

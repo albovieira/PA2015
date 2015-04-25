@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Albo
- * Date: 25/04/2015
- * Time: 11:52
- */
 
 namespace Doacao\Service;
 
