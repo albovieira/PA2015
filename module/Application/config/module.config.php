@@ -6,23 +6,50 @@
  * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
+namespace Application;
+
+use Zend\Mvc\Application;
 
 return array(
 
     'doctrine' => array(
         'driver' => array(
-            __NAMESPACE__ . '_driver' => array(
+            // defines an annotation driver with two paths, and names it `my_annotation_driver`
+            'application_entities' => array(
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
-                'paths' => array(__DIR__ . '/../src/' . __NAMESPACE__ . '/Entity')
+                'paths' => array(
+                    //__DIR__ . '/../src/Application/Entity'
+                    'module/Application/src/Application/Entity'
+                ),
             ),
+
+            // default metadata driver, aggregates all other drivers into a single one.
+            // Override `orm_default` only if you know what you're doing
             'orm_default' => array(
                 'drivers' => array(
-                    __NAMESPACE__ . '\Entity' => __NAMESPACE__ . '_driver'
+                    // register `my_annotation_driver` for any entity under namespace `My\Namespace`
+                    'Application\Entity' => 'application_entities',
                 )
             )
         )
     ),
+    /*'doctrine' => array(
+        'driver' => array(
+
+            'application_entities' => array(
+                'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
+                'cache' => 'array',
+                'paths' => array(__DIR__ . '/../src/Application/Entity')
+            ),
+
+            'orm_default' => array(
+                'drivers' => array(
+                    'Application\Entity' => 'application_entities',
+                ),
+            ),
+        )
+    ),*/
 
 
     'router' => array(
@@ -82,6 +109,17 @@ return array(
         ),
     ),
     'service_manager' => array(
+        'factories' => array(
+            // Override ZfcUser User Mapper factory
+            'zfcuser_user_mapper' => function ($sm) {
+                return new \Application\Mapper\User(
+                    $sm->get('zfcuser_doctrine_em'),
+                    $sm->get('zfcuser_module_options')
+                );
+            },
+        ),
+
+
         'abstract_factories' => array(
             'Zend\Cache\Service\StorageCacheAbstractServiceFactory',
             'Zend\Log\LoggerAbstractServiceFactory',
