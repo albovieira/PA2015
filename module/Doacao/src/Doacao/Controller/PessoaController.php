@@ -11,6 +11,7 @@ namespace Doacao\Controller;
 
 use Components\MVC\Controller\AbstractCrudController;
 use Components\MVC\Controller\AbstractDoctrineCrudController;
+use Doacao\Service\PessoaService;
 use Doctrine\DBAL\Schema\View;
 use Tropa\Form\LanternaForm;
 use Tropa\Model\Lanterna;
@@ -23,26 +24,32 @@ use Zend\View\Model\ViewModel;
 
 class PessoaController extends AbstractDoctrineCrudController
 {
+    private $pessoaService;
     public function __construct(){
-        /* $this->formClass = 'Despesas\Form\DespesaForm';
-         $this->modelClass = 'Despesas\Model\Despesa';
-         $this->route = 'despesa';
-         $this->title = 'Cadastro de Despesas';
-         $this->label['yes'] = 'Sim';
-         $this->label['no'] = 'Não';
-         $this->label['add'] = 'Incluir';
-         $this->label['edit'] = 'Alterar';
-        */
-
-
+        $this->pessoaService = new PessoaService();
     }
 
      public function indexAction()
      {
+         //TODO verificar se user tem pessoa, se nao tiver redirecionar para dashboard editavel;
          $this->layout()->setTemplate('layout/layout_pessoa');
-         return new ViewModel();
+
+         $doacoes = null;
+         if(!$doacoes){
+             $retorno = "Não há doações, siga instituições e doe.<br><a href='#' class='btn btn-success'>Ver Instituicoes </a>";
+         }
+
+         $dadosPessoa = $this->pessoaService->dadosPessoa($this->pessoaService->getUserLogado());
+
+         return new ViewModel(
+             array(
+                 'retorno' => $retorno,
+                 'dadosPessoa' => $dadosPessoa
+             )
+         );
      }
 
+    //
     public function instituicaoAction(){
         $this->layout()->setTemplate('layout/layout_pessoa');
         return new ViewModel();

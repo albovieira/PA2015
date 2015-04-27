@@ -25,7 +25,10 @@ use ZfcUser\Service\User;
 
 class HomeController extends AbstractDoctrineCrudController
 {
+    const PESSOA = '2';
+    const INSTITUICAO = '3';
     private $homeService;
+
     public function __construct(){
         if(!$this->homeService){
             $this->homeService = new HomeService();
@@ -38,10 +41,10 @@ class HomeController extends AbstractDoctrineCrudController
 
          $auth = new AuthenticationService();
          switch($this->homeService->validaPerfil($auth->getIdentity())){
-             case '2':
+             case self::PESSOA:
                 $rota = 'pessoa';
                  break;
-             case '3':
+             case self::INSTITUICAO:
                  $rota = 'instituicao';
                  break;
          }

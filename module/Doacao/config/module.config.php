@@ -8,6 +8,22 @@
  */
 
 return array(
+
+    /*'doctrine' => array(
+        'driver' => array(
+            'doacao_driver' => array(
+                'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
+                'cache' => 'array',
+                'paths' => array(__DIR__ . '/../src/Album/Entity')
+            ),
+            'orm_default' => array(
+                'drivers' => array(
+                    'Doacao\Entity' =>  'doacao_driver'
+                ),
+            ),
+        ),
+    ),*/
+
     'router' => array(
         'routes' => array(
             'doacao' => array(

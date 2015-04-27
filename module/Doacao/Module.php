@@ -15,12 +15,6 @@ use Doctrine\Common\Cache\ArrayCache;
 use Doctrine\ORM\Configuration;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
-use Tropa\Model\Lanterna;
-use Tropa\Model\LanternaTable;
-use Tropa\Model\Setor;
-use Tropa\Model\SetorTable;
-use Zend\Db\ResultSet\ResultSet;
-use Zend\Db\TableGateway\TableGateway;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 use Zend\I18n\Translator\Translator;
@@ -51,6 +45,33 @@ class Module
         $this->initializeDoctrine2($e);
     }
 
+    private function initializeDoctrine2($e)
+    {
+        $conn = $this->getDoctrine2Config($e);
+    	$config = new Configuration();
+    	$cache = new ArrayCache();
+    	$config->setMetadataCacheImpl($cache);
+    	$annotationPath	= realpath(__DIR__ . self::DOCTRINE_BASE_PATH . '/ORM/Mapping/Driver/DoctrineAnnotations.php');
+    	AnnotationRegistry::registerFile($annotationPath);
+    	$driver = new AnnotationDriver(
+    			new AnnotationReader(),
+    		//	array(__DIR__ . '/src/Doacao/Entity')
+    			array(__DIR__ .'\..\Application\src\Application/Entity')
+    	);
+    	$config->setMetadataDriverImpl($driver);
+    	$config->setProxyDir(__DIR__ .'\..\Application\src\Application\Proxy');
+    	$config->setProxyNamespace('Application\Proxy');
+    	$entityManager = EntityManager::create($conn, $config);
+    	$GLOBALS['entityManager'] = $entityManager;
+
+    }
+
+    private function getDoctrine2Config($e)
+    {
+    	$config = $e->getApplication()->getConfig();
+    	return $config['doctrine_config'];
+    }
+
     public function getConfig()
     {
         return include __DIR__ . '/config/module.config.php';
@@ -65,35 +86,10 @@ class Module
                     'Components' => realpath(__DIR__ .'/../../vendor/generalcomponents/generalcomponents/library/Components'),
                 	'Doctrine\Common' => realpath(__DIR__ . self::DOCTRINE_BASE_PATH . '/Common'),
                 	'Doctrine\DBAL' => realpath(__DIR__ . self::DOCTRINE_BASE_PATH . '/DBAL'),
-                	'Doctrine\ORM' => realpath(__DIR__ . self::DOCTRINE_BASE_PATH . '/ORM')                		
+                	'Doctrine\ORM' => realpath(__DIR__ . self::DOCTRINE_BASE_PATH . '/ORM')
                 ),
             ),
         );
-    }
-
-    private function initializeDoctrine2($e)
-    {
-    	$conn = $this->getDoctrine2Config($e);
-    	$config = new Configuration();
-    	$cache = new ArrayCache();
-    	$config->setMetadataCacheImpl($cache);
-    	$annotationPath	= realpath(__DIR__ . self::DOCTRINE_BASE_PATH . '/ORM/Mapping/Driver/DoctrineAnnotations.php');
-    	AnnotationRegistry::registerFile($annotationPath);
-    	$driver = new AnnotationDriver(
-    			new AnnotationReader(),
-    			array(__DIR__ . '/src/Doacao/Model')
-    	);
-    	$config->setMetadataDriverImpl($driver);
-    	$config->setProxyDir(__DIR__ . '/src/Doacao/Proxy');
-    	$config->setProxyNamespace('Doacao\Proxy');
-    	$entityManager = EntityManager::create($conn, $config);
-    	$GLOBALS['entityManager'] = $entityManager;
-    }
-
-    private function getDoctrine2Config($e)
-    {
-    	$config = $e->getApplication()->getConfig();
-    	return $config['doctrine_config'];
     }
     
 }
