@@ -19,7 +19,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  */
 
-class Pessoa {//extends AbstractEntity{
+class Pessoa extends AbstractEntity{
 
 
     /**
