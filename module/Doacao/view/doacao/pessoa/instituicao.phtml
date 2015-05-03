@@ -1,92 +1,134 @@
-<div class="row-fluid">
 
-    <div class="col-md-4 col-sm-6">
 
-        <div class="panel panel-default">
-            <div class="panel-heading"><a href="#" class="pull-right">Ver mais</a> <h4>APAE</h4></div>
-            <div class="panel-body">
-                <p><img src="//placehold.it/150x150" class="img-circle pull-right"> <a href="#">Publicidade</a></p>
-                <div class="clearfix"></div>
-                <hr>
-                Descricao instituicao
+
+<div class='row-fluid'>
+    <div class="col-xs-12" style="margin-bottom: 50px">
+        <form id="pesquisar" class="navbar-form pull-left" method="get">
+            <div class="input-group" style="max-width:470px;">
+                <input type="text" class="form-control" placeholder="Pesquisar" name="srch-term" id="srch-term">
+                <div class="input-group-btn">
+                    <button class="btn btn-default btn-primary" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                    <span style="margin-left: 10px"><input type="radio" name="filtro" value="todos" id="todos" /><label for="todos" style="padding-left: 5px">Ver todos</label></span>
+                    <span style="margin-left: 10px"><input type="radio" name="filtro" value="minhas" id="minhas" /><label for="minhas" style="padding-left: 5px">Minhas instituições</label></span>
+                </div>
             </div>
-        </div>
-
+        </form>
     </div>
-
-    <div class="col-md-4 col-sm-6">
-
-        <div class="panel panel-default">
-            <div class="panel-heading"><a href="#" class="pull-right">Ver mais</a> <h4>São Cristovão</h4></div>
-            <div class="panel-body">
-                <p><img src="//placehold.it/150x150" class="img-circle pull-right"> <a href="#">São Cristovão</a></p>
-                <div class="clearfix"></div>
-                <hr>
-                Descricao instituicao
-            </div>
-        </div>
-
-    </div>
-
-    <div class="col-md-4 col-sm-6">
-
-        <div class="panel panel-default">
-            <div class="panel-heading"><a href="#" class="pull-right">Ver mais</a> <h4>Instituicao</h4></div>
-            <div class="panel-body">
-                <p><img src="//placehold.it/150x150" class="img-circle pull-right"> <a href="#">Instituicao</a></p>
-                <div class="clearfix"></div>
-                <hr>
-                Descricao instituicao
-            </div>
-        </div>
-
-    </div>
-
 </div>
 
+<!--Inicio Instituicao -->
+<div id="containerInstituicao" class='row-fluid'>
 
-<div class="row-fluid">
+    <?php
+    foreach($instituicoes as $instituicao){
 
-    <div class="col-md-4 col-sm-6">
+        echo "
+            <div class='col-md-4 col-sm-6'>
+                <form class='formSeguir' method='post'>
+                <input class='instituicaoID' type='hidden' name='id' value='".$instituicao['id'] ."'>
 
-        <div class="panel panel-default">
-            <div class="panel-heading"><a href="#" class="pull-right">Ver mais</a> <h4>Fome Zero</h4></div>
-            <div class="panel-body">
-                <p><img src="//placehold.it/150x150" class="img-circle pull-right"> <a href="#">Fome Zero</a></p>
-                <div class="clearfix"></div>
-                <hr>
-                Descricao instituicao
-            </div>
-        </div>
-
-    </div>
-
-    <div class="col-md-4 col-sm-6">
-
-        <div class="panel panel-default">
-            <div class="panel-heading"><a href="#" class="pull-right">Ver mais</a> <h4>Outra</h4></div>
-            <div class="panel-body">
-                <p><img src="//placehold.it/150x150" class="img-circle pull-right"> <a href="#">Outra</a></p>
-                <div class="clearfix"></div>
-                <hr>
-                Descricao instituicao
-            </div>
-        </div>
-
-    </div>
-
-    <div class="col-md-4 col-sm-6">
-
-        <div class="panel panel-default">
-            <div class="panel-heading"><a href="#" class="pull-right">Ver mais</a> <h4>RARA</h4></div>
-            <div class="panel-body">
-                <p><img src="//placehold.it/150x150" class="img-circle pull-right"> <a href="#">RAra</a></p>
-                <div class="clearfix"></div>
-                <hr>
-                Descricao instituicao
-            </div>
-        </div>
-
-    </div>
+                <div class='panel panel-default'>
+                    <div class='panel-heading'><a href='#' class='pull-right'>Ver mais</a> <h4>". $instituicao['nomeFantasia']."</h4></div>
+                    <div class='panel-body'>
+                            <p>" . $instituicao['descricao'] ."<img src='//placehold.it/150x150' class='img-circle pull-right'> <a href='#'></a></p>
+                            <div class='clearfix'></div>
+                            <hr>
+                            <input type='submit' class='btn btn-primary btn-seguir' value='Seguir'>
+                    </div>
+                </div>
+                </form>
+            </div>"
+        ;
+    }
+    ?>
 
 </div>
+<!--Fim Instituicao -->
+
+<script>
+    $('#todos').click(function () {
+        $.ajax({
+            data: {'filtro': "todos"},
+            type: 'GET',
+            url:'/pessoa/instituicao',
+            success: function (data) {
+                var html="";
+                for(var i in data.instituicoes){
+                    html +="<div class='col-md-4 col-sm-6'> " +
+                    "<form class='formSeguir' method='post'>"+
+                    "<input class='instituicaoID' type='hidden' name='id' value='"+data.instituicoes[i].id +"'>" +
+                    "<div class='panel panel-default'>"+
+                    "<div class='panel-heading'><a href='#' class='pull-right'>Ver mais</a> <h4>"+ data.instituicoes[i].nomeFantasia +"</h4></div>"+
+                    "<div class='panel-body'>" +
+                    "<p>" + data.instituicoes[i].descricao +
+                    "<img src='//placehold.it/150x150' class='img-circle pull-right'> <a href='#'></a></p>"+
+                    "<div class='clearfix'></div>"+
+                    "<hr>"+
+                    "<input type='submit' class='btn btn-primary btn-seguir' value='Seguir'>"+
+                    "</div>"+
+                    "</div>"+
+                    "</form>"+
+                    "</div>";
+                }
+                //html
+                $('#containerInstituicao').html(html);
+            }
+        });
+    });
+
+    $('#minhas').click(function () {
+        $.ajax({
+            data: {'filtro': "minhas"},
+            type: 'GET',
+            url:'/pessoa/instituicao',
+            success: function (data) {
+
+                var html = "";
+                for(var i in data.instituicoes){
+                    //console.log(data.instituicoes[i]);
+                    html +="<div class='col-md-4 col-sm-6'> " +
+                        "<form class='formSeguir' method='post'>"+
+                            "<input class='instituicaoID' type='hidden' name='id' value='"+data.instituicoes[i].id +"'>" +
+                            "<div class='panel panel-default'>"+
+                            "<div class='panel-heading'><a href='#' class='pull-right'>Ver mais</a> <h4>"+ data.instituicoes[i].nomeFantasia +"</h4></div>"+
+                                "<div class='panel-body'>" +
+                                    "<p>" + data.instituicoes[i].descricao +
+                                    "<img src='//placehold.it/150x150' class='img-circle pull-right'> <a href='#'></a></p>"+
+                                    "<div class='clearfix'></div>"+
+                                    "<hr>"+
+                                    "<input type='submit' class='btn btn-danger btn-seguir' value='Parar de Seguir'>"+
+                                "</div>"+
+                             "</div>"+
+                         "</form>"+
+                         "</div>";
+                }
+                //html
+                $('#containerInstituicao').html(html);
+            }
+        });
+    });
+
+
+    $(document).ready(function () {
+
+        $('.formSeguir').submit(function (e) {
+            e.preventDefault();
+
+            //console.log();
+            var idInstituicao = $(this).find('input[name="id"]').val();
+                $.ajax({
+                    data: {'idInstituicao': idInstituicao},
+                    type: 'POST',
+                    url:'/pessoa/seguir',
+                    success: function (data) {
+                        console.log(data);
+                        //return response(data);
+                    }
+                });
+
+            //console.log();
+
+        });
+
+   });
+</script>

@@ -12,9 +12,8 @@ namespace Doacao\Controller;
 use Components\MVC\Controller\AbstractCrudController;
 use Components\MVC\Controller\AbstractDoctrineCrudController;
 use Doacao\Service\PessoaService;
+use Doacao\Service\ServiceInstituicao;
 use Doctrine\DBAL\Schema\View;
-use Tropa\Form\LanternaForm;
-use Tropa\Model\Lanterna;
 use Zend\Authentication\AuthenticationService;
 use Zend\Paginator\Adapter\ArrayAdapter;
 use Zend\Paginator\Paginator;
@@ -52,6 +51,63 @@ class PessoaController extends AbstractDoctrineCrudController
     //
     public function instituicaoAction(){
         $this->layout()->setTemplate('layout/layout_pessoa');
-        return new ViewModel();
+        $instituicoesService = new ServiceInstituicao();
+
+
+        //$instituicoes = null;
+        $filtro = $this->params()->fromQuery('filtro');
+
+        if($filtro){
+            if($filtro == "minhas"){
+                $instituicoes = $this->pessoaService->instituicoesPessoa();
+            }else{
+                $instituicoes = $instituicoesService->buscaInstituicoes();
+            }
+
+            return new JsonModel(
+                array(
+                    'instituicoes' => $instituicoes
+                )
+            );
+        }
+
+        else{
+            $instituicoes = $instituicoesService->buscaInstituicoes();
+        }
+
+        return new ViewModel(
+            array(
+                'instituicoes' => $instituicoes
+            )
+        );
+    }
+
+    public function seguirAction(){
+        //$view = new ViewModel();
+        //$view->setTerminal(true);
+
+        //$this->request();
+        $seguido = null;
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $instituicaoId = $request->getPost('idInstituicao');
+            $instituicaoService = new ServiceInstituicao();
+            $inst = $instituicaoService->buscaUmaInstituicao($instituicaoId);
+
+            $capturaPessoa = $this->pessoaService->dadosPessoa($this->pessoaService->getUserLogado());
+
+            $seguido = $this->pessoaService->salvarSeguir($capturaPessoa, $inst);
+        }
+
+        //var_dump($seguido);die;
+        //$view->setVariables(array('teste' => 'teste'));
+        //return $view;
+
+        $json = new JsonModel(
+            array(
+                "status" => $seguido
+            )
+        );
+        return $json;
     }
 }

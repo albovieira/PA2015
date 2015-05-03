@@ -16,17 +16,36 @@ class ServiceInstituicao{
 	}
 	
 	public function buscaUmaInstituicao($id){
-		$instituicao = new Instituicao();
 		$em = self::getServiceLocator();
 		$instituicao = $em->find('\Application\Entity\Instituicao',$id);
 		return $instituicao;
 	}
-	
+
 	public static function getServiceLocator(){
 		if(!isset(self::$em)){
 			self::$em = $GLOBALS['entityManager'];
 		}
 		return self::$em;
+	}
+	
+	public function buscaInstituicoes(){
+		$em = self::getServiceLocator();
+		$instituicoes = $em->getRepository('Application\Entity\Instituicao')->findAll();
+
+		$arrInstituicao = [];
+		foreach($instituicoes as $key=>$instituicao){
+			 $arrInstituicao[$key]['id'] = $instituicao->__get('id');
+			 $arrInstituicao[$key]['nomeFantasia'] = $instituicao->__get('nomeFantasia');
+			 $arrInstituicao[$key]['razaoSocial'] = $instituicao->__get('razaoSocial');
+			 $arrInstituicao[$key]['foto'] = $instituicao->__get('foto');
+			 $arrInstituicao[$key]['descricao'] = $instituicao->__get('descricao');
+			 $arrInstituicao[$key]['email'] = $instituicao->__get('email');
+			 $arrInstituicao[$key]['cnpj'] = $instituicao->__get('cnpj');
+			 $arrInstituicao[$key]['site'] = $instituicao->__get('site');
+			 $arrInstituicao[$key]['site'] = $instituicao->__get('site');
+		}
+
+		return $arrInstituicao;
 	}
 	
 	/**

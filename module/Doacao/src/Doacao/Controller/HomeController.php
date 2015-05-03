@@ -30,6 +30,8 @@ class HomeController extends AbstractDoctrineCrudController
     private $homeService;
 
     public function __construct(){
+
+
         if(!$this->homeService){
             $this->homeService = new HomeService();
         }
@@ -37,6 +39,7 @@ class HomeController extends AbstractDoctrineCrudController
 
      public function indexAction()
      {
+
          $rota = null;
 
          $auth = new AuthenticationService();

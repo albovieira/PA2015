@@ -8,6 +8,9 @@
 
 namespace Doacao\Dao;
 
+use Doctrine\DBAL\Query\QueryBuilder;
+use Components\Entity\AbstractEntity;
+
 class PessoaDao {
 
     private $em;
@@ -41,4 +44,55 @@ class PessoaDao {
 
         return $arrayObjs;
     }
+
+    public function salvar(AbstractEntity $entity){
+        $em = $this->getEntityManager();
+        $em->persist($entity);
+        $em->flush();
+    }
+
+    public function excluir(AbstractEntity $entity){
+        $em = $this->getEntityManager();
+        $em->remove($entity);
+        $em->flush();
+    }
+
+    public function selectMinhaInstituicao($idPessoa,$idInstituicao){
+       $query = $this->em->createQuery(
+            "SELECT minInst FROM Application\Entity\MinhaInstituicao minInst
+                     WHERE minInst.idPessoa = :idPessoa AND
+                           minInst.idInstituicao = :idInstituicao
+            ");
+
+        $query->setParameters(
+            array(
+                'idPessoa' => $idPessoa,
+                'idInstituicao' => $idInstituicao
+            ));
+
+        $result = $query->getResult();
+
+        if(empty($result)){
+            return false;
+        }
+        $arrayObjs = [];
+        foreach($result as $itens){
+            $arrayObjs = $itens;
+        }
+
+        return $arrayObjs;
+    }
+
+    public function instituicoesPessoaSegue(){
+        $query = $this->em->createQuery(
+            "SELECT tbinst FROM Application\Entity\Instituicao tbinst
+                     INNER JOIN Application\Entity\MinhaInstituicao mininst WITH tbinst.id = mininst.idInstituicao
+            ");
+
+        $result = $query->getResult();
+
+        return $result;
+
+    }
+
 }
