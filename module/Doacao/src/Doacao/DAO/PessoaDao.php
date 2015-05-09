@@ -8,21 +8,29 @@
 
 namespace Doacao\Dao;
 
+use Application\Dao\AbstractDao;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Components\Entity\AbstractEntity;
+use Doctrine\DBAL\LockMode;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Mapping\ClassMetadata;
+use Doctrine\ORM\Query\Expr;
 
-class PessoaDao {
+
+class PessoaDao extends AbstractDao{
 
     private $em;
 
     public function __construct(){
-        $this->getEntityManager();
+
+        $this->em = $this->getEntityManager();
     }
 
-    public function getEntityManager(){
-        $this->em = $GLOBALS['entityManager'];
-        return $this->em;
+    //retorna querybuilder
+    public function createQueryBuilder(){
+        return $qb = $this->em->createQueryBuilder();
     }
+
 
     public function selectPorUsuario($idUsuario){
         $query = $this->em->createQuery(
@@ -45,16 +53,8 @@ class PessoaDao {
         return $arrayObjs;
     }
 
-    public function salvar(AbstractEntity $entity){
-        $em = $this->getEntityManager();
-        $em->persist($entity);
-        $em->flush();
-    }
-
-    public function excluir(AbstractEntity $entity){
-        $em = $this->getEntityManager();
-        $em->remove($entity);
-        $em->flush();
+    public function select(){
+        //$this->entityManager
     }
 
     public function selectMinhaInstituicao($idPessoa,$idInstituicao){
@@ -83,16 +83,27 @@ class PessoaDao {
         return $arrayObjs;
     }
 
+
     public function instituicoesPessoaSegue(){
         $query = $this->em->createQuery(
             "SELECT tbinst FROM Application\Entity\Instituicao tbinst
                      INNER JOIN Application\Entity\MinhaInstituicao mininst WITH tbinst.id = mininst.idInstituicao
             ");
-
         $result = $query->getResult();
-
         return $result;
+    }
 
+
+    public function todasInstituicoesQueNaoSegue(){
+
+        $query = $this->em->createQuery(
+            "SELECT tbinst,mininst FROM Application\Entity\Instituicao tbinst
+                     LEFT JOIN Application\Entity\MinhaInstituicao mininst WITH tbinst.id = mininst.idInstituicao
+                WHERE mininst.idPessoa is null
+            ");
+//        echo $query->getSql();exit;
+        $result = $query->getResult();
+        return $result;
     }
 
 }

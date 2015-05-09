@@ -85,13 +85,14 @@ class Instituicao extends AbstractEntity{
 	 * @ORM\OneToMany(targetEntity="Donativos",mappedBy="instituicao")
 	 */
 	private $donativos;
-	
+
 	
 	public function __construct(){
 		$this->enderecos = new ArrayCollection();
 		$this->donativos = new ArrayCollection();
 	}
-	
+
+
 	
 	/**
 	 * @param mixed $property

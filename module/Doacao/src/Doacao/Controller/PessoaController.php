@@ -9,6 +9,7 @@
 
 namespace Doacao\Controller;
 
+use Application\Entity\TesteAnexo;
 use Components\MVC\Controller\AbstractCrudController;
 use Components\MVC\Controller\AbstractDoctrineCrudController;
 use Doacao\Service\PessoaService;
@@ -38,7 +39,7 @@ class PessoaController extends AbstractDoctrineCrudController
              $retorno = "Não há doações, siga instituições e doe.<br><a href='#' class='btn btn-success'>Ver Instituicoes </a>";
          }
 
-         $dadosPessoa = $this->pessoaService->dadosPessoa($this->pessoaService->getUserLogado());
+         $dadosPessoa = $this->pessoaService->getObjPessoa();
 
          return new ViewModel(
              array(
@@ -51,17 +52,16 @@ class PessoaController extends AbstractDoctrineCrudController
     //
     public function instituicaoAction(){
         $this->layout()->setTemplate('layout/layout_pessoa');
-        $instituicoesService = new ServiceInstituicao();
-
 
         //$instituicoes = null;
         $filtro = $this->params()->fromQuery('filtro');
 
         if($filtro){
             if($filtro == "minhas"){
-                $instituicoes = $this->pessoaService->instituicoesPessoa();
+                $instituicoes = $this->pessoaService->instituicoesPessoaSegue();
             }else{
-                $instituicoes = $instituicoesService->buscaInstituicoes();
+                //$instituicoes = $instituicoesService->buscaInstituicoes();
+                $instituicoes = $this->pessoaService->naoSegue();
             }
 
             return new JsonModel(
@@ -71,8 +71,9 @@ class PessoaController extends AbstractDoctrineCrudController
             );
         }
 
+        // senao comportamento padrao, retorna a view
         else{
-            $instituicoes = $instituicoesService->buscaInstituicoes();
+            $instituicoes = $this->pessoaService->naoSegue();
         }
 
         return new ViewModel(
@@ -82,15 +83,15 @@ class PessoaController extends AbstractDoctrineCrudController
         );
     }
 
+    //Acao para seguir  instituicao
     public function seguirAction(){
-        //$view = new ViewModel();
-        //$view->setTerminal(true);
 
-        //$this->request();
         $seguido = null;
         $request = $this->getRequest();
         if ($request->isPost()) {
             $instituicaoId = $request->getPost('idInstituicao');
+
+
             $instituicaoService = new ServiceInstituicao();
             $inst = $instituicaoService->buscaUmaInstituicao($instituicaoId);
 
@@ -99,10 +100,6 @@ class PessoaController extends AbstractDoctrineCrudController
             $seguido = $this->pessoaService->salvarSeguir($capturaPessoa, $inst);
         }
 
-        //var_dump($seguido);die;
-        //$view->setVariables(array('teste' => 'teste'));
-        //return $view;
-
         $json = new JsonModel(
             array(
                 "status" => $seguido
@@ -110,4 +107,5 @@ class PessoaController extends AbstractDoctrineCrudController
         );
         return $json;
     }
+
 }

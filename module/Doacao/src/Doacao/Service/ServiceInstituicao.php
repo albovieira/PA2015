@@ -42,7 +42,6 @@ class ServiceInstituicao{
 			 $arrInstituicao[$key]['email'] = $instituicao->__get('email');
 			 $arrInstituicao[$key]['cnpj'] = $instituicao->__get('cnpj');
 			 $arrInstituicao[$key]['site'] = $instituicao->__get('site');
-			 $arrInstituicao[$key]['site'] = $instituicao->__get('site');
 		}
 
 		return $arrInstituicao;
