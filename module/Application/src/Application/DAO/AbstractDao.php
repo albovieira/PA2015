@@ -34,10 +34,16 @@ class AbstractDao
         $this->entityManager->flush();
     }
 
-    public function getModel($key, $entity)
+    public function findById($key, $entity)
     {
         $em = $this->entityManager;
         return $em->getRepository($entity)->find($key);
+    }
+
+    public function findAll($entity)
+    {
+        $em = $this->entityManager;
+        return $em->getRepository($entity)->findAll();
     }
 
 }

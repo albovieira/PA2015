@@ -91,7 +91,8 @@ var pessoa = {
                     type: 'POST',
                     url:'/pessoa/seguir',
                     success: function (data) {
-                        pessoa.bindFiltroMinhas();
+                        var div = $('#btn-seguir'+index).parents('form').parent();
+                        div.fadeOut('1000');
                     }
                 });
 

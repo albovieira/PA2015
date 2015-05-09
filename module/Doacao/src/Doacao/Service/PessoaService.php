@@ -12,7 +12,6 @@ class PessoaService extends AbstractService{
 
     const QTDREGISTRO = 0;
     private $pessoaDAO;
-    private $entity;
 
     public function __construct(){
         $this->pessoaDAO = new PessoaDao();
@@ -34,7 +33,7 @@ class PessoaService extends AbstractService{
         //valida se ja segue uma instituicao, sim sim exclui senao adiciona
         $possuiInstituicao = $this->jaPossuiInstituicao($idPessoa->getId(), $idInstituicao->__get('id'));
         if($possuiInstituicao != null){
-            $this->pessoaDAO->excluir($this->pessoaDAO->getModel($possuiInstituicao, 'Application\Entity\MinhaInstituicao'));
+            $this->pessoaDAO->excluir($this->pessoaDAO->findById($possuiInstituicao, 'Application\Entity\MinhaInstituicao'));
             return "nseguido";
         }
         else{
@@ -48,7 +47,6 @@ class PessoaService extends AbstractService{
     }
 
     public function jaPossuiInstituicao($idPessoa,$idInstituicao){
-        //$jaSegue = false;
         return $this->pessoaDAO->selectMinhaInstituicao($idPessoa,$idInstituicao)
                 ? $this->pessoaDAO->selectMinhaInstituicao($idPessoa,$idInstituicao)
                 : null;
