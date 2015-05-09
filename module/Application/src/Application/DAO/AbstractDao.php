@@ -29,8 +29,15 @@ class AbstractDao
     }
 
     public function excluir(AbstractEntity $entity){
-        $this->entityManager->remove($entity->getId());
+        $this->entityManager->merge($entity);
+        $this->entityManager->remove($entity);
         $this->entityManager->flush();
+    }
+
+    public function getModel($key, $entity)
+    {
+        $em = $this->entityManager;
+        return $em->getRepository($entity)->find($key);
     }
 
 }

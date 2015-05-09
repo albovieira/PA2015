@@ -95,7 +95,7 @@ class PessoaController extends AbstractDoctrineCrudController
             $instituicaoService = new ServiceInstituicao();
             $inst = $instituicaoService->buscaUmaInstituicao($instituicaoId);
 
-            $capturaPessoa = $this->pessoaService->dadosPessoa($this->pessoaService->getUserLogado());
+            $capturaPessoa = $this->pessoaService->getObjPessoa($this->pessoaService->getUserLogado());
 
             $seguido = $this->pessoaService->salvarSeguir($capturaPessoa, $inst);
         }

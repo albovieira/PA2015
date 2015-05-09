@@ -12,6 +12,7 @@ class PessoaService extends AbstractService{
 
     const QTDREGISTRO = 0;
     private $pessoaDAO;
+    private $entity;
 
     public function __construct(){
         $this->pessoaDAO = new PessoaDao();
@@ -27,35 +28,30 @@ class PessoaService extends AbstractService{
         return $auth->getIdentity();
     }
 
-    public function dadosPessoa($id){
-        if($id){
-            return $this->pessoaDAO->selectPorUsuario($id);
-        }
-    }
 
     public function salvarSeguir($idPessoa,$idInstituicao){
 
-        $minhaInstituicao = new MinhaInstituicao();
-        $minhaInstituicao->setIdPessoa($idPessoa);
-        $minhaInstituicao->setIdInstituicao($idInstituicao);
-
         //valida se ja segue uma instituicao, sim sim exclui senao adiciona
-        if($this->jaPossuiInstituicao($idPessoa->getId(), $idInstituicao->__get('id'))){
-            $this->pessoaDAO->excluir($minhaInstituicao);
+        $possuiInstituicao = $this->jaPossuiInstituicao($idPessoa->getId(), $idInstituicao->__get('id'));
+        if($possuiInstituicao != null){
+            $this->pessoaDAO->excluir($this->pessoaDAO->getModel($possuiInstituicao, 'Application\Entity\MinhaInstituicao'));
             return "nseguido";
         }
         else{
+            $minhaInstituicao = new MinhaInstituicao();
+            $minhaInstituicao->setIdPessoa($idPessoa);
+            $minhaInstituicao->setIdInstituicao($idInstituicao);
+
             $this->pessoaDAO->salvar($minhaInstituicao);
             return "seguido";
         }
     }
 
     public function jaPossuiInstituicao($idPessoa,$idInstituicao){
-        $jaSegue = false;
-        if($this->pessoaDAO->selectMinhaInstituicao($idPessoa,$idInstituicao)){
-            $jaSegue = true;
-        }
-        return $jaSegue;
+        //$jaSegue = false;
+        return $this->pessoaDAO->selectMinhaInstituicao($idPessoa,$idInstituicao)
+                ? $this->pessoaDAO->selectMinhaInstituicao($idPessoa,$idInstituicao)
+                : null;
     }
 
     public function naoSegue(){

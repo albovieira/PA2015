@@ -71,16 +71,10 @@ class PessoaDao extends AbstractDao{
             ));
 
         $result = $query->getResult();
-
         if(empty($result)){
             return false;
         }
-        $arrayObjs = [];
-        foreach($result as $itens){
-            $arrayObjs = $itens;
-        }
-
-        return $arrayObjs;
+        return $result[0]->getId();
     }
 
 

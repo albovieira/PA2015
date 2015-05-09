@@ -91,8 +91,7 @@ var pessoa = {
                     type: 'POST',
                     url:'/pessoa/seguir',
                     success: function (data) {
-                        //$(el).parents('form').parent('div');
-
+                        pessoa.bindFiltroMinhas();
                     }
                 });
 
