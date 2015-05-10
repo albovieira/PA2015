@@ -27,7 +27,6 @@ class PessoaService extends AbstractService{
         return $auth->getIdentity();
     }
 
-
     public function salvarSeguir($idPessoa,$idInstituicao){
 
         //valida se ja segue uma instituicao, sim sim exclui senao adiciona
@@ -50,6 +49,29 @@ class PessoaService extends AbstractService{
         return $this->pessoaDAO->selectMinhaInstituicao($idPessoa,$idInstituicao)
                 ? $this->pessoaDAO->selectMinhaInstituicao($idPessoa,$idInstituicao)
                 : null;
+    }
+
+    public function getPesquisaInstituicaoPorNome($term){
+        return $this->pessoaDAO->selectAutoComplete($term);
+    }
+
+    public function getPesquisaRapidaInstituicaoPorNome($term){
+        $objInstituicao = $this->pessoaDAO->selectPesquisaRapida($term);
+        $arrInstituicao = [];
+
+        foreach($objInstituicao as $key=>$instituicao){
+            if($instituicao != null){
+                $arrInstituicao[$key]['id'] = $instituicao->__get('id');
+                $arrInstituicao[$key]['nomeFantasia'] = $instituicao->__get('nomeFantasia');
+                $arrInstituicao[$key]['razaoSocial'] = $instituicao->__get('razaoSocial');
+                $arrInstituicao[$key]['foto'] = $instituicao->__get('foto');
+                $arrInstituicao[$key]['descricao'] = $instituicao->__get('descricao');
+                $arrInstituicao[$key]['email'] = $instituicao->__get('email');
+                $arrInstituicao[$key]['cnpj'] = $instituicao->__get('cnpj');
+                $arrInstituicao[$key]['site'] = $instituicao->__get('site');
+            }
+        }
+        return $arrInstituicao;
     }
 
     public function naoSegue(){

@@ -23,6 +23,7 @@ class PessoaDao extends AbstractDao{
 
     public function __construct(){
 
+        /** @var  em */
         $this->em = $this->getEntityManager();
     }
 
@@ -69,14 +70,12 @@ class PessoaDao extends AbstractDao{
                 'idPessoa' => $idPessoa,
                 'idInstituicao' => $idInstituicao
             ));
-
         $result = $query->getResult();
         if(empty($result)){
             return false;
         }
         return $result[0]->getId();
     }
-
 
     public function instituicoesPessoaSegue(){
         $query = $this->em->createQuery(
@@ -86,7 +85,6 @@ class PessoaDao extends AbstractDao{
         $result = $query->getResult();
         return $result;
     }
-
 
     public function todasInstituicoesQueNaoSegue(){
 
@@ -100,4 +98,33 @@ class PessoaDao extends AbstractDao{
         return $result;
     }
 
+    public function selectAutoComplete($termo){
+        $query = $this->em->createQuery(
+            "SELECT tbinst.nomeFantasia FROM Application\Entity\Instituicao tbinst
+                     WHERE tbinst.nomeFantasia LIKE :termoAuto
+                     ORDER BY tbinst.nomeFantasia ASC
+                ");
+        $query->setParameters(
+            array(
+                'termoAuto' => '%' .$termo. '%'
+            ));
+        //echo $query->getSql();exit;
+        $result = $query->getResult();
+        return $result;
+    }
+
+    public function selectPesquisaRapida($termo){
+        $query = $this->em->createQuery(
+            "SELECT tbinst FROM Application\Entity\Instituicao tbinst
+                     WHERE tbinst.nomeFantasia LIKE :termoAuto
+                     ORDER BY tbinst.nomeFantasia ASC
+                ");
+        $query->setParameters(
+            array(
+                'termoAuto' => '%' .$termo. '%'
+            ));
+        //echo $query->getSql();exit;
+        $result = $query->getResult();
+        return $result;
+    }
 }

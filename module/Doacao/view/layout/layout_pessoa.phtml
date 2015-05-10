@@ -21,6 +21,7 @@
 
         <!-- Scripts -->
         <?php echo $this->headScript()
+            ->prependFile($this->basePath() . '/js/doacao/doacao.js')
             ->prependFile($this->basePath() . '/js/jquery-ui.js')
             ->prependFile($this->basePath() . '/js/bootstrap.min.js')
             ->prependFile($this->basePath() . '/js/jquery.js')
@@ -31,6 +32,9 @@
 
     </head>
     <body>
+    <div id="spinner">
+        <img src="/img/ajax-loader.gif" alt="Loading..."/>
+    </div>
     <nav class="navbar navbar-fixed-top header">
         <div class="col-md-12">
             <div class="navbar-header">

@@ -112,3 +112,17 @@ h3,h4,h5 {
 #myCarousel{
   margin-top: 6%;
 }
+
+div#spinner {
+ display: none;
+ width:100px;
+ height: 100px;
+ position: fixed;
+ top: 50%;
+ left: 50%;
+ text-align:center;
+ margin-left: -50px;
+ margin-top: -100px;
+ z-index:2;
+ overflow: auto;
+}

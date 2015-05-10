@@ -108,4 +108,18 @@ class PessoaController extends AbstractDoctrineCrudController
         return $json;
     }
 
+    public function listarAutocompleteInstituicaoAction(){
+
+        $termo = $this->params()->fromQuery('term');
+        $retorno = $this->pessoaService->getPesquisaInstituicaoPorNome($termo);
+
+        return new JsonModel($retorno);
+    }
+    public function pesquisarInstituicaoAction(){
+        $nomeInstituicao = $this->params()->fromQuery('descricao');
+        $instituicoes = $this->pessoaService->getPesquisaRapidaInstituicaoPorNome($nomeInstituicao);
+        return new JsonModel(array(
+            'instituicoes' => $instituicoes
+        ));
+    }
 }

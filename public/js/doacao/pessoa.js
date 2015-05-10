@@ -7,6 +7,9 @@ var pessoa = {
     aplicarEventos: function () {
         this.bindFiltroTodos();
         this.bindFiltroMinhas();
+        this.autocomplete();
+        this.bindClickBuscaInstituicao();
+
     },
     bindFiltroTodos: function (){
         $('#todos').click(function () {
@@ -99,8 +102,78 @@ var pessoa = {
             });
 
         });
-    }
+    },
 
+    autocomplete: function(){
+        $('#buscaPesquisa').autocomplete({
+
+            minLength: 1,
+            source: function (request, response) {
+                var DTO = { "term": request.term };
+                $.ajax({
+                    data: DTO,
+                    type: 'GET',
+                    url:'/pessoa/listar-autocomplete-instituicao',
+                    success: function (data) {
+
+                        var arrInstituicoes = [];
+                        $.each( data, function( key, value ) {
+                            arrInstituicoes.push(value.nomeFantasia);
+                        });
+                        return response(arrInstituicoes);
+                    }
+                });
+            }
+        });
+    },
+
+
+    bindClickBuscaInstituicao: function () {
+        $('#pesquisar').submit(function (event) {
+            event.preventDefault();
+            var desc = {'descricao' : $('#buscaPesquisa').val()};
+            $.ajax({
+                data: desc,
+                type: 'GET',
+                url:'/pessoa/pesquisar-instituicao',
+                success: function (data) {
+                    console.log(data);
+                    //return response(data);
+                    var html = "";
+                    for(var i in data.instituicoes){
+                        html +="<div class='col-md-4 col-sm-6'> " +
+                        "<form class='formSeguir' method='post'>"+
+                        "<input class='instituicaoID' type='hidden' name='id' value='"+data.instituicoes[i].id +"'>" +
+                        "<div class='panel panel-default'>"+
+                        "<div class='panel-heading'><a href='#' class='pull-right'>Ver mais</a> <h4>"+ data.instituicoes[i].nomeFantasia +"</h4></div>"+
+                        "<div class='panel-body'>" +
+                        "<p>" + data.instituicoes[i].descricao +
+                        "<img src='//placehold.it/150x150' class='img-circle pull-right'> <a href='#'></a></p>"+
+                        "<div class='clearfix'></div>"+
+                        "<hr>"+
+                        "<input type='button' class='btn btn-primary btn-seguir' value='Seguir'>"+
+                        "</div>"+
+                        "</div>"+
+                        "</form>"+
+                        "</div>";
+                    }
+                    //html
+                    $('#containerInstituicao').html(html);
+                    pessoa.aplicaSeguir();
+
+
+
+                }
+            });
+
+
+        });
+
+    },
+    
+    limpaModal: function () {
+        
+    }
 
 }
 
