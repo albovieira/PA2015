@@ -36,14 +36,20 @@ class PessoaController extends AbstractDoctrineCrudController
 
          $doacoes = null;
          if(!$doacoes){
-             $retorno = "Não há doações, siga instituições e doe.<br><a href='#' class='btn btn-success'>Ver Instituicoes </a>";
+             $doacoes = "Não há doações, siga instituições e doe.<br><a href='/pessoa/instituicao' class='btn btn-success'>Ver Instituicoes </a>";
+         }
+
+         $campanhas = null;
+         if(!$campanhas){
+             $campanhas = "No momento nenhuma instituicao que voce segue tem campanhas.<br>";
          }
 
          $dadosPessoa = $this->pessoaService->getObjPessoa();
 
          return new ViewModel(
              array(
-                 'retorno' => $retorno,
+                 'doacoes' => $doacoes,
+                 'campanhas' => $campanhas,
                  'dadosPessoa' => $dadosPessoa
              )
          );
@@ -70,7 +76,6 @@ class PessoaController extends AbstractDoctrineCrudController
                 )
             );
         }
-
         // senao comportamento padrao, retorna a view
         else{
             $instituicoes = $this->pessoaService->naoSegue();
@@ -81,6 +86,14 @@ class PessoaController extends AbstractDoctrineCrudController
                 'instituicoes' => $instituicoes
             )
         );
+    }
+
+    public function eventosAction(){
+        $this->layout()->setTemplate('layout/layout_pessoa');
+
+
+        return new ViewModel();
+
     }
 
     //Acao para seguir  instituicao

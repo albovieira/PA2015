@@ -10,9 +10,26 @@ var principal = {
             $('#spinner').fadeOut('fast');
 
         });
+    },
+    ajustaRodape: function () {
+            var mFoo = $("footer");
+            if ((($(document.body).height() + mFoo.outerHeight()) < $(window).height() && mFoo.css("position") == "fixed") || ($(document.body).height() < $(window).height() && mFoo.css("position") != "fixed")) {
+                mFoo.css({ position: "fixed", bottom: "0px" });
+            } else {
+                mFoo.css({ position: "static" });
+            }
+
+    },
+    bindAjusteRodape: function () {
+        $(window).scroll(principal.ajustaRodape());
+        $(window).resize(principal.ajustaRodape());
+        $(window).load(principal.ajustaRodape());
     }
 }
 
 $(document).ready(function () {
     principal.bindAjaxPreloader();
+
+    principal.ajustaRodape();
+    principal.bindAjusteRodape();
 });

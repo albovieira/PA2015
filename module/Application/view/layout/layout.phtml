@@ -19,15 +19,22 @@
 
         <!-- Scripts -->
         <?php echo $this->headScript()
+            ->prependFile($this->basePath() . '/js/doacao/doacao.js')
+            ->prependFile($this->basePath() . '/js/jquery-ui.js')
             ->prependFile($this->basePath() . '/js/bootstrap.min.js')
-            ->prependFile($this->basePath() . '/js/jquery.min.js')
+            ->prependFile($this->basePath() . '/js/jquery.js')
+            //->prependFile($this->basePath() . '/js/scripts.js')
             ->prependFile($this->basePath() . '/js/respond.min.js', 'text/javascript', array('conditional' => 'lt IE 9',))
             ->prependFile($this->basePath() . '/js/html5shiv.js',   'text/javascript', array('conditional' => 'lt IE 9',))
         ; ?>
 
     </head>
     <body>
+    <div id="spinner">
+        <img src="/img/ajax-loader.gif" alt="Loading..."/>
+    </div>
     <div class="container" style="margin-top: 6%;">
+
         <nav class="navbar navbar-fixed-top header">
             <div class="col-md-12">
                 <div class="navbar-header">

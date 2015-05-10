@@ -31,9 +31,17 @@
         <div class="well">
             <h4>Últimas Doações:</h4>
             <?php
-                if(!is_array($this->retorno)){
-                    echo $this->retorno;
+                if(!is_array($this->doacoes)){
+                    echo $this->doacoes;
                 }
+            ?>
+        </div>
+        <div class="well">
+            <h4>Últimas Campanhas</h4>
+            <?php
+            if(!is_array($this->campanhas)){
+                echo $this->campanhas;
+            }
             ?>
         </div>
     </div>

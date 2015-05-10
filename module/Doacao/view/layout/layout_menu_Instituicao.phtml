@@ -22,6 +22,7 @@
 
         <!-- Scripts -->
         <?php echo $this->headScript()
+            ->prependFile($this->basePath() . '/js/doacao/doacao.js')
             ->prependFile($this->basePath() . '/js/jquery-ui.js')
             ->prependFile($this->basePath() . '/js/bootstrap.min.js')
             ->prependFile($this->basePath() . '//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js')
