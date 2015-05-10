@@ -59,9 +59,7 @@ class PessoaController extends AbstractDoctrineCrudController
     public function instituicaoAction(){
         $this->layout()->setTemplate('layout/layout_pessoa');
 
-        //$instituicoes = null;
         $filtro = $this->params()->fromQuery('filtro');
-
         if($filtro){
             if($filtro == "minhas"){
                 $instituicoes = $this->pessoaService->instituicoesPessoaSegue();
@@ -90,9 +88,13 @@ class PessoaController extends AbstractDoctrineCrudController
 
     public function eventosAction(){
         $this->layout()->setTemplate('layout/layout_pessoa');
+        $eventos = $this->pessoaService->getEventosInstituicoes();
 
-
-        return new ViewModel();
+        return new ViewModel(
+            array(
+                'eventos' => $eventos
+            )
+        );
 
     }
 
@@ -134,5 +136,11 @@ class PessoaController extends AbstractDoctrineCrudController
         return new JsonModel(array(
             'instituicoes' => $instituicoes
         ));
+    }
+
+
+    public function testeAnexoAction(){
+        $this->layout()->setTemplate('layout/layout_pessoa');
+        return new ViewModel();
     }
 }

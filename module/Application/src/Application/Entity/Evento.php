@@ -24,7 +24,7 @@ class Evento extends AbstractEntity{
 
     /**
      * @ORM\Id
-     * @ORM\Column(name="id",type="integer")
+     * @ORM\Column(name="id_evento",type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      **/
     private $id;
@@ -42,12 +42,12 @@ class Evento extends AbstractEntity{
 
     /**
      * @var date
-     * @ORM\Column(name="data_inicio" ,type="date") **/
+     * @ORM\Column(name="data_inicio" ,type="datetime") **/
     private $dataInicio;
 
     /**
      * @var date
-     * @ORM\Column(name="data_fim" ,type="date") **/
+     * @ORM\Column(name="data_final" ,type="datetime") **/
     private $dataFim;
 
     /**
