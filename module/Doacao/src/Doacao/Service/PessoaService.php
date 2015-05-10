@@ -139,4 +139,8 @@ class PessoaService extends AbstractService{
     }
 
 
+    public function dateToString($data){
+        return $data->format('d/m/Y');
+    }
+
 }
