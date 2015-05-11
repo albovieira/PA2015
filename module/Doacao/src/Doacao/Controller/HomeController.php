@@ -11,6 +11,7 @@ namespace Doacao\Controller;
 
 use Components\MVC\Controller\AbstractCrudController;
 use Components\MVC\Controller\AbstractDoctrineCrudController;
+use Doacao\Service\HomeService;
 use Doctrine\DBAL\Schema\View;
 use Tropa\Form\LanternaForm;
 use Tropa\Model\Lanterna;
@@ -24,22 +25,31 @@ use ZfcUser\Service\User;
 
 class HomeController extends AbstractDoctrineCrudController
 {
-    public function __construct(){
+    const PESSOA = '2';
+    const INSTITUICAO = '3';
+    private $homeService;
 
+    public function __construct(){
+        if(!$this->homeService){
+            $this->homeService = new HomeService();
+        }
     }
 
      public function indexAction()
      {
-         //$auth = new AuthenticationService();
-          //var_dump($auth->getIdentity());die;
-         /*TODO validar se o usuario é pessoa ou instituicao e redirecionar */
-         return $this->redirect()->toRoute('pessoa');
+         $rota = null;
+
+         $auth = new AuthenticationService();
+         switch($this->homeService->validaPerfil($auth->getIdentity())){
+             case self::PESSOA:
+                $rota = 'pessoa';
+                 break;
+             case self::INSTITUICAO:
+                 $rota = 'instituicao';
+                 break;
+         }
+
+         return $this->redirect()->toRoute($rota);
      }
-
-    /*TODO verificar perfil do usuario */
-     public function getTipoUsuario(){
-
-     }
-
 
 }

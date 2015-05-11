@@ -1,33 +1,12 @@
 <?php
-//$socialSignIn = true;
+$socialSignIn = true;
 foreach ($this->options->getEnabledProviders() as $provider) {
-   /* if ($socialSignIn) {
+    if ($socialSignIn) {
         echo '<h1>Social Registration</h1>';
         $socialSignIn = false;
-    }*/
-
+    }
+    echo '<dd>' . $this->socialSignInButton($provider, $this->redirect) . '</dd>';
 }
 if ($this->options->getSocialLoginOnly() == false) {
     echo $this->zfcUserLogin;
 }
-
-echo '<dd>' . $this->socialSignInButton($provider, $this->redirect) . '</dd>';
-
-
-?>
-
-</div>
-<div class="col-sm-6">
-    <p>
-        dasdasdsadasdasddasddaddsdadadsdssd
-        dasdasdsadasdasddasddaddsdadadsdssd
-        dasdasdsadasdasddasddaddsdadadsdssd
-        dasdasdsadasdasddasddaddsdadadsdssd
-        dasdasdsadasdasddasddaddsdadadsdssd
-        dasdasdsadasdasddasddaddsdadadsdssdda
-
-    </p>
-</div>
-
-
-</div>

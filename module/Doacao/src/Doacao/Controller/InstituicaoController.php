@@ -11,6 +11,7 @@ namespace Doacao\Controller;
 
 use Components\MVC\Controller\AbstractCrudController;
 use Components\MVC\Controller\AbstractDoctrineCrudController;
+use Doacao\Service\ServiceInstituicao;
 use Doctrine\DBAL\Schema\View;
 use Tropa\Form\LanternaForm;
 use Tropa\Model\Lanterna;
@@ -24,20 +25,20 @@ use Zend\View\Model\ViewModel;
 class InstituicaoController extends AbstractDoctrineCrudController
 {
     public function __construct(){
-        /* $this->formClass = 'Despesas\Form\DespesaForm';
-         $this->modelClass = 'Despesas\Model\Despesa';
-         $this->route = 'despesa';
-         $this->title = 'Cadastro de Despesas';
-         $this->label['yes'] = 'Sim';
-         $this->label['no'] = 'Não';
-         $this->label['add'] = 'Incluir';
-         $this->label['edit'] = 'Alterar';
-        */
-     }
+
+    }
 
      public function indexAction()
      {
          $this->layout()->setTemplate('layout/layout_menu_Instituicao');
-         return new ViewModel();
+         $service = new ServiceInstituicao();
+         $id = $_GET['id'];
+         $instituicao = $service->buscaUmaInstituicao($id);
+         $donativo = $service->listaDonativos($instituicao);
+         $perfil = $service->montaPerfilHtml($instituicao);
+         return new ViewModel(array(
+             'perfil'=> $perfil,
+             'listaDonativos' => $donativo
+         ));
      }
 }

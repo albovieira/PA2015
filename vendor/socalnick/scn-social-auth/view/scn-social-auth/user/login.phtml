@@ -1,23 +1,12 @@
 <?php
-//$socialSignIn = true;
+$socialSignIn = true;
 foreach ($this->options->getEnabledProviders() as $provider) {
-   /* if ($socialSignIn) {
+    if ($socialSignIn) {
         echo '<h1>Social Sign In</h1>';
         $socialSignIn = false;
-    }*/
-
+    }
+    echo '<dd>' . $this->socialSignInButton($provider, $this->redirect) . '</dd>';
 }
 if ($this->options->getSocialLoginOnly() == false) {
     echo $this->zfcUserLogin;
 }
-echo '<dd>' . $this->socialSignInButton($provider, $this->redirect) . '</dd>';
-
-?>
-
-
-<?php
-//verificar necessidade de colocar este codigo na area de login
-if ($this->enableRegistration) : ?>
-    <?php echo $this->translate('Não cadastrado?'); ?> <a href="<?php echo $this->url('zfcuser/register') . ($this->redirect ? '?redirect='.$this->escapeUrl($this->redirect) : '') ?>"><?php echo $this->translate('Cadastre-se!'); ?></a>
-<?php endif; ?>
-

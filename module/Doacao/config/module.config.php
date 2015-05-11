@@ -8,6 +8,22 @@
  */
 
 return array(
+
+    /*'doctrine' => array(
+        'driver' => array(
+            'doacao_driver' => array(
+                'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
+                'cache' => 'array',
+                'paths' => array(__DIR__ . '/../src/Album/Entity')
+            ),
+            'orm_default' => array(
+                'drivers' => array(
+                    'Doacao\Entity' =>  'doacao_driver'
+                ),
+            ),
+        ),
+    ),*/
+
     'router' => array(
         'routes' => array(
             'doacao' => array(
@@ -33,12 +49,22 @@ return array(
             'instituicao' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route'    => '/instituicao[/][/:action]',
+                    'route'    => '/instituicao[/][/:action][/:id]',
                     'defaults' => array(
                         'controller' => 'Doacao\Controller\Instituicao',
                         'action'     => 'index',
                     ),
                 ),
+            ),
+            'donativo' => array(
+            		'type' => 'segment',
+            		'options' => array(
+            				'route'    => '/donativo[/][/:action]',
+            				'defaults' => array(
+            						'controller' => 'Doacao\Controller\Donativo',
+            						'action'     => 'index',
+            				),
+            		),
             ),
             // The following is a route to simplify getting started creating
             // new controllers and actions without needing to create a new
@@ -96,6 +122,7 @@ return array(
             'Doacao\Controller\Home' => 'Doacao\Controller\HomeController',
             'Doacao\Controller\Pessoa' => 'Doacao\Controller\PessoaController',
             'Doacao\Controller\Instituicao' => 'Doacao\Controller\InstituicaoController',
+            'Doacao\Controller\Donativo' => 'Doacao\Controller\DonativoController',
         ),
     ),
     'view_manager' => array(
