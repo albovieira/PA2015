@@ -57,6 +57,10 @@ class PessoaService extends AbstractService{
 
     public function getPesquisaRapidaInstituicaoPorNome($term){
         $objInstituicao = $this->pessoaDAO->selectPesquisaRapida($term);
+        return $this->bindInstituicao($objInstituicao);
+    }
+
+    public function bindInstituicao($objInstituicao){
         $arrInstituicao = [];
 
         foreach($objInstituicao as $key=>$instituicao){
@@ -71,53 +75,27 @@ class PessoaService extends AbstractService{
                 $arrInstituicao[$key]['site'] = $instituicao->__get('site');
             }
         }
+
         return $arrInstituicao;
     }
 
     public function naoSegue(){
         $objInstituicao = $this->pessoaDAO->todasInstituicoesQueNaoSegue();
-        $arrInstituicao = [];
-
-        foreach($objInstituicao as $key=>$instituicao){
-            if($instituicao != null){
-                $arrInstituicao[$key]['id'] = $instituicao->__get('id');
-                $arrInstituicao[$key]['nomeFantasia'] = $instituicao->__get('nomeFantasia');
-                $arrInstituicao[$key]['razaoSocial'] = $instituicao->__get('razaoSocial');
-                $arrInstituicao[$key]['foto'] = $instituicao->__get('foto');
-                $arrInstituicao[$key]['descricao'] = $instituicao->__get('descricao');
-                $arrInstituicao[$key]['email'] = $instituicao->__get('email');
-                $arrInstituicao[$key]['cnpj'] = $instituicao->__get('cnpj');
-                $arrInstituicao[$key]['site'] = $instituicao->__get('site');
-            }
-        }
-
-        return $arrInstituicao;
-
+        return $this->bindInstituicao($objInstituicao);
     }
 
     public function instituicoesPessoaSegue(){
         $objInstituicao = $this->pessoaDAO->instituicoesPessoaSegue();
-            $arrInstituicao = [];
-
-            foreach($objInstituicao as $key=>$instituicao){
-                $arrInstituicao[$key]['id'] = $instituicao->__get('id');
-                $arrInstituicao[$key]['nomeFantasia'] = $instituicao->__get('nomeFantasia');
-                $arrInstituicao[$key]['razaoSocial'] = $instituicao->__get('razaoSocial');
-                $arrInstituicao[$key]['foto'] = $instituicao->__get('foto');
-                $arrInstituicao[$key]['descricao'] = $instituicao->__get('descricao');
-                $arrInstituicao[$key]['email'] = $instituicao->__get('email');
-                $arrInstituicao[$key]['cnpj'] = $instituicao->__get('cnpj');
-                $arrInstituicao[$key]['site'] = $instituicao->__get('site');
-            }
-
-            return $arrInstituicao;
+        return $this->bindInstituicao($objInstituicao);
     }
 
     public function getEventosInstituicoes(){
         $objEvento = $this->pessoaDAO->selectEventosInstituicao();
+        return $this->bindEvento($objEvento);
+    }
+
+    public function bindEvento($objEvento){
         $arrEvento = [];
-
-
         foreach($objEvento as $key=>$evento){
             // necessario pois o retorno esta trazendo as instituicoes tbm
             if($evento instanceof Evento){
@@ -132,12 +110,15 @@ class PessoaService extends AbstractService{
                 $arrEvento[$key]['imagem1'] = $evento->getImagem1();
                 $arrEvento[$key]['imagem2'] = $evento->getImagem2();
                 $arrEvento[$key]['imagem3'] = $evento->getImagem3();
-          }
+            }
         }
-
         return $arrEvento;
     }
 
+    public function getEventosComFiltro($termo){
+        $objEvento = $this->pessoaDAO->selectEventosInstituicaoComFiltro($termo);
+        return $this->bindEvento($objEvento);
+    }
 
     public function dateToString($data){
         return $data->format('d/m/Y');

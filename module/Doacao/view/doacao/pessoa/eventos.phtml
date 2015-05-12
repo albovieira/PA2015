@@ -1,4 +1,4 @@
-<style>
+<style xmlns="http://www.w3.org/1999/html">
     .imagem-evento{
         width: 400px !important;
         height: 200px !important;
@@ -12,6 +12,15 @@
                 <input type="text" class="form-control" placeholder="Pesquisar" name="buscaPesquisa" id="buscaPesquisa" >
                 <div class="input-group-btn">
                     <button class="btn btn-default btn-primary" id="btnPesquisar" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                    <span style="margin-left: 10px">
+                        <label for="todos" style="padding-left: 5px"></label>
+                            <select class="form-control" name="filtro" id="filtro" />
+                                <option selected>Selecione</option>
+                                <option >Instituicao</option>
+                                <option>Titulo Evento</option>
+                                <option>Objetivos</option>
+                            </select>
+                    </span>
                 </div>
             </div>
         </form>
@@ -20,7 +29,7 @@
 
 <div class="row-fluid">
 <?php
-   $eventos = $this->eventos;
+    $eventos = $this->eventos;
     foreach($eventos as $evento){
         echo "<div class='col-sm-6 col-md-4'>";
         echo "<div class='thumbnail'>";
@@ -45,3 +54,4 @@
     }
 ?>
 </div>
+<script src="/js/doacao/pessoaEvento.js"></script>

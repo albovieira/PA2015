@@ -139,4 +139,23 @@ class PessoaDao extends AbstractDao{
         $result = $query->getResult();
         return $result;
     }
+
+    public function selectEventosInstituicaoComFiltro($termo){
+        $query = $this->em->createQuery(
+            "SELECT evento,tbinst FROM Application\Entity\Evento evento
+                     LEFT JOIN Application\Entity\Instituicao tbinst WITH evento.idInstituicao = tbinst.id
+                     INNER JOIN Application\Entity\MinhaInstituicao mininst WITH evento.idInstituicao = mininst.idInstituicao
+                     WHERE tbinst.nomeFantasia LIKE :termoAuto
+                     ORDER BY tbinst.nomeFantasia ASC
+                ");
+        $query->setParameters(
+            array(
+                'termoAuto' => '%' .$termo. '%'
+            ));
+        //echo $query->getSql();exit;
+        //var_dump($query->getResult());exit;
+        $result = $query->getResult();
+        return $result;
+    }
+
 }

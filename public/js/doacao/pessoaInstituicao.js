@@ -1,8 +1,7 @@
 /**
  * Created by Albo on 08/05/2015.
  */
-
-var pessoa = {
+var pessoaInstituicao = {
 
     aplicarEventos: function () {
         this.bindFiltroTodos();
@@ -39,7 +38,7 @@ var pessoa = {
                     }
                     //html
                     $('#containerInstituicao').html(html);
-                    pessoa.aplicaSeguir();
+                    pessoaInstituicao.aplicaSeguir();
                 }
             });
         });
@@ -73,7 +72,7 @@ var pessoa = {
                     }
                     //html
                     $('#containerInstituicao').html(html);
-                    pessoa.aplicaSeguir();
+                    pessoaInstituicao.aplicaSeguir();
 
                 }
             });
@@ -127,7 +126,6 @@ var pessoa = {
         });
     },
 
-
     bindClickBuscaInstituicao: function () {
         $('#pesquisar').submit(function (event) {
             event.preventDefault();
@@ -159,7 +157,7 @@ var pessoa = {
                     }
                     //html
                     $('#containerInstituicao').html(html);
-                    pessoa.aplicaSeguir();
+                    pessoaInstituicao.aplicaSeguir();
 
 
 
@@ -179,6 +177,6 @@ var pessoa = {
 
 
 $(document).ready(function () {
-    pessoa.aplicarEventos();
-    pessoa.aplicaSeguir();
+    pessoaInstituicao.aplicarEventos();
+    pessoaInstituicao.aplicaSeguir();
 });

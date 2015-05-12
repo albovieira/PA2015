@@ -95,7 +95,6 @@ class PessoaController extends AbstractDoctrineCrudController
                 'eventos' => $eventos
             )
         );
-
     }
 
     //Acao para seguir  instituicao
@@ -136,6 +135,21 @@ class PessoaController extends AbstractDoctrineCrudController
         return new JsonModel(array(
             'instituicoes' => $instituicoes
         ));
+    }
+
+    public function listarAutocompleteEventoAction(){
+
+        $termo = $this->params()->fromQuery('term');
+        $retorno = $this->pessoaService->getEventosComFiltro($termo);
+
+        return new JsonModel($retorno);
+    }
+    public function pesquisarEventoAction(){
+        /*$nomeInstituicao = $this->params()->fromQuery('descricao');
+        $instituicoes = $this->pessoaService->getPesquisaRapidaInstituicaoPorNome($nomeInstituicao);
+        return new JsonModel(array(
+            'instituicoes' => $instituicoes
+        ));*/
     }
 
 
