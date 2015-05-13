@@ -4,9 +4,10 @@
             <?php
             //var_dump($this->dadosPessoa);
             $dadosPessoa = $this->dadosPessoa;
-            echo "<img style='width:280px' src='".$dadosPessoa->getFoto(). "' /><br>";
-            echo $dadosPessoa->getNome().'<br>';
+            echo "<img class='img img-responsive' style='width:280px' src='".$dadosPessoa->getFoto(). "' /><br>";
+            echo "<strong class='text-info'>".$dadosPessoa->getNome().'</strong><br>';
             echo $dadosPessoa->getEmail().'<br>';
+            echo '<a class="btn-link" href="#">Editar Perfil</a>'
             ?>
         </div>
     </div>
@@ -41,6 +42,15 @@
             <?php
             if(!is_array($this->campanhas)){
                 echo $this->campanhas;
+            }else{
+                foreach($campanhas as $campanha){
+                    echo "<div class='well text-capitalize'>";
+                    echo "<strong>Titulo:</strong> ".$campanha['tituloEvento'] . '<br>';
+                    echo "<strong>Instituicao:</strong> ".$campanha['nomeFantasia'] . '<br>';
+                    echo "<strong>Fim do evento:</strong> ".$campanha['dataFim'] . '<br>';
+                    echo "<a style='margin-top: 4%' class='btn btn-default btn-sm' href='#'>Ver Mais</a>";
+                    echo "</div>";
+                }
             }
             ?>
         </div>

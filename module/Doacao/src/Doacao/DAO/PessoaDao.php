@@ -140,6 +140,22 @@ class PessoaDao extends AbstractDao{
         return $result;
     }
 
+    public function selectEventosInstituicaoRecente(){
+        $query = $this->em->createQuery(
+            "SELECT evento,tbinst FROM Application\Entity\Evento evento
+                     LEFT JOIN Application\Entity\Instituicao tbinst WITH evento.idInstituicao = tbinst.id
+                     INNER JOIN Application\Entity\MinhaInstituicao mininst WITH evento.idInstituicao = mininst.idInstituicao
+                     WHERE
+                     evento.dataFim BETWEEN
+                     CURRENT_DATE()-15 AND CURRENT_DATE()
+                     ORDER BY evento.dataInicio DESC
+                ");
+        //echo $query->getSql();exit;
+        //var_dump($query->getResult());exit;
+        $result = $query->getResult();
+        return $result;
+    }
+
     public function selectEventosInstituicaoComFiltro($termo){
         $query = $this->em->createQuery(
             "SELECT evento,tbinst FROM Application\Entity\Evento evento

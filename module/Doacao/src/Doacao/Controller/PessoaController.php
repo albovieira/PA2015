@@ -16,6 +16,7 @@ use Doacao\Service\PessoaService;
 use Doacao\Service\ServiceInstituicao;
 use Doctrine\DBAL\Schema\View;
 use Zend\Authentication\AuthenticationService;
+use Zend\Mail\Storage\Writable\Maildir;
 use Zend\Paginator\Adapter\ArrayAdapter;
 use Zend\Paginator\Paginator;
 use Zend\View\Helper\Json;
@@ -39,7 +40,7 @@ class PessoaController extends AbstractDoctrineCrudController
              $doacoes = "Não há doações, siga instituições e doe.<br><a href='/pessoa/instituicao' class='btn btn-success'>Ver Instituicoes </a>";
          }
 
-         $campanhas = null;
+         $campanhas = $this->pessoaService->getEventosInstituicoesRecentes();
          if(!$campanhas){
              $campanhas = "No momento nenhuma instituicao que voce segue tem campanhas.<br>";
          }

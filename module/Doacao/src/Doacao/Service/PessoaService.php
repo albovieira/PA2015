@@ -4,6 +4,7 @@ namespace Doacao\Service;
 
 use Application\Entity\MinhaInstituicao;
 use Application\Entity\Evento;
+use Application\Proxy\__CG__\Application\Entity\Instituicao;
 use Application\Service\AbstractService;
 use Zend\Authentication\AuthenticationService;
 use Doacao\Dao\PessoaDao;
@@ -62,7 +63,6 @@ class PessoaService extends AbstractService{
 
     public function bindInstituicao($objInstituicao){
         $arrInstituicao = [];
-
         foreach($objInstituicao as $key=>$instituicao){
             if($instituicao != null){
                 $arrInstituicao[$key]['id'] = $instituicao->__get('id');
@@ -106,7 +106,7 @@ class PessoaService extends AbstractService{
                 $arrEvento[$key]['objetivos'] = $evento->getObjetivos();
                 $arrEvento[$key]['tituloEvento'] = $evento->getTituloEvento();
                 $arrEvento[$key]['dataInicio'] = $evento->getDataInicio();
-                $arrEvento[$key]['dataFim'] = $evento->getDataFim();
+                $arrEvento[$key]['dataFim'] = $this->dateToString($evento->getDataFim());
                 $arrEvento[$key]['imagem1'] = $evento->getImagem1();
                 $arrEvento[$key]['imagem2'] = $evento->getImagem2();
                 $arrEvento[$key]['imagem3'] = $evento->getImagem3();
@@ -115,13 +115,18 @@ class PessoaService extends AbstractService{
         return $arrEvento;
     }
 
-    public function getEventosComFiltro($termo){
-        $objEvento = $this->pessoaDAO->selectEventosInstituicaoComFiltro($termo);
+    public function dateToString($data){
+        return $data->format('d/m/Y');
+    }
+
+    public function getEventosInstituicoesRecentes(){
+        $objEvento = $this->pessoaDAO->selectEventosInstituicaoRecente();
         return $this->bindEvento($objEvento);
     }
 
-    public function dateToString($data){
-        return $data->format('d/m/Y');
+    public function getEventosComFiltro($termo){
+        $objEvento = $this->pessoaDAO->selectEventosInstituicaoComFiltro($termo);
+        return $this->bindEvento($objEvento);
     }
 
 }

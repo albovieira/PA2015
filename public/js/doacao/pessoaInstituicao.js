@@ -27,7 +27,7 @@ var pessoaInstituicao = {
                         "<div class='panel-heading'><a href='#' class='pull-right'>Ver mais</a> <h4>"+ data.instituicoes[i].nomeFantasia +"</h4></div>"+
                         "<div class='panel-body'>" +
                         "<p>" + data.instituicoes[i].descricao +
-                        "<img src='//placehold.it/150x150' class='img-circle pull-right'> <a href='#'></a></p>"+
+                        "<img src="+ data.instituicoes[i].foto + " class='img-circle pull-right img-profile'> <a href='#'></a></p>"+
                         "<div class='clearfix'></div>"+
                         "<hr>"+
                         "<input type='button' class='btn btn-primary btn-seguir' value='Seguir'>"+
@@ -61,7 +61,7 @@ var pessoaInstituicao = {
                         "<div class='panel-heading'><a href='#' class='pull-right'>Ver mais</a> <h4>"+ data.instituicoes[i].nomeFantasia +"</h4></div>"+
                         "<div class='panel-body'>" +
                         "<p>" + data.instituicoes[i].descricao +
-                        "<img src='//placehold.it/150x150' class='img-circle pull-right'> <a href='#'></a></p>"+
+                        "<img src="+ data.instituicoes[i].foto + " class='img-circle pull-right img-profile'> <a href='#'></a></p>"+
                         "<div class='clearfix'></div>"+
                         "<hr>"+
                         "<input type='button' class='btn btn-danger btn-seguir' value='Parar de Seguir'>"+
@@ -138,7 +138,9 @@ var pessoaInstituicao = {
                     console.log(data);
                     //return response(data);
                     var html = "";
+
                     for(var i in data.instituicoes){
+
                         html +="<div class='col-md-4 col-sm-6'> " +
                         "<form class='formSeguir' method='post'>"+
                         "<input class='instituicaoID' type='hidden' name='id' value='"+data.instituicoes[i].id +"'>" +
@@ -146,7 +148,7 @@ var pessoaInstituicao = {
                         "<div class='panel-heading'><a href='#' class='pull-right'>Ver mais</a> <h4>"+ data.instituicoes[i].nomeFantasia +"</h4></div>"+
                         "<div class='panel-body'>" +
                         "<p>" + data.instituicoes[i].descricao +
-                        "<img src='//placehold.it/150x150' class='img-circle pull-right'> <a href='#'></a></p>"+
+                        "<img src="+data.instituicoes[i].foto +  " class='img-circle pull-right img-profile'> <a href='#'></a></p>"+
                         "<div class='clearfix'></div>"+
                         "<hr>"+
                         "<input type='button' class='btn btn-primary btn-seguir' value='Seguir'>"+
@@ -174,7 +176,6 @@ var pessoaInstituicao = {
     }
 
 }
-
 
 $(document).ready(function () {
     pessoaInstituicao.aplicarEventos();

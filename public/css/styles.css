@@ -136,3 +136,7 @@ footer{
  background-color: #f5f5f5;
 }
 
+.img-profile{
+    width: 80px !important;
+    height: 80px !important;
+}
