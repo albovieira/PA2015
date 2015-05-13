@@ -3,9 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <?php
-        echo $this->headTitle('Sistema Doacao')->setSeparator(' - ')->setAutoEscape(false);
-        echo $this->headMeta()
+        <?php echo $this->headMeta()
             ->appendName('viewport', 'width=device-width, initial-scale=1.0')
             ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
         ?>
@@ -13,7 +11,6 @@
         <!-- Le styles -->
         <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
                         ->prependStylesheet($this->basePath() . '/css/style.css')
-                        ->prependStylesheet($this->basePath() . '/css/flat-style.css')
                         ->prependStylesheet($this->basePath() . '/css/bootstrap-theme.min.css')
                         ->prependStylesheet($this->basePath() . '/css/bootstrap.css')
                         ->prependStylesheet($this->basePath() . '/css/jquery-ui.css')
@@ -22,7 +19,6 @@
 
         <!-- Scripts -->
         <?php echo $this->headScript()
-            ->prependFile($this->basePath() . '/js/doacao/doacao.js')
             ->prependFile($this->basePath() . '/js/jquery-ui.js')
             ->prependFile($this->basePath() . '/js/bootstrap.min.js')
             ->prependFile($this->basePath() . '//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js')
@@ -34,28 +30,18 @@
 
     </head>
     <body>
-    <nav class="navbar navbar-fixed-top header navbar-default">
-        <div class="col-xs-12 navbar-inverse-flat">
-            <a href="#" class="navbar-brand padrao-header"><img src="/img/logo.png" class="logo" /></a>
-            <ul class="btn-group btn-group-lg pull-right">
-                  <li class="btn">
-                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-bell"></i></a>
-                     <ul class="dropdown-menu">
-                         <li><a href="#"><span class="badge pull-right">40</span>Link</a></li>
-                         <li><a href="#"><span class="badge pull-right">2</span>Link</a></li>
-                         <li><a href="#"><span class="badge pull-right">0</span>Link</a></li>
-                         <li><a href="#"><span class="label label-info pull-right">1</span>Link</a></li>
-                         <li><a href="#"><span class="badge pull-right">13</span>Link</a></li>
-                      </ul>
-                  </li>
-                  <li class="btn"><a href="#" id="btnToggle"><i class="glyphicon glyphicon-th-large"></i></a></li>
-                  <li class="btn"><a href="\application\index\logout"><i class="glyphicon glyphicon-user"></i></a></li>
-                  <li class="btn navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse1">
-                  	<i class="glyphicon glyphicon-search"></i>
-             	  </li>
-            </ul>            
-            <div class="collapse navbar-collapse col-lg-12" id="navbar-collapse1">
-                <form class="navbar-form">
+    <nav class="navbar navbar-fixed-top header">
+        <div class="col-md-12">
+            <div class="navbar-header">
+
+                <a href="#" class="navbar-brand padrao-header">Doação</a>
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse1">
+                    <i class="glyphicon glyphicon-search"></i>
+                </button>
+
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-collapse1">
+                <form class="navbar-form pull-left">
                     <div class="input-group" style="max-width:470px;">
                         <input type="text" class="form-control" placeholder="Pesquisar" name="srch-term" id="srch-term">
                         <div class="input-group-btn">
@@ -63,10 +49,25 @@
                         </div>
                     </div>
                 </form>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-bell"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#"><span class="badge pull-right">40</span>Link</a></li>
+                            <li><a href="#"><span class="badge pull-right">2</span>Link</a></li>
+                            <li><a href="#"><span class="badge pull-right">0</span>Link</a></li>
+                            <li><a href="#"><span class="label label-info pull-right">1</span>Link</a></li>
+                            <li><a href="#"><span class="badge pull-right">13</span>Link</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#" id="btnToggle"><i class="glyphicon glyphicon-th-large"></i></a></li>
+                    <li><a href="\application\index\logout"><i class="glyphicon glyphicon-user"></i></a></li>
+                </ul>
             </div>
         </div>
 
-    <div class="col-xs-12" id="subnav">
+    <div class="navbar navbar-default" id="subnav">
+        <div class="col-md-12">
             <div class="navbar-header">
 
                 <a href="#" style="margin-left:15px;" class="navbar-btn btn btn-default btn-plus dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-home" style="color:#dd1111;"></i> Inicio<small><i class="glyphicon glyphicon-chevron-down"></i></small></a>
@@ -89,13 +90,14 @@
             </div>
             <div class="collapse navbar-collapse" id="navbar-collapse2">
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="active"><a href="<?php echo $this->url('instituicao',array('action'=>'index'));?>">Minha Página</a></li>
+                    <li class="active"><a href="#">Minha Página</a></li>
                     <li><a href="#">Meus Doadores</a></li>
                     <li><a href="#loginModal" role="button" data-toggle="modal">Eventos</a></li>
                     <li><a href="#aboutModal" role="button" data-toggle="modal">Lista de Desejos</a></li>
                     <li><a href="#aboutModal" role="button" data-toggle="modal">Denunciar Abusos</a></li>
                 </ul>
             </div>
+        </div>
     </div>
     </nav>
     <div class="container-flid" id="main">

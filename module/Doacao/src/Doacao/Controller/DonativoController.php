@@ -20,12 +20,55 @@ use Zend\Paginator\Paginator;
 use Zend\View\Helper\Json;
 use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
+use Application\Entity\Donativos;
+use Doacao\Form\DonativoForm;
 
 class DonativoController extends AbstractDoctrineCrudController
 {
+	
+	public function init(){
+		$contextAjax = $this->_helper->getHelper('AjaxContext');
+		$contextAjax->addActionContext('teste','html')
+					->initContext();
 
+	}
+	
 	public function indexAction()
 	{
-		$this->layout()->setTemplate('layout/layout_menu_Instituicao');
+		$this->setLayout();
+	}
+	
+	private function setLayout(){
+		return $this->layout()->setTemplate('layout/layout_menu_Instituicao');
+	}
+	
+	public function showNovo(){
+		
+	}
+	
+	public function novoAction(){
+		$form = new DonativoForm();
+		$request = $this->getRequest();
+		$jsonRequest = true;
+		
+		return (new ViewModel())
+		->setTerminal($this->getRequest()->isXmlHttpRequest())
+		->setVariable('form', $form)
+		->setVariable('e_json', $jsonRequest);
+		
+	}
+	
+	public function validaAjaxAction(){
+		$form = new DonativoForm();
+		$request = $this->getRequest();
+		$responde = $this->getResponse();
+		if($request->isPost()){
+			var_dump($request->getPost());exit();
+		}
+		return $response;
+	}
+	
+	public function doarAction(){
+		$this->setLayout();
 	}
 }

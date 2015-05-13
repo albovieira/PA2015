@@ -8,7 +8,6 @@ var principal = {
             $('#spinner').fadeIn('fast');
         }).bind("ajaxComplete", function(){
             $('#spinner').fadeOut('fast');
-
         });
     },
     ajustaRodape: function () {
@@ -18,7 +17,6 @@ var principal = {
             } else {
                 mFoo.css({ position: "static" });
             }
-
     },
     bindAjusteRodape: function () {
         $(window).scroll(principal.ajustaRodape());

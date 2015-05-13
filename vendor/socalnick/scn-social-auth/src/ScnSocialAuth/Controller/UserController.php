@@ -129,7 +129,6 @@ class UserController extends AbstractActionController
         }
         $viewModel->setVariable('redirect', $redirect);
 
-
         return $viewModel;
     }
 

@@ -2,7 +2,6 @@
 return array(
     // This should be an array of module namespaces used in the application.
     'modules' => array(
-        'Doacao',
         'DoctrineModule',
         'DoctrineORMModule',
         'ScnSocialAuth',
@@ -10,6 +9,7 @@ return array(
         'ZfcBase',
         'ZfcUser',
         'ZfcUserDoctrineORM',
+        'Doacao',
         'Application',
     ),
 

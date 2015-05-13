@@ -32,10 +32,12 @@ class InstituicaoController extends AbstractDoctrineCrudController
      {
          $this->layout()->setTemplate('layout/layout_menu_Instituicao');
          $service = new ServiceInstituicao();
-         $instituicao = $service->buscaUmaInstituicao(1);
+         $id = $_GET['id'];
+         $instituicao = $service->buscaUmaInstituicao($id);
          $donativo = $service->listaDonativos($instituicao);
+         $perfil = $service->montaPerfilHtml($instituicao);
          return new ViewModel(array(
-             'instituicao'=> $instituicao,
+             'perfil'=> $perfil,
              'listaDonativos' => $donativo
          ));
      }

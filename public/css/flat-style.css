@@ -2,14 +2,15 @@
 .navbar-inverse-flat{
 	background-color: rgb(61, 146, 185);
 }
-.navbar-inverse-flat > ul > li > a{
+.navbar-inverse-flat > a{
 	color: #fff;
 }
 .navbar-brand{
-	padding: 8px 0px;
+	padding: 8px 15px;
 }
 .btn-group-lg > .btn{
 	padding: 8px 16px;
+	color: #fff;
 }
 .logo{
 	width: 80px;	
@@ -19,11 +20,10 @@
 	margin-right: 0px;
 	border: none;
 }
-.list-flat > .list-group-item, .list-flat{
+.list-flat > .list-group-item, .list-flat, .list-flat > .list-group-item:hover{
 	background-color: transparent;
 	border: none;
 	box-shadow: 0 0px 0px rgba(0,0,0,0.075);
-	color: #fff;
 }
 .list-group-item:first-child, .list-group-item:last-child{
 	border:none;
@@ -40,4 +40,34 @@
 .emulate-img{
 	width: 150px;
 	height: 150px;
+}
+.navbar-form{
+	margin-bottom: 0px;
+}
+.btn-group.btn-group-lg.pull-right{
+	margin-top: 8px;
+	margin-bottom: 0px;
+}
+.btn-group.btn-group-lg.pull-right > li > a{
+	color: rgb(167, 216, 247);
+}
+.btn-group.btn-group-lg.pull-right > .btn:active, .btn-group.btn-group-lg.pull-right > .btn.active{
+  -webkit-box-shadow:0px 0px;
+          box-shadow:0 0px 0px;
+}
+.panel {
+	margin-bottom: 20px;
+	border-radius: 0px;
+	-webkit-box-shadow: 0 0px 0px;
+	box-shadow: 0 0px 0px;
+	background-color: rgba(0,0,0,0.2);
+}
+.list-group-item-special {
+	position: relative;
+	display: block;
+	padding: 10px 15px;
+	margin-bottom: -1px;
+	background-color: #ffffff;
+	margin-bottom: 0.2px;
+	border:0px;
 }
