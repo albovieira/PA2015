@@ -56,6 +56,17 @@ return array(
                     ),
                 ),
             ),
+
+            'donativo' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route'    => '/donativo[/][/:action]',
+                    'defaults' => array(
+                        'controller' => 'Doacao\Controller\Donativo',
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
             // The following is a route to simplify getting started creating
             // new controllers and actions without needing to create a new
             // module. Simply drop new controllers in, and you can access them
@@ -113,6 +124,7 @@ return array(
             'Doacao\Controller\Home' => 'Doacao\Controller\HomeController',
             'Doacao\Controller\Pessoa' => 'Doacao\Controller\PessoaController',
             'Doacao\Controller\Instituicao' => 'Doacao\Controller\InstituicaoController',
+            'Doacao\Controller\Donativo' => 'Doacao\Controller\DonativoController',
         ),
     ),
     'view_manager' => array(

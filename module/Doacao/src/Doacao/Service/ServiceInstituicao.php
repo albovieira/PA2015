@@ -55,7 +55,7 @@ class ServiceInstituicao extends GlobalService{
                 <li class='list-group-item'><span class='glyphicon glyphicon-credit-card'></span> {$nomeFantasia}</li>
                 <li class='list-group-item'><span class='glyphicon glyphicon-envelope'></span> {$email}</li>
                 <li class='list-group-item'><span class='glyphicon glyphicon-link'></span> {$site}</li>
-                <li class='list-group-item'><span class='glyphicon glyphicon-calendar'></span> Membro desde {$dataCadastro}</li>
+                <li class='list-group-item'><span class='glyphicon glyphicon-calendar'></span> Membro desde {$dataCadastro->format('d/m/Y')}</li>
                 <li class='list-group-item'><span class='glyphicon glyphicon-book'></span> {$descricao}</li>
             </ul>
         </div>"

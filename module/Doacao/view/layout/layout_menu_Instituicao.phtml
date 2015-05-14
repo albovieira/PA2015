@@ -1,6 +1,6 @@
 <?php echo $this->doctype(); ?>
 
-<html lang="en">
+<html lang="pt-br">
     <head>
         <meta charset="utf-8">
         <?php echo $this->headMeta()
@@ -11,7 +11,8 @@
         <!-- Le styles -->
         <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
                         ->prependStylesheet($this->basePath() . '/css/style.css')
-                        ->prependStylesheet($this->basePath() . '/css/bootstrap-theme.min.css')
+                        ->prependStylesheet($this->basePath() . '/css/flat-style.css')
+                        //->prependStylesheet($this->basePath() . '/css/bootstrap-theme.min.css')
                         ->prependStylesheet($this->basePath() . '/css/bootstrap.css')
                         ->prependStylesheet($this->basePath() . '/css/jquery-ui.css')
                         ->prependStylesheet($this->basePath() . '/css/jquery-ui.structure.css')
@@ -24,94 +25,70 @@
             ->prependFile($this->basePath() . '//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js')
             ->prependFile($this->basePath() . '/js/jquery.js')
             ->prependFile($this->basePath() . '/js/scripts.js')
+            ->appendFile($this->basePath() . '/js/instituicao.js')
             ->prependFile($this->basePath() . '/js/respond.min.js', 'text/javascript', array('conditional' => 'lt IE 9',))
             ->prependFile($this->basePath() . '/js/html5shiv.js',   'text/javascript', array('conditional' => 'lt IE 9',))
-        ; ?>
+        ; 
+        ?>
 
     </head>
     <body>
-    <nav class="navbar navbar-fixed-top header">
-        <div class="col-md-12">
-            <div class="navbar-header">
-
-                <a href="#" class="navbar-brand padrao-header">Doação</a>
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse1">
-                    <i class="glyphicon glyphicon-search"></i>
-                </button>
-
-            </div>
-            <div class="collapse navbar-collapse" id="navbar-collapse1">
-                <form class="navbar-form pull-left">
-                    <div class="input-group" style="max-width:470px;">
-                        <input type="text" class="form-control" placeholder="Pesquisar" name="srch-term" id="srch-term">
-                        <div class="input-group-btn">
-                            <button class="btn btn-default btn-primary" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-                        </div>
-                    </div>
-                </form>
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-bell"></i></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#"><span class="badge pull-right">40</span>Link</a></li>
-                            <li><a href="#"><span class="badge pull-right">2</span>Link</a></li>
-                            <li><a href="#"><span class="badge pull-right">0</span>Link</a></li>
-                            <li><a href="#"><span class="label label-info pull-right">1</span>Link</a></li>
-                            <li><a href="#"><span class="badge pull-right">13</span>Link</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#" id="btnToggle"><i class="glyphicon glyphicon-th-large"></i></a></li>
-                    <li><a href="\application\index\logout"><i class="glyphicon glyphicon-user"></i></a></li>
-                </ul>
-            </div>
-        </div>
-
-    <div class="navbar navbar-default" id="subnav">
-        <div class="col-md-12">
-            <div class="navbar-header">
-
-                <a href="#" style="margin-left:15px;" class="navbar-btn btn btn-default btn-plus dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-home" style="color:#dd1111;"></i> Inicio<small><i class="glyphicon glyphicon-chevron-down"></i></small></a>
-                <ul class="nav dropdown-menu">
-                    <li><a href="#"><i class="glyphicon glyphicon-user" style="color:#1111dd;"></i> Perfil</a></li>
-                    <li><a href="#"><i class="glyphicon glyphicon-dashboard" style="color:#0000aa;"></i> Dashboard</a></li>
-                    <li class="nav-divider"></li>
-                    <li><a href="#"><i class="glyphicon glyphicon-cog" style="color:#dd1111;"></i> Settings</a></li>
-                    <li><a href="#"><i class="glyphicon glyphicon-plus"></i> Mais..</a></li>
-                </ul>
-
-
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse2">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-
-            </div>
+    <header class="navbar navbar-fixed-top">
+    	<div class="col-xs-12 navbar-inverse-flat">
+	    		<a href="#" class="navbar-brand">
+	    			<img src="/img/logo.png" class="logo"/>
+	    		</a>
+				<ul class="btn-group btn-group-lg pull-right">
+	            	<li class="btn">
+	                	<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-bell"></i></a>
+	                    <ul class="dropdown-menu">
+	                    	<li><a href="#"><span class="badge pull-right">40</span>Link</a></li>
+	                        <li><a href="#"><span class="badge pull-right">2</span>Link</a></li>
+	                        <li><a href="#"><span class="badge pull-right">0</span>Link</a></li>
+	                        <li><a href="#"><span class="label label-info pull-right">1</span>Link</a></li>
+	                        <li><a href="#"><span class="badge pull-right">13</span>Link</a></li>
+	                    </ul>
+	                </li>
+	                <li class="btn"><a href="#" id="btnToggle"><i class="glyphicon glyphicon-th-large"></i></a></li>
+	                <li class="btn"><a href="\application\index\logout"><i class="glyphicon glyphicon-user"></i></a></li>
+	                <li class="btn navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse1">
+	                	<i class="glyphicon glyphicon-search"></i>
+	            	</li>
+	            	<li class="btn navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse2">
+                    	<span class="sr-only">Toggle navigation</span>
+                    	<i class="glyphicon glyphicon-list"></i>
+                	</li>
+	            </ul>	    		
+	    		<div class="navbar-form navbar-collapse collapse" id="navbar-collapse1">
+	            	<form>
+		                <div class="input-group">
+		                    <input type="text" class="form-control" placeholder="Pesquisar" name="srch-term" id="srch-term" size="60">
+		                    <div class="input-group-btn">
+		                    	<button class="btn btn-default btn-primary" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+		                	</div>
+		            	</div>
+		            </form>
+	            </div>     
+    	</div>
+		<div class="col-xs-12 navbar-default">
             <div class="collapse navbar-collapse" id="navbar-collapse2">
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="active"><a href="#">Minha Página</a></li>
+                    <li class="active"><a href="<?php echo $this->url('instituicao',array('action'=>'index'));?>">Minha Página</a></li>
                     <li><a href="#">Meus Doadores</a></li>
                     <li><a href="#loginModal" role="button" data-toggle="modal">Eventos</a></li>
                     <li><a href="#aboutModal" role="button" data-toggle="modal">Lista de Desejos</a></li>
                     <li><a href="#aboutModal" role="button" data-toggle="modal">Denunciar Abusos</a></li>
                 </ul>
             </div>
-        </div>
-    </div>
-    </nav>
+    	</div>    	
+    </header>
     <div class="container-flid" id="main">
             <?php echo $this->content; ?>
-
-        <footer>
-
-            <hr>
-            <div style="outline: 1px solid #ccc" class="col-md-12 text-center"><p><a href="http://www.bootply.com/download/90113" target="_ext">Colocar redes sociais aqui</a></p></div>
-            <hr>
-        </footer>
-
     </div> <!-- /container -->
-
-
+        <footer>
+            <div class="col-xs-12 text-center">
+            	<p><a href="http://www.bootply.com/download/90113" target="_ext">Colocar redes sociais aqui</a></p>
+            </div>
+        </footer>	
     </body>
 </html>
