@@ -181,9 +181,6 @@ class ElementAnnotationsListenerTest extends TestCase
 
         $this->assertEquals('foo', $elementSpec['spec']['options']['empty_option']);
 
-        $elementSpec['spec']['options']['empty_option'] = null;
-        $listener->handleRequiredAssociation($event);
-        $this->assertEquals('NULL', $elementSpec['spec']['options']['empty_option']);
     }
 
     public function testHandleRequiredField()
@@ -203,6 +200,15 @@ class ElementAnnotationsListenerTest extends TestCase
         $event->setParam('name', 'stringNullable');
         $listener->handleRequiredField($event);
         $this->assertFalse($inputSpec['required']);
+    }
+
+    public function testHandleRequiredFieldNonFieldProperty()
+    {
+        $listener = $this->listener;
+        $event    = $this->getMetadataEvent();
+        $event->setParam('name', 'targetMany');
+        $listener->handleRequiredField($event);
+        $this->assertFalse(isset($inputSpec['required']));
     }
 
     /**

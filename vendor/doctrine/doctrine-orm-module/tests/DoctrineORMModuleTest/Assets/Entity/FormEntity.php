@@ -112,8 +112,44 @@ class FormEntity
      */
     protected $targetOneNullable;
 
+   /**
+    * @Form\Type("DoctrineModule\Form\Element\ObjectSelect")
+    * @ORM\OneToOne(targetEntity="TargetInterface")
+    * @ORM\JoinColumn(nullable=true)
+    * @Form\Options({"empty_option":null})
+    */
+    protected $noDisplayEmptyOption;
+
     /**
      * @ORM\OneToMany(targetEntity="FormEntityTarget", mappedBy="formEntity")
      */
     protected $targetMany;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @Form\Options({"label":"Please Choose", "value_options":{"f":"false","t":"true"}})
+     * @Form\Type("Radio")
+     */
+    protected $specificType;
+
+    /**
+     * @ORM\OneToMany(targetEntity="FormEntityTarget", mappedBy="formEntityMulti")
+     * @Form\Type("DoctrineORMModule\Form\Element\EntityMultiCheckbox")
+     */
+    protected $specificMultiType;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @Form\Options({"label":"Please Choose", "value_options":{"f":"false","t":"true"}})
+     * @Form\Attributes({"type":"textarea"})
+     */
+    protected $specificAttributeType;
+
+    /**
+     * @ORM\Column(type="string", length=256)
+     * @Form\Type("File")
+     * @ORM\JoinColumn(nullable=true)
+     * @Form\Options({"label":"Image"})
+     */
+    protected $image;
 }

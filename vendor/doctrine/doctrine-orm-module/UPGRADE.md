@@ -1,3 +1,15 @@
+# 0.9.0
+ * [`DoctrineORMModule\Form\Annotation\ElementAnnotationsListener`](https://github.com/doctrine/DoctrineORMModule/blob/master/src/DoctrineORMModule/Form/Annotation/ElementAnnotationsListener.php) and
+   [`DoctrineORMModule\Form\Annotation\AnnotationBuilder`](https://github.com/doctrine/DoctrineORMModule/blob/master/src/DoctrineORMModule/Form/Annotation/AnnotationBuilder.php)
+   were updated to properly handle 'empty_option'.
+   According to ZF2 docs, setting empty_option to NULL instructs a \Zend\Form\Element\Select that it should not add an "empty option" to a select list.
+   [#281](https://github.com/doctrine/DoctrineORMModule/pull/281)
+ * Added possibility to define a specific form element in annotations. It now overrides the one defined by the listener when explicitly asked.
+   It also reintroduces the DoctrineModule\Form\Element\ObjectSelect behavior of v0.7.0, that permitted to set an ObjectSelect on an entity's attribute when no association was defined (OneToMany etc.)
+   [#272](https://github.com/doctrine/DoctrineORMModule/pull/272)
+ * The required PHP version is bumped to `5.3.23` [#306](https://github.com/doctrine/DoctrineORMModule/pull/306)
+ * Add support for second level cache (see docs about how to configure it)
+
 # 0.8.0
 
  * [`DoctrineORMModule\Form\Annotation\AnnotationBuilder`](https://github.com/doctrine/DoctrineORMModule/blob/master/src/DoctrineORMModule/Form/Annotation/AnnotationBuilder.php)

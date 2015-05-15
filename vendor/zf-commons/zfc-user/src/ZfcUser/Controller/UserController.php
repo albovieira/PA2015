@@ -79,7 +79,7 @@ class UserController extends AbstractActionController
         if (!$this->zfcUserAuthentication()->hasIdentity()) {
             return $this->redirect()->toRoute(static::ROUTE_LOGIN);
         }
-        //return new ViewModel();
+        return new ViewModel();
     }
 
     /**
@@ -99,8 +99,6 @@ class UserController extends AbstractActionController
         } else {
             $redirect = false;
         }
-
-        $this->layout()->setTemplate('layout/layout_modal.phtml');
 
         if (!$request->isPost()) {
             return array(
@@ -191,7 +189,6 @@ class UserController extends AbstractActionController
         $request = $this->getRequest();
         $service = $this->getUserService();
         $form = $this->getRegisterForm();
-
 
         if ($this->getOptions()->getUseRedirectParameterIfPresent() && $request->getQuery()->get('redirect')) {
             $redirect = $request->getQuery()->get('redirect');

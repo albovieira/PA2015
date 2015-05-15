@@ -1,30 +1,33 @@
 
 <?php
+$this->layout()->setTemplate('layout/layout_modal.phtml');
+
 $form = $this->loginForm;
 $form->prepare();
 $form->setAttribute('action', $this->url('zfcuser/login'));
 $form->setAttribute('method', 'post');
-$form->setAttribute('class', 'form form-group');
+$form->setAttribute('class', 'form-signin');
 
 ?>
+        <?php echo $this->formLabel($form->get('identity')->setAttribute('class', 'sr-only')) ?>
+        <?php echo $this->formInput($form->get('identity')->setAttribute('class','form-control')) ?>
+        <?php echo $this->formLabel($form->get('credential')->setAttribute('class', 'sr-only')) ?>
+        <?php echo $this->formInput($form->get('credential')->setAttribute('class','form-control')) ?>
+
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" value="remember-me"> Remember me
+            </label>
+        </div>
+        <?php echo $this->formElementErrors($form->get('identity')) ?>
 
 <?php echo $this->form()->openTag($form) ?>
-
-<dl class="zend_form">
-    <?php echo $this->formElementErrors($form->get('identity')) ?>
-
-    <dt><?php echo $this->formLabel($form->get('identity')) ?></dt>
-    <dd><?php echo $this->formInput($form->get('identity')) ?></dd>
-
-    <dt><?php echo $this->formLabel($form->get('credential')) ?></dt>
-    <dd><?php echo $this->formInput($form->get('credential')) ?></dd>
-
     <?php if ($this->redirect): ?>
         <input type="hidden" name="redirect" value="<?php echo $this->escapeHtml($this->redirect) ?>" />
     <?php endif ?>
-
-    <dd><?php echo $this->formButton($form->get('submit')) ?></dd>
-</dl>
+    <?php echo $this->formButton($form->get('submit')->setAttribute('class','btn btn-lg btn-success btn-block')) ?>
 
 <?php echo $this->form()->closeTag() ?>
+
+
 

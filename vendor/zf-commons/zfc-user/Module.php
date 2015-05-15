@@ -145,7 +145,6 @@ class Module implements
 
                 'zfcuser_register_form' => function ($sm) {
                     $options = $sm->get('zfcuser_module_options');
-
                     $form = new Form\Register(null, $options);
                     //$form->setCaptchaElement($sm->get('zfcuser_captcha_element'));
                     $form->setInputFilter(new Form\RegisterFilter(

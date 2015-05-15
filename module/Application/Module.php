@@ -23,11 +23,6 @@ class Module
         $eventManager->attach(MvcEvent::EVENT_ROUTE, array('Components\Service\Authentication','verifyIdentity'));
     }
 
-    public function init($moduleManager)
-    {
-        $moduleManager->loadModule('ZfcUser');
-    }
-
     public function getConfig()
     {
         return include __DIR__ . '/config/module.config.php';

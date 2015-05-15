@@ -21,6 +21,7 @@ namespace DoctrineORMModuleTest\Options;
 
 use PHPUnit_Framework_TestCase as TestCase;
 use DoctrineORMModule\Options\Configuration;
+use Doctrine\ORM\Repository\DefaultRepositoryFactory;
 
 class ConfigurationOptionsTest extends TestCase
 {
@@ -50,11 +51,30 @@ class ConfigurationOptionsTest extends TestCase
         $options->setRepositoryFactory('test');
         $this->assertSame('test', $options->getRepositoryFactory());
 
-        $repositoryFactory = $this->getMock('Doctrine\ORM\Repository\DefaultRepositoryFactory');
+        $repositoryFactory = new DefaultRepositoryFactory();
         $options->setRepositoryFactory($repositoryFactory);
         $this->assertSame($repositoryFactory, $options->getRepositoryFactory());
 
         $this->setExpectedException('Zend\Stdlib\Exception\InvalidArgumentException');
         $options->setRepositoryFactory(new \stdClass());
+    }
+
+    public function testSetGetEntityListenerResolver()
+    {
+        $options = new Configuration();
+
+        $options->setEntityListenerResolver(null);
+        $this->assertNull($options->getEntityListenerResolver());
+
+        $options->setEntityListenerResolver('test');
+        $this->assertSame('test', $options->getEntityListenerResolver());
+
+        $entityListenerResolver = $this->getMock('Doctrine\ORM\Mapping\EntityListenerResolver');
+
+        $options->setEntityListenerResolver($entityListenerResolver);
+        $this->assertSame($entityListenerResolver, $options->getEntityListenerResolver());
+
+        $this->setExpectedException('Zend\Stdlib\Exception\InvalidArgumentException');
+        $options->setEntityListenerResolver(new \stdClass());
     }
 }

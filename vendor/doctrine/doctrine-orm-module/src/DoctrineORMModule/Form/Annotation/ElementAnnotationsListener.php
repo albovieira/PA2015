@@ -22,7 +22,6 @@ namespace DoctrineORMModule\Form\Annotation;
 use ArrayObject;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\Mapping\ClassMetadata;
-use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use DoctrineModule\Form\Element;
 use Zend\EventManager\AbstractListenerAggregate;
 use Zend\EventManager\EventInterface;
@@ -122,8 +121,8 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
         $this->prepareEvent($event);
 
         /** @var \ArrayObject $elementSpec */
-        $elementSpec = $event->getParam('elementSpec');
-        $inputSpec   = $event->getParam('inputSpec');
+        $elementSpec           = $event->getParam('elementSpec');
+        $inputSpec             = $event->getParam('inputSpec');
         $inputSpec['required'] = false;
 
         $this->mergeAssociationOptions($elementSpec, $mapping['targetEntity']);
@@ -140,6 +139,7 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
     {
         /** @var \Doctrine\ORM\Mapping\ClassMetadataInfo $metadata */
         $metadata = $event->getParam('metadata');
+
         return $metadata && $metadata->isAssociationInverseSide($event->getParam('name'));
     }
 
@@ -220,8 +220,10 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
             foreach ($mapping['joinColumns'] as $joinColumn) {
                 if (isset($joinColumn['nullable']) && $joinColumn['nullable']) {
                     $required = false;
-
-                    if (!isset($elementSpec['spec']['options']['empty_option'])) {
+                    if ((isset($elementSpec['spec']['options']) &&
+                         !array_key_exists('empty_option', $elementSpec['spec']['options'])) ||
+                         !isset($elementSpec['spec']['options'])
+                    ) {
                         $elementSpec['spec']['options']['empty_option'] = 'NULL';
                     }
                     break;
@@ -244,6 +246,10 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
         $metadata  = $event->getParam('metadata');
         $inputSpec = $event->getParam('inputSpec');
 
+        if (!$metadata || !$metadata->hasField($event->getParam('name'))) {
+            return;
+        }
+
         $inputSpec['required'] = !$metadata->isNullable($event->getParam('name'));
     }
 
@@ -263,6 +269,15 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
         $this->prepareEvent($event);
 
         $elementSpec = $event->getParam('elementSpec');
+
+        if (isset($elementSpec['spec']['options']['target_class'])) {
+            $this->mergeAssociationOptions($elementSpec, $elementSpec['spec']['options']['target_class']);
+            return;
+        }
+
+        if (isset($elementSpec['spec']['type']) || isset($elementSpec['spec']['attributes']['type'])) {
+            return;
+        }
 
         switch ($metadata->getTypeOfField($event->getParam('name'))) {
             case 'bigint':
@@ -329,6 +344,13 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
                 $inputSpec['validators'][] = array('name' => 'Int');
                 break;
             case 'string':
+                $elementSpec = $event->getParam('elementSpec');
+                if (isset($elementSpec['spec']['type']) &&
+                    in_array($elementSpec['spec']['type'], array('File', 'Zend\Form\Element\File'))
+                ) {
+                    return;
+                }
+
                 if (isset($mapping['length'])) {
                     $inputSpec['validators'][] = array(
                         'name'    => 'StringLength',
@@ -350,6 +372,7 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
         if ($metadata && $metadata->hasField($event->getParam('name'))) {
             return $metadata->getFieldMapping($event->getParam('name'));
         }
+
         return null;
     }
 
@@ -364,6 +387,7 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
         if ($metadata && $metadata->hasAssociation($event->getParam('name'))) {
             return $metadata->getAssociationMapping($event->getParam('name'));
         }
+
         return null;
     }
 
@@ -383,7 +407,9 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
         );
 
         $elementSpec['spec']['options'] = $options;
-        $elementSpec['spec']['type']    = 'DoctrineORMModule\Form\Element\EntitySelect';
+        if (!isset($elementSpec['spec']['type'])) {
+            $elementSpec['spec']['type'] = 'DoctrineORMModule\Form\Element\EntitySelect';
+        }
     }
 
     /**

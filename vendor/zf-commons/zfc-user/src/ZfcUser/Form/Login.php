@@ -26,8 +26,7 @@ class Login extends ProvidesEventsForm
                 'label' => '',
             ),
             'attributes' => array(
-                'type' => 'text',
-                'class' => 'form-control'
+                'type' => 'text'
             ),
         ));
 
@@ -35,18 +34,17 @@ class Login extends ProvidesEventsForm
         $label = $emailElement->getLabel('label');
         // @TODO: make translation-friendly
         foreach ($this->getAuthenticationOptions()->getAuthIdentityFields() as $mode) {
-            $label = (!empty($label) ? $label . ' ou ' : '') . ucfirst($mode);
+            $label = (!empty($label) ? $label . ' or ' : '') . ucfirst($mode);
         }
         $emailElement->setLabel($label);
         //
         $this->add(array(
             'name' => 'credential',
             'options' => array(
-                'label' => 'Senha',
+                'label' => 'Password',
             ),
             'attributes' => array(
                 'type' => 'password',
-                'class' => 'form-control '
             ),
         ));
 
@@ -61,10 +59,9 @@ class Login extends ProvidesEventsForm
 
         $submitElement = new Element\Button('submit');
         $submitElement
-            ->setLabel('Entrar')
+            ->setLabel('Sign In')
             ->setAttributes(array(
                 'type'  => 'submit',
-                'class' => 'form-control btn btn-success'
             ));
 
         $this->add($submitElement, array(

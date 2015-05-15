@@ -30,7 +30,6 @@ class ConfigurationFactoryTest extends PHPUnit_Framework_TestCase
      * @var ServiceManager
      */
     protected $serviceManager;
-
     /**
      * @var ConfigurationFactory
      */
@@ -134,6 +133,28 @@ class ConfigurationFactoryTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Doctrine\Common\Cache\ArrayCache', $ormConfig->getHydrationCacheImpl());
     }
 
+    public function testCanSetDefaultRepositoryClass()
+    {
+        $repositoryClass = 'DoctrineORMModuleTest\Assets\RepositoryClass';
+
+        $config = array(
+            'doctrine' => array(
+                'configuration' => array(
+                    'test_default' => array(
+
+                        'hydration_cache' => 'array',
+                        'default_repository_class_name' => $repositoryClass,
+                    ),
+                ),
+            ),
+        );
+        $this->serviceManager->setService('Config', $config);
+
+        $factory = new ConfigurationFactory('test_default');
+        $ormConfig = $factory->createService($this->serviceManager);
+        $this->assertInstanceOf('Doctrine\Common\Cache\ArrayCache', $ormConfig->getHydrationCacheImpl());
+    }
+
     public function testAcceptsMetadataFactory()
     {
         $config = array(
@@ -165,5 +186,141 @@ class ConfigurationFactoryTest extends PHPUnit_Framework_TestCase
         $factory = new ConfigurationFactory('test_default');
         $ormConfig = $factory->createService($this->serviceManager);
         $this->assertEquals('Doctrine\ORM\Mapping\ClassMetadataFactory', $ormConfig->getClassMetadataFactoryName());
+    }
+
+    public function testWillInstantiateConfigWithoutEntityListenerResolverSetting()
+    {
+        $config = array(
+            'doctrine' => array(
+                'configuration' => array(
+                    'test_default' => array(),
+                ),
+            ),
+        );
+
+        $this->serviceManager->setService('Config', $config);
+
+        $ormConfig = $this->factory->createService($this->serviceManager);
+
+        $this->assertInstanceOf('Doctrine\ORM\Mapping\EntityListenerResolver', $ormConfig->getEntityListenerResolver());
+    }
+
+    public function testWillInstantiateConfigWithEntityListenerResolverObject()
+    {
+        $entityListenerResolver = $this->getMock('Doctrine\ORM\Mapping\EntityListenerResolver');
+
+        $config = array(
+            'doctrine' => array(
+                'configuration' => array(
+                    'test_default' => array(
+                        'entity_listener_resolver' => $entityListenerResolver,
+                    ),
+                ),
+            ),
+        );
+
+        $this->serviceManager->setService('Config', $config);
+
+        $ormConfig = $this->factory->createService($this->serviceManager);
+
+        $this->assertSame($entityListenerResolver, $ormConfig->getEntityListenerResolver());
+    }
+
+    public function testWillInstantiateConfigWithEntityListenerResolverReference()
+    {
+        $entityListenerResolver = $this->getMock('Doctrine\ORM\Mapping\EntityListenerResolver');
+
+        $config = array(
+            'doctrine' => array(
+                'configuration' => array(
+                    'test_default' => array(
+                        'entity_listener_resolver' => 'test_entity_listener_resolver',
+                    ),
+                ),
+            ),
+        );
+
+        $this->serviceManager->setService('Config', $config);
+        $this->serviceManager->setService('test_entity_listener_resolver', $entityListenerResolver);
+
+        $ormConfig = $this->factory->createService($this->serviceManager);
+
+        $this->assertSame($entityListenerResolver, $ormConfig->getEntityListenerResolver());
+    }
+
+    public function testDoNotCreateSecondLevelCacheByDefault()
+    {
+        $config = array(
+            'doctrine' => array(
+                'configuration' => array(
+                    'test_default' => array(),
+                ),
+            ),
+        );
+
+        $this->serviceManager->setService('Config', $config);
+
+        $ormConfig = $this->factory->createService($this->serviceManager);
+
+        $this->assertNull($ormConfig->getSecondLevelCacheConfiguration());
+    }
+
+    public function testCanInstantiateWithSecondLevelCacheConfig()
+    {
+        $config = array(
+            'doctrine' => array(
+                'configuration' => array(
+                    'test_default' => array(
+                        'result_cache' => 'array',
+
+                        'second_level_cache' => array(
+                            'enabled'                    => true,
+                            'default_lifetime'           => 200,
+                            'default_lock_lifetime'      => 500,
+                            'file_lock_region_directory' => 'my_dir',
+
+                            'regions' => array(
+                                'my_first_region' => array(
+                                    'lifetime'      => 800,
+                                    'lock_lifetime' => 1000
+                                ),
+
+                                'my_second_region' => array(
+                                    'lifetime'      => 10,
+                                    'lock_lifetime' => 20
+                                )
+                            )
+                        )
+                    ),
+                ),
+            ),
+        );
+
+        $this->serviceManager->setService('Config', $config);
+
+        $ormConfig        = $this->factory->createService($this->serviceManager);
+        $secondLevelCache = $ormConfig->getSecondLevelCacheConfiguration();
+        
+        $this->assertInstanceOf('Doctrine\ORM\Cache\CacheConfiguration', $secondLevelCache);
+
+        $cacheFactory = $secondLevelCache->getCacheFactory();
+        $this->assertInstanceOf('Doctrine\ORM\Cache\DefaultCacheFactory', $cacheFactory);
+        $this->assertEquals('my_dir', $cacheFactory->getFileLockRegionDirectory());
+
+        $regionsConfiguration = $secondLevelCache->getRegionsConfiguration();
+        $this->assertEquals(200, $regionsConfiguration->getDefaultLifetime());
+        $this->assertEquals(500, $regionsConfiguration->getDefaultLockLifetime());
+
+        $this->assertEquals(800, $regionsConfiguration->getLifetime('my_first_region'));
+        $this->assertEquals(10, $regionsConfiguration->getLifetime('my_second_region'));
+
+        $this->assertEquals(1000, $regionsConfiguration->getLockLifetime('my_first_region'));
+        $this->assertEquals(20, $regionsConfiguration->getLockLifetime('my_second_region'));
+
+        // Doctrine does not allow to retrieve the cache adapter from cache factory, so we are forced to use
+        // reflection here
+        $reflProperty = new \ReflectionProperty($cacheFactory, 'cache');
+        $reflProperty->setAccessible(true);
+        $this->assertInstanceOf('Doctrine\Common\Cache\ArrayCache', $reflProperty->getValue($cacheFactory));
     }
 }

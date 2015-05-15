@@ -2,7 +2,7 @@
 
 namespace DoctrineORMModule\Options;
 
-use DoctrineORMModule\Options\DBALConfiguration;
+use Doctrine\ORM\Mapping\EntityListenerResolver;
 use Doctrine\ORM\Mapping\NamingStrategy;
 use Doctrine\ORM\Repository\RepositoryFactory;
 use Zend\Stdlib\Exception\InvalidArgumentException;
@@ -153,6 +153,14 @@ class Configuration extends DBALConfiguration
      */
     protected $namingStrategy;
 
+
+    /**
+     * Default repository class
+     *
+     * @var string|null
+     */
+    protected $defaultRepositoryClassName;
+
     /**
      * Repository factory or name of the repository factory service to be set in ORM
      * configuration (if any)
@@ -168,6 +176,23 @@ class Configuration extends DBALConfiguration
      * @var string
      */
     protected $classMetadataFactoryName;
+
+    /**
+     * Entity listener resolver or service name of the entity listener resolver
+     * to be set in ORM configuration (if any)
+     *
+     * @link http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html
+     * @var  string|null|EntityListenerResolver
+     */
+    protected $entityListenerResolver;
+
+    /**
+     * Configuration for second level cache
+     *
+     * @link http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/second-level-cache.html
+     * @var SecondLevelCacheConfiguration|null
+     */
+    protected $secondLevelCache;
 
     /**
      * @param  array $datetimeFunctions
@@ -559,5 +584,75 @@ class Configuration extends DBALConfiguration
     public function getClassMetadataFactoryName()
     {
         return $this->classMetadataFactoryName;
+    }
+
+    /**
+     * @param  string|null|EntityListenerResolver $entityListenerResolver
+     * @return self
+     * @throws InvalidArgumentException           When the provided entity listener resolver
+     *                                            does not fit the expected type
+     */
+    public function setEntityListenerResolver($entityListenerResolver)
+    {
+        if (null === $entityListenerResolver
+            || $entityListenerResolver instanceof EntityListenerResolver
+            || is_string($entityListenerResolver)
+        ) {
+            $this->entityListenerResolver = $entityListenerResolver;
+
+            return $this;
+        }
+
+        throw new InvalidArgumentException(sprintf(
+            'entityListenerResolver must be either a string, a Doctrine\ORM\Mapping\EntityListenerResolver '
+            . 'instance or null, %s given',
+            is_object($entityListenerResolver) ? get_class($entityListenerResolver) : gettype($entityListenerResolver)
+        ));
+    }
+
+    /**
+     * @return string|null|EntityListenerResolver
+     */
+    public function getEntityListenerResolver()
+    {
+        return $this->entityListenerResolver;
+    }
+
+    /**
+     * @param  array $secondLevelCache
+     * @return void
+     */
+    public function setSecondLevelCache(array $secondLevelCache)
+    {
+        $this->secondLevelCache = new SecondLevelCacheConfiguration($secondLevelCache);
+    }
+
+    /**
+     * @return SecondLevelCacheConfiguration
+     */
+    public function getSecondLevelCache()
+    {
+        return $this->secondLevelCache ?: new SecondLevelCacheConfiguration();
+    }
+
+    /**
+     * Sets default repository class.
+     *
+     * @param  string $className
+     * @return void
+     */
+    public function setDefaultRepositoryClassName($className)
+    {
+        $this->defaultRepositoryClassName = (string) $className;
+    }
+
+    /**
+     * Get default repository class name.
+     *
+     * @return string|null
+     */
+    public function getDefaultRepositoryClassName()
+    {
+        return $this->defaultRepositoryClassName;
     }
 }

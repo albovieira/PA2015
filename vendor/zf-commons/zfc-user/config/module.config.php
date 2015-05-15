@@ -65,7 +65,6 @@ return array(
                             ),
                         ),
                     ),
-
                     'changepassword' => array(
                         'type' => 'Literal',
                         'options' => array(
