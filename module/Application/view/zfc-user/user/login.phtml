@@ -9,6 +9,7 @@ $form->setAttribute('method', 'post');
 $form->setAttribute('class', 'form-signin');
 
 ?>
+        <?php echo $this->form()->openTag($form) ?>
         <?php echo $this->formLabel($form->get('identity')->setAttribute('class', 'sr-only')) ?>
         <?php echo $this->formInput($form->get('identity')->setAttribute('class','form-control')) ?>
         <?php echo $this->formLabel($form->get('credential')->setAttribute('class', 'sr-only')) ?>
@@ -16,18 +17,15 @@ $form->setAttribute('class', 'form-signin');
 
         <div class="checkbox">
             <label>
-                <input type="checkbox" value="remember-me"> Remember me
+                <input type="checkbox" value="lembrar" id="lembrar">Lembrar
             </label>
         </div>
         <?php echo $this->formElementErrors($form->get('identity')) ?>
 
-<?php echo $this->form()->openTag($form) ?>
     <?php if ($this->redirect): ?>
         <input type="hidden" name="redirect" value="<?php echo $this->escapeHtml($this->redirect) ?>" />
     <?php endif ?>
     <?php echo $this->formButton($form->get('submit')->setAttribute('class','btn btn-lg btn-success btn-block')) ?>
 
 <?php echo $this->form()->closeTag() ?>
-
-
 
