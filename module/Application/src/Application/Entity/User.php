@@ -2,6 +2,7 @@
 
 namespace Application\Entity;
 
+use ZfcRbac\Identity\IdentityInterface;
 use ZfcUser\Entity\User as ZfcUserEntity;
 use ZfcUser\Entity\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -16,7 +17,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  */
 
-class User implements UserInterface
+class User implements UserInterface,IdentityInterface
 {
     /**
      * @var int
@@ -204,5 +205,25 @@ class User implements UserInterface
     {
         $this->state = $state;
         return $this;
+    }
+
+    /**
+     * Get the identity
+     *
+     * @return IdentityInterface|null
+     */
+    public function getIdentity()
+    {
+        // TODO: Implement getIdentity() method.
+    }
+
+    /**
+     * Get the list of roles of this identity
+     *
+     * @return string[]|\Rbac\Role\RoleInterface[]
+     */
+    public function getRoles()
+    {
+        // TODO: Implement getRoles() method.
     }
 }

@@ -26,12 +26,18 @@ use Zend\View\Model\ViewModel;
 class PessoaController extends AbstractDoctrineCrudController
 {
     private $pessoaService;
+
     public function __construct(){
         $this->pessoaService = new PessoaService();
     }
 
      public function indexAction()
      {
+
+         if ($this->getIdUserLogado() == null) {
+            //return $this->redirect()->toRoute('home');
+         }
+
          //TODO verificar se user tem pessoa, se nao tiver redirecionar para dashboard editavel;
          $this->layout()->setTemplate('layout/layout_pessoa');
 

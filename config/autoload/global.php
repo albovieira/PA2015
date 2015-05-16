@@ -19,15 +19,18 @@ return array(
       'invokables' => array(
           'Zend\Session\SessionManager' => 'Zend\Session\SessionManager',
       ),
+      'aliases' => [
+          'Zend\Authentication\AuthenticationService' => 'zfcuser_auth_service'
+      ],
       'factories' => array(
           'Navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory',
       ),
    ),
    'doctrine_config' => array(
-       'driver' => 'pdo_mysql',
-       'user' => 'root',
-       'password' => '',
-       'dbname' => 'doacao_sistema'
-   ) ,
+        'driver' => 'pdo_mysql',
+        'user' => 'root',
+        'password' => '',
+        'dbname' => 'doacao_sistema'
+    ) ,
 
 );

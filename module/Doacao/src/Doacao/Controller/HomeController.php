@@ -39,7 +39,6 @@ class HomeController extends AbstractDoctrineCrudController
 
      public function indexAction()
      {
-
          $rota = null;
 
          $auth = new AuthenticationService();
