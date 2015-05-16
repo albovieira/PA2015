@@ -21,6 +21,6 @@ class SocialSignInButton extends AbstractHelper
 
         $url = $this->view->url($name, $params, $options);
 
-        echo '<a class="btn btn-lg btn-primary btn-block" href="' . $url . '">' . ucfirst($provider) . '</a>';
+        echo '<a href="' . $url . '">' . ucfirst($provider) . '</a>';
     }
 }

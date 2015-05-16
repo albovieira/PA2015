@@ -22,6 +22,16 @@ var principal = {
         $(window).scroll(principal.ajustaRodape());
         $(window).resize(principal.ajustaRodape());
         $(window).load(principal.ajustaRodape());
+    },
+    openModalLogin: function () {
+
+        $('#btnLogin').click(function(event) {
+            $.get("/user/login", function(data) {
+                $('.modal-body').html(data);
+                $('.form-signin').next('a').addClass('btn btn-lg btn-primary btn-block');
+            });
+        });
+
     }
 }
 
@@ -30,4 +40,5 @@ $(document).ready(function () {
 
     principal.ajustaRodape();
     principal.bindAjusteRodape();
+    principal.openModalLogin();
 });

@@ -93,8 +93,6 @@
 
     </div> <!-- /container -->
 
-
-
     <?php echo $this->inlineScript() ?>
 
     <footer>
@@ -103,17 +101,6 @@
         <hr>
     </footer>
 
-    <script>
-
-        $(document).ready(function(){
-            $('#btnLogin').click(function(event) {
-                $.get("/user/login", function(data) {
-                    $('.modal-body').html(data);
-                });
-            });
-        });
-
-    </script>
 
     </body>
 </html>
