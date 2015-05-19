@@ -3,20 +3,32 @@ namespace Doacao\Service;
 
 use Application\Entity\Instituicao;
 use Application\Entity\Donativos;
+use Application\Service\AbstractService;
+use Doacao\Dao\InstituicaoDao;
 use Zend\Console\Charset\Utf8;
 use Zend\Mime\Decode;
 
-class ServiceInstituicao extends GlobalService{
+class ServiceInstituicao extends AbstractService{
 	private static $em;
 	private static $instituicao;
-	
+	private $instituicaoDao;
+
+	/** PASSAR ESSES METODOS QUE ACESSAM A ENTIDADE INSTITUICAO PARA A INSTITUICAO DAO
+	 O QUE FOR GERAL PASSAR PARA A CLASSE SERVICE
+	 *
+	 */
+
 	public function __construct(){
-		if(!isset(self::$instituicao)){
-			self::$instituicao = new Instituicao();
+		if(!$this->instituicaoDao){
+			$this->instituicaoDao = new InstituicaoDao();
 		}
-		return self::$instituicao;
 	}
-	
+
+	public function getObjInstituicao(){
+		$usuario = $this->getUserLogado();
+		return $this->instituicaoDao->selectPorUsuario($usuario);
+	}
+
 	public function buscaUmaInstituicao($id){
 		$instituicao = new Instituicao();
 		$em = self::getServiceLocator();
@@ -103,7 +115,7 @@ class ServiceInstituicao extends GlobalService{
 		}
 		return $listHtml;
 	}
-	
+
 	public function decompoeObjeto($objectArray, $association){
 		$associationArray = array();
 		foreach($objectArray->__get($association) as $decomposte):
@@ -111,5 +123,5 @@ class ServiceInstituicao extends GlobalService{
 		endforeach;
 		return $associationArray;
 	}
-	
+
 }

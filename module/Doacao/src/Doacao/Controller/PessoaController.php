@@ -30,7 +30,10 @@ class PessoaController extends AbstractDoctrineCrudController
     private $pessoaService;
 
     public function __construct(){
-        $this->pessoaService = new PessoaService();
+
+        if(!$this->pessoaService){
+            $this->pessoaService = new PessoaService();
+        }
     }
 
      public function indexAction()
