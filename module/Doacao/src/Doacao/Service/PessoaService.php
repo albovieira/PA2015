@@ -23,10 +23,6 @@ class PessoaService extends AbstractService{
         return $this->pessoaDAO->selectPorUsuario($usuario);
     }
 
-    public function getUserLogado(){
-        $auth = new AuthenticationService();
-        return $auth->getIdentity();
-    }
 
     public function salvarSeguir($idPessoa,$idInstituicao){
 

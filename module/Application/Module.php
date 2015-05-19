@@ -21,10 +21,21 @@ class Module
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
-        //$eventManager->attach(MvcEvent::EVENT_ROUTE, array('Components\Service\Authentication','verifyIdentity'));
 
         $this->initAcl($e);
         $e->getApplication()->getEventManager()->attach('route', array($this, 'checkAcl'));
+
+
+        $translator = $e->getApplication()->getServiceManager()->get('MvcTranslator');
+        $translator->addTranslationFile(
+            'phpArray',
+            'vendor/zendframework/zendframework/resources/languages/pt_BR/Zend_Validate.php'
+        );
+
+        \Zend\Validator\AbstractValidator::setDefaultTranslator($translator);
+
+
+        $this->personalizaLoginForm($e);
     }
 
     public function initAcl(MvcEvent $e) {
@@ -36,29 +47,62 @@ class Module
 
             $role = new \Zend\Permissions\Acl\Role\GenericRole($role);
             $acl -> addRole($role);
-
             $allResources = array_merge($resources, $allResources);
 
-            $auth = new AuthenticationService();
-           // var_dump($auth->getIdentity());die;
-            //adding resources
             foreach ($resources as $resource) {
-                // Edit 4
                 if(!$acl ->hasResource($resource))
                     $acl -> addResource(new \Zend\Permissions\Acl\Resource\GenericResource($resource));
             }
-            //adding restrictions
+
             foreach ($allResources as $resource) {
                 $acl -> allow($role, $resource);
             }
         }
-        //testing
-        //var_dump($acl->isAllowed('admin','home'));
-        //true
 
-        //setting to view
         $e -> getViewModel() -> acl = $acl;
 
+    }
+
+    public function personalizaLoginForm(MvcEvent $e){
+        $events = $e->getApplication()->getEventManager()->getSharedManager();
+        $events->attach('ZfcUser\Form\Register','init', function($e) {
+            /** @var \ZfcUser\Form\Register $form */
+            $form = $e->getTarget();
+            $form->get('email')->setAttributes(array(
+                'class' => 'form-control'
+            ));
+
+            $form->get('password')->setLabel('Senha');
+            $form->get('password')->setAttributes(array(
+                'class' => 'form-control'
+            ));
+
+            $form->get('passwordVerify')->setLabel('Confirmar Senha');
+            $form->get('passwordVerify')->setAttributes(array(
+                'class' => 'form-control'
+            ));
+
+            $form->add(
+                array(
+                    'name' => 'perfil',
+                    'options' => array(
+                        'label' => 'Cadastrar como instituicao?',
+                    ),
+                    'attributes' => array(
+                        'type'  => 'radio',
+                    ),
+                )
+            );
+
+            $form->get('submit')->setAttributes(array(
+                'class' => 'btn btn-success'
+            ));
+            // Do what you please with the form instance ($form)
+        });
+        $events->attach('ZfcUser\Form\RegisterFilter','init', function($e) {
+            $filter = $e->getTarget();
+            // Do what you please with the filter instance ($filter)
+        });
     }
 
     public function getConfig()

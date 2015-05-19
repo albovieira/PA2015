@@ -1,0 +1,44 @@
+<?php
+$form = $this->form;
+$form->prepare();
+?>
+
+<?php echo $this->form()->openTag($form) ?>
+
+<div class="col-xs-12">
+    <div class="col-xs-4"><?=$this->formLabel
+        ($form->get('foto'))?></div>
+    <div class="col-xs-8"><?=$this->formFile
+        ($form->get('foto'))?></div>
+</div>
+
+<div class="col-xs-12">
+    <div class="col-xs-4"><?=$this->formLabel
+        ($form->get('nomePessoa'))?></div>
+    <div class="col-xs-8"><?=$this->formInput
+        ($form->get('nomePessoa'))?></div>
+</div>
+
+<div class="col-xs-12">
+    <div class="col-xs-4"><?=$this->formLabel
+        ($form->get('sexo'))?></div>
+    <div class="col-xs-8"><?=$this->formRadio
+        ($form->get('sexo'))?></div>
+</div>
+
+<div class="col-xs-12">
+    <div class="col-xs-4"><?=$this->formLabel
+        ($form->get('telCel'))?></div>
+    <div class="col-xs-8"><?=$this->formInput
+        ($form->get('telCel'))?></div>
+</div>
+
+<div class="col-xs-12">
+    <div class="col-xs-4"><?=$this->formLabel
+        ($form->get('dataNasc'))?></div>
+    <div class="col-xs-8"><?=$this->formDate
+        ($form->get('dataNasc'))?></div>
+</div>
+
+
+<?php echo $this->form()->closeTag($form) ?>

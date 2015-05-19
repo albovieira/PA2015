@@ -12,6 +12,7 @@ namespace Doacao\Controller;
 use Application\Entity\TesteAnexo;
 use Components\MVC\Controller\AbstractCrudController;
 use Components\MVC\Controller\AbstractDoctrineCrudController;
+use Doacao\Form\PessoaForm;
 use Doacao\Service\PessoaService;
 use Doacao\Service\ServiceInstituicao;
 use Doctrine\DBAL\Schema\View;
@@ -33,10 +34,6 @@ class PessoaController extends AbstractDoctrineCrudController
 
      public function indexAction()
      {
-
-         if ($this->getIdUserLogado() == null) {
-            //return $this->redirect()->toRoute('home');
-         }
 
          //TODO verificar se user tem pessoa, se nao tiver redirecionar para dashboard editavel;
          $this->layout()->setTemplate('layout/layout_pessoa');
@@ -61,6 +58,25 @@ class PessoaController extends AbstractDoctrineCrudController
              )
          );
      }
+
+    public function minhaContaAction(){
+        $this->layout()->setTemplate('layout/layout_pessoa');
+        $formPessoa = new PessoaForm();
+        return new ViewModel(
+            array(
+                'form' => $formPessoa
+            )
+        );
+    }
+    public function dadosPessoaAction(){
+        $this->layout()->setTemplate('layout/layout_modal');
+        $formPessoa = new PessoaForm();
+        return new ViewModel(
+            array(
+                'form' => $formPessoa
+            )
+        );
+    }
 
     //
     public function instituicaoAction(){

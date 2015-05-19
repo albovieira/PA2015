@@ -9,6 +9,12 @@
 namespace Application\Service;
 
 
+use Zend\Authentication\AuthenticationService;
+
 class AbstractService {
 
+    public function getUserLogado(){
+        $auth = new AuthenticationService();
+        return $auth->getIdentity();
+    }
 }
