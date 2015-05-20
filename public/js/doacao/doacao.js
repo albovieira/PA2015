@@ -5,9 +5,9 @@
 var principal = {
     bindAjaxPreloader: function () {
         $(document).bind("ajaxSend", function(){
-            $('#spinner').fadeIn('fast');
+            $('#preloading').fadeIn('fast');
         }).bind("ajaxComplete", function(){
-            $('#spinner').fadeOut('fast');
+            $('#preloading').fadeOut('fast');
         });
     },
     ajustaRodape: function () {

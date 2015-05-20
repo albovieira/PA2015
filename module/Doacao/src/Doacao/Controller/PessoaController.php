@@ -24,12 +24,16 @@ use Zend\View\Helper\Json;
 use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
 
+
 class PessoaController extends AbstractDoctrineCrudController
 {
     private $pessoaService;
 
     public function __construct(){
-        $this->pessoaService = new PessoaService();
+
+        if(!$this->pessoaService){
+            $this->pessoaService = new PessoaService();
+        }
     }
 
      public function indexAction()
@@ -61,12 +65,7 @@ class PessoaController extends AbstractDoctrineCrudController
 
     public function minhaContaAction(){
         $this->layout()->setTemplate('layout/layout_pessoa');
-        $formPessoa = new PessoaForm();
-        return new ViewModel(
-            array(
-                'form' => $formPessoa
-            )
-        );
+        return new ViewModel();
     }
     public function dadosPessoaAction(){
         $this->layout()->setTemplate('layout/layout_modal');
