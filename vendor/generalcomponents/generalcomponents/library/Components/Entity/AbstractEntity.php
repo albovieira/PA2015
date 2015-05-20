@@ -22,5 +22,8 @@ namespace Components\Entity;
          }
      }
 
-     abstract public function getArrayCopy();
+     public function getArrayCopy()
+     {
+         return get_object_vars($this);
+     }
 }

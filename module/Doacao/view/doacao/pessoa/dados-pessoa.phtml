@@ -4,7 +4,7 @@ $form->prepare();
 ?>
 
 <?php echo $this->form()->openTag($form) ?>
-
+<?=$this->formInput($form->get('id'))?>
 <div class="col-xs-12">
     <div class="col-xs-4"><?=$this->formLabel
         ($form->get('foto'))?></div>
@@ -27,8 +27,7 @@ $form->prepare();
 </div>
 
 <div class="col-xs-12">
-    <div class="col-xs-4"><?=$this->formLabel
-        ($form->get('telCel'))?></div>
+    <div class="col-xs-4"><?=$this->formLabel($form->get('telCel'))?></div>
     <div class="col-xs-8"><?=$this->formInput
         ($form->get('telCel'))?></div>
 </div>
@@ -40,5 +39,8 @@ $form->prepare();
         ($form->get('dataNasc'))?></div>
 </div>
 
+<div class="col-xs-12">
+    <?=$this->formButton($form->get('salvar'))?>
+</div>
 
 <?php echo $this->form()->closeTag($form) ?>

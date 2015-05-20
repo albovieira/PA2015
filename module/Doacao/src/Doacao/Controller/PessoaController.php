@@ -70,6 +70,14 @@ class PessoaController extends AbstractDoctrineCrudController
     public function dadosPessoaAction(){
         $this->layout()->setTemplate('layout/layout_modal');
         $formPessoa = new PessoaForm();
+
+        $pessoa = $this->pessoaService->getObjPessoa();
+
+        //var_dump($pessoa);die;
+        $formPessoa->bind($pessoa);
+        var_dump($formPessoa);die;
+
+
         return new ViewModel(
             array(
                 'form' => $formPessoa

@@ -90,6 +90,17 @@ class PessoaForm extends Form{
             ),
         ));
 
+        $this->add(array(
+            'name' => 'salvar',
+            'options' => array(
+                'label' => 'Salvar',
+            ),
+            'attributes' => array(
+                'type' => 'text',
+                'class'=> 'btn btn-primary'
+            ),
+        ));
+
     }
 
 }
