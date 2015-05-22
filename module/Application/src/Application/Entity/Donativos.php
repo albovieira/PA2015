@@ -66,21 +66,71 @@ class Donativos extends AbstractEntity{
 	 */
 	private $instituicao;
 	
-	/**
-	 * 
-	 * @param mixed $property
-	 */
-	public function __get($property){
-		return $this->$property;
+	
+	
+	public function getId(){
+		return $this->id;
 	}
 	
-	/**
-	 * 
-	 * @param mixed $property
-	 * @param mixed $value
-	 */
-	public function __set($property,$value){
-		$this->$property = $value;
+	public function getDescricao(){
+		return $this->descricao;
+	}
+	
+	public function getTitulo(){
+		return $this->titulo;
+	}
+	
+	public function getQuantidade(){
+		return $this->quantidade;
+	}
+	
+	public function getDataInclusao(){
+		return $this->dataInclu;
+	}
+	
+	public function getDataDesativacao(){
+		return $this->dataDesa;
+	}
+	
+	public function getIdInstituicao(){
+		return $this->idInstituicao;
+	}
+	
+	public function getIdCategoria(){
+		return $this->idCategoria;
+	}
+	
+	public function setId($value){
+		$this->id = $value;
+	}
+	
+	public function setDescricao($value){
+		$this->descricao = $value;
+	}
+	
+	public function setTitulo($value){
+		$this->titulo = $value;
+	}
+	
+	public function setQuantidade($value){
+		$this->quantidade = $value;
+	}
+	
+	public function setDataInclusao($value){
+		
+		$this->dataInclu;
+	}
+	
+	public function setDataDesativacao($value){
+		$this->dataDesa = $value;
+	}
+	
+	public function setIdCategoria($value){
+		$this->idCategoria = $value;
+	}
+	
+	public function setInstituicao(Instituicao $instituicao){
+		$this->instituicao = $instituicao;
 	}
 	
 	public function getInputFilter(){}
