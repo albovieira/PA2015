@@ -92,6 +92,198 @@ class Instituicao extends AbstractEntity{
 		$this->donativos = new ArrayCollection();
 	}
 
+	/**
+	 * @return mixed
+	 */
+	public function getId()
+	{
+		return $this->id;
+	}
+
+	/**
+	 * @param mixed $id
+	 */
+	public function setId($id)
+	{
+		$this->id = $id;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getCnpj()
+	{
+		return $this->cnpj;
+	}
+
+	/**
+	 * @param mixed $cnpj
+	 */
+	public function setCnpj($cnpj)
+	{
+		$this->cnpj = $cnpj;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getNomeFantasia()
+	{
+		return $this->nomeFantasia;
+	}
+
+	/**
+	 * @param mixed $nomeFantasia
+	 */
+	public function setNomeFantasia($nomeFantasia)
+	{
+		$this->nomeFantasia = $nomeFantasia;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getRazaoSocial()
+	{
+		return $this->razaoSocial;
+	}
+
+	/**
+	 * @param mixed $razaoSocial
+	 */
+	public function setRazaoSocial($razaoSocial)
+	{
+		$this->razaoSocial = $razaoSocial;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getDescricao()
+	{
+		return $this->descricao;
+	}
+
+	/**
+	 * @param mixed $descricao
+	 */
+	public function setDescricao($descricao)
+	{
+		$this->descricao = $descricao;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getEmail()
+	{
+		return $this->email;
+	}
+
+	/**
+	 * @param mixed $email
+	 */
+	public function setEmail($email)
+	{
+		$this->email = $email;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getSite()
+	{
+		return $this->site;
+	}
+
+	/**
+	 * @param mixed $site
+	 */
+	public function setSite($site)
+	{
+		$this->site = $site;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getFoto()
+	{
+		return $this->foto;
+	}
+
+	/**
+	 * @param mixed $foto
+	 */
+	public function setFoto($foto)
+	{
+		$this->foto = $foto;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getDataCadastro()
+	{
+		return $this->dataCadastro;
+	}
+
+	/**
+	 * @param mixed $dataCadastro
+	 */
+	public function setDataCadastro($dataCadastro)
+	{
+		$this->dataCadastro = $dataCadastro;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getIdUsuario()
+	{
+		return $this->idUsuario;
+	}
+
+	/**
+	 * @param mixed $idUsuario
+	 */
+	public function setIdUsuario($idUsuario)
+	{
+		$this->idUsuario = $idUsuario;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getEnderecos()
+	{
+		return $this->enderecos;
+	}
+
+	/**
+	 * @param mixed $enderecos
+	 */
+	public function setEnderecos($enderecos)
+	{
+		$this->enderecos = $enderecos;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getDonativos()
+	{
+		return $this->donativos;
+	}
+
+	/**
+	 * @param mixed $donativos
+	 */
+	public function setDonativos($donativos)
+	{
+		$this->donativos = $donativos;
+	}
+
 
 	
 	/**

@@ -59,16 +59,18 @@ class PessoaService extends AbstractService{
 
     public function bindInstituicao($objInstituicao){
         $arrInstituicao = [];
+
+        /** * @var Instituicao $instituicao */
         foreach($objInstituicao as $key=>$instituicao){
             if($instituicao != null){
-                $arrInstituicao[$key]['id'] = $instituicao->__get('id');
-                $arrInstituicao[$key]['nomeFantasia'] = $instituicao->__get('nomeFantasia');
-                $arrInstituicao[$key]['razaoSocial'] = $instituicao->__get('razaoSocial');
-                $arrInstituicao[$key]['foto'] = $instituicao->__get('foto');
-                $arrInstituicao[$key]['descricao'] = $instituicao->__get('descricao');
-                $arrInstituicao[$key]['email'] = $instituicao->__get('email');
-                $arrInstituicao[$key]['cnpj'] = $instituicao->__get('cnpj');
-                $arrInstituicao[$key]['site'] = $instituicao->__get('site');
+                $arrInstituicao[$key]['id'] = $instituicao->getId();
+                $arrInstituicao[$key]['nomeFantasia'] = $instituicao->getNomeFantasia();
+                $arrInstituicao[$key]['razaoSocial'] = $instituicao->getRazaoSocial();
+                $arrInstituicao[$key]['foto'] = $instituicao->getFoto();
+                $arrInstituicao[$key]['descricao'] = $instituicao->getDescricao();
+                $arrInstituicao[$key]['email'] = $instituicao->getEmail();
+                $arrInstituicao[$key]['cnpj'] = $instituicao->getCnpj();
+                $arrInstituicao[$key]['site'] = $instituicao->getSite();
             }
         }
 
@@ -92,6 +94,7 @@ class PessoaService extends AbstractService{
 
     public function bindEvento($objEvento){
         $arrEvento = [];
+
         foreach($objEvento as $key=>$evento){
             // necessario pois o retorno esta trazendo as instituicoes tbm
             if($evento instanceof Evento){

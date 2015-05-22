@@ -23,7 +23,7 @@ use Zend\Paginator\Paginator;
 use Zend\View\Helper\Json;
 use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
-
+use Application\Entity\Pessoa;
 
 class PessoaController extends AbstractDoctrineCrudController
 {
@@ -71,16 +71,19 @@ class PessoaController extends AbstractDoctrineCrudController
         $this->layout()->setTemplate('layout/layout_modal');
         $formPessoa = new PessoaForm();
 
+        /** @var Pessoa $pessoa */
         $pessoa = $this->pessoaService->getObjPessoa();
 
-        //var_dump($pessoa);die;
         $formPessoa->bind($pessoa);
-        var_dump($formPessoa);die;
 
+        //$formPessoa->get('foto')->setValue($pessoa->getFoto());
+        //data nao tava retornando
+        $formPessoa->get('dataNasc')->setValue($pessoa->getDataNasc()->format('Y-m-d'));
 
         return new ViewModel(
             array(
-                'form' => $formPessoa
+                'form' => $formPessoa,
+                'img' => $pessoa->getFoto()
             )
         );
     }
