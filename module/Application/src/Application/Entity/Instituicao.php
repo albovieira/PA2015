@@ -98,7 +98,7 @@ class Instituicao extends AbstractEntity{
 	
 	/**
 	 *
-	 * @return the unknown_type
+	 * @return the integer
 	 */
 	public function getId() {
 		return $this->id;
@@ -106,7 +106,7 @@ class Instituicao extends AbstractEntity{
 	
 	/**
 	 *
-	 * @param unknown_type $id        	
+	 * @param integer $id        	
 	 */
 	public function setId($id) {
 		$this->id = $id;
@@ -115,7 +115,7 @@ class Instituicao extends AbstractEntity{
 	
 	/**
 	 *
-	 * @return the unknown_type
+	 * @return the string
 	 */
 	public function getCnpj() {
 		return $this->cnpj;
@@ -123,7 +123,7 @@ class Instituicao extends AbstractEntity{
 	
 	/**
 	 *
-	 * @param unknown_type $cnpj        	
+	 * @param string $cnpj        	
 	 */
 	public function setCnpj($cnpj) {
 		$this->cnpj = $cnpj;
@@ -132,7 +132,7 @@ class Instituicao extends AbstractEntity{
 	
 	/**
 	 *
-	 * @return the unknown_type
+	 * @return the string
 	 */
 	public function getNomeFantasia() {
 		return $this->nomeFantasia;
@@ -140,7 +140,7 @@ class Instituicao extends AbstractEntity{
 	
 	/**
 	 *
-	 * @param unknown_type $nomeFantasia        	
+	 * @param string $nomeFantasia        	
 	 */
 	public function setNomeFantasia($nomeFantasia) {
 		$this->nomeFantasia = $nomeFantasia;
@@ -149,7 +149,7 @@ class Instituicao extends AbstractEntity{
 	
 	/**
 	 *
-	 * @return the unknown_type
+	 * @return the string
 	 */
 	public function getRazaoSocial() {
 		return $this->razaoSocial;
@@ -157,7 +157,7 @@ class Instituicao extends AbstractEntity{
 	
 	/**
 	 *
-	 * @param unknown_type $razaoSocial        	
+	 * @param string $razaoSocial        	
 	 */
 	public function setRazaoSocial($razaoSocial) {
 		$this->razaoSocial = $razaoSocial;
@@ -166,7 +166,7 @@ class Instituicao extends AbstractEntity{
 	
 	/**
 	 *
-	 * @return the unknown_type
+	 * @return the string
 	 */
 	public function getDescricao() {
 		return $this->descricao;
@@ -174,7 +174,7 @@ class Instituicao extends AbstractEntity{
 	
 	/**
 	 *
-	 * @param unknown_type $descricao        	
+	 * @param string $descricao        	
 	 */
 	public function setDescricao($descricao) {
 		$this->descricao = $descricao;
@@ -183,7 +183,7 @@ class Instituicao extends AbstractEntity{
 	
 	/**
 	 *
-	 * @return the unknown_type
+	 * @return the string
 	 */
 	public function getEmail() {
 		return $this->email;
@@ -191,7 +191,7 @@ class Instituicao extends AbstractEntity{
 	
 	/**
 	 *
-	 * @param unknown_type $email        	
+	 * @param string $email        	
 	 */
 	public function setEmail($email) {
 		$this->email = $email;
@@ -200,7 +200,7 @@ class Instituicao extends AbstractEntity{
 	
 	/**
 	 *
-	 * @return the unknown_type
+	 * @return the string
 	 */
 	public function getSite() {
 		return $this->site;
@@ -208,7 +208,7 @@ class Instituicao extends AbstractEntity{
 	
 	/**
 	 *
-	 * @param unknown_type $site        	
+	 * @param string $site        	
 	 */
 	public function setSite($site) {
 		$this->site = $site;
@@ -217,7 +217,7 @@ class Instituicao extends AbstractEntity{
 	
 	/**
 	 *
-	 * @return the unknown_type
+	 * @return the string
 	 */
 	public function getFoto() {
 		return $this->foto;
@@ -225,7 +225,7 @@ class Instituicao extends AbstractEntity{
 	
 	/**
 	 *
-	 * @param unknown_type $foto        	
+	 * @param string $foto        	
 	 */
 	public function setFoto($foto) {
 		$this->foto = $foto;
@@ -234,7 +234,7 @@ class Instituicao extends AbstractEntity{
 	
 	/**
 	 *
-	 * @return the unknown_type
+	 * @return the datetime
 	 */
 	public function getDataCadastro() {
 		return $this->dataCadastro;
@@ -242,7 +242,7 @@ class Instituicao extends AbstractEntity{
 	
 	/**
 	 *
-	 * @param unknown_type $dataCadastro        	
+	 * @param datetime $dataCadastro        	
 	 */
 	public function setDataCadastro($dataCadastro) {
 		$this->dataCadastro = $dataCadastro;
@@ -251,7 +251,7 @@ class Instituicao extends AbstractEntity{
 	
 	/**
 	 *
-	 * @return the unknown_type
+	 * @return the integer
 	 */
 	public function getIdUsuario() {
 		return $this->idUsuario;
@@ -259,7 +259,7 @@ class Instituicao extends AbstractEntity{
 	
 	/**
 	 *
-	 * @param unknown_type $idUsuario        	
+	 * @param integer $idUsuario        	
 	 */
 	public function setIdUsuario($idUsuario) {
 		$this->idUsuario = $idUsuario;
@@ -268,7 +268,7 @@ class Instituicao extends AbstractEntity{
 	
 	/**
 	 *
-	 * @return the unknown_type
+	 * @return the object
 	 */
 	public function getEnderecos() {
 		return $this->enderecos;
@@ -276,7 +276,7 @@ class Instituicao extends AbstractEntity{
 	
 	/**
 	 *
-	 * @param unknown_type $enderecos        	
+	 * @param object $enderecos        	
 	 */
 	public function setEnderecos($enderecos) {
 		$this->enderecos = $enderecos;
