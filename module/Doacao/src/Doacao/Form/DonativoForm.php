@@ -14,8 +14,16 @@ class DonativoForm extends Form{
 			'type'=>'Hidden'
 		));
 		$this->add(array(
-			'name'=>'dataInclusao',
-			'type'=>'Hidden',
+			'name'=>'dataInclu',
+			'type'=>'Hidden'
+		));
+		$this->add(array(
+			'name'=>'dataDesa',
+			'type'=>'Hidden'
+		));
+		$this->add(array(
+			'name'=>'idInstituicao',
+			'type'=>'Hidden'
 		));
 		$this->add(array(
 			'name'=>'titulo',

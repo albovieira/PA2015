@@ -7,6 +7,7 @@ use Application\Service\AbstractService;
 use Doacao\Dao\InstituicaoDao;
 use Zend\Console\Charset\Utf8;
 use Zend\Mime\Decode;
+use Zend\View\Helper\ViewModel;
 
 class ServiceInstituicao extends AbstractService{
 	private static $em;
@@ -35,14 +36,16 @@ class ServiceInstituicao extends AbstractService{
 		$instituicao = $em->find('\Application\Entity\Instituicao',$id);
 		return $instituicao;
 	}
-	
-	public static function getServiceLocator(){
-		if(!isset(self::$em)){
-			self::$em = $GLOBALS['entityManager'];
-		}
-		return self::$em;
+		
+	public function save($data){
+		
 	}
 	
+	/**
+	 * Monta o Perfil de uma instituição e retorna respectivo HTML
+	 * @param Instituicao $instituicao
+	 * @return string
+	 */
 	public function montaPerfilHtml(Instituicao $instituicao){
 		$id = $instituicao->__get('id');
 		$razaoSocial = $instituicao->__get('razaoSocial');
@@ -86,12 +89,12 @@ class ServiceInstituicao extends AbstractService{
 		$listHtml = null;
 		if($donativos) {
 			foreach ($donativos as $item):
-				$id = $item->__get('id');
-				$titulo = $item->__get('titulo');
-				$descricao = $item->__get('descricao');
-				$quantidade = $item->__get('quantidade');
-				$dataInclu = $item->__get('dataInclu')->format('d/m/Y');
-				$dataDesa = $item->__get('dataDesa')->format('d/m/Y');
+				$id = $item->ID();
+				$titulo = $item->Titulo();
+				$descricao = $item->Descricao();
+				$quantidade = $item->Quantidade();
+				$dataInclu = $item->DataInclusao()->format('d/m/Y');
+				$dataDesa = $item->DataDesativacao()->format('d/m/Y');
 				$listHtml = "" .
 					"<li class='list-group-item list-group-item-special' data-toggle='collapse' href='#donativo-{$id}' aria-expanded='false' aria-controls='perfilcollapse'>
 				{$titulo}

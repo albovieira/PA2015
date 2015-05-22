@@ -22,9 +22,16 @@ use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
 use Application\Entity\Donativos;
 use Doacao\Form\DonativoForm;
+use Doacao\Service\DonativoService;
+use Application\Service\AbstractService;
 
 class DonativoController extends AbstractDoctrineCrudController
 {
+	private static $service;
+	
+	public function __construct(){
+		self::$service = new DonativoService();
+	}
 	
 	public function init(){
 		$contextAjax = $this->_helper->getHelper('AjaxContext');
@@ -33,17 +40,16 @@ class DonativoController extends AbstractDoctrineCrudController
 
 	}
 	
-	public function indexAction()
-	{
-		$this->setLayout();
-	}
-	
+	/**
+	 * Seta o layout padrão para as páginas de instituicão
+	 */
 	private function setLayout(){
 		return $this->layout()->setTemplate('layout/layout_menu_Instituicao');
 	}
 	
-	public function showNovo(){
-		
+	public function indexAction()
+	{
+		$this->setLayout();
 	}
 	
 	public function novoAction(){
@@ -54,7 +60,10 @@ class DonativoController extends AbstractDoctrineCrudController
 		return (new ViewModel())
 		->setTerminal($this->getRequest()->isXmlHttpRequest())
 		->setVariable('form', $form)
-		->setVariable('e_json', $jsonRequest);
+		->setVariable('e_json', $jsonRequest)
+		->setVariable('userID', (new AbstractService())->getUserLogado())
+		->setVariable('now', (new \DateTime("now")))
+		->setVariable('old', (new \DateTime("1900-01-01")));
 		
 	}
 	
@@ -62,10 +71,13 @@ class DonativoController extends AbstractDoctrineCrudController
 		$form = new DonativoForm();
 		$request = $this->getRequest();
 		$responde = $this->getResponse();
+		
 		if($request->isPost()){
-			var_dump($request->getPost());exit();
+			$data = $request->getPost();
+			self::$service->save($data);
 		}
-		return $response;
+		
+		return "{'insercao':'Ok'}";exit();
 	}
 	
 	public function doarAction(){

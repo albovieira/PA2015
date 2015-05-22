@@ -1,6 +1,8 @@
 <?php
-	use Zend\Form\Element\DateTime;
+use Zend\Form\Element\DateTime;
 use Zend\Form\Element\DateTimeLocal;
+use Doctrine\DBAL\Types\DateTimeType;
+
 echo $this->headScript()->appendFile($this->basePath . '/js/instituicao_actions.js');
 	
 	if($e_json = true):
@@ -8,12 +10,15 @@ echo $this->headScript()->appendFile($this->basePath . '/js/instituicao_actions.
 	else:
 		$form->setAttribute('action',$this->url('donativo',array('action'=>'novo')));
 	endif;
+	
 	$form->setAttribute('enctype','application/json');
 	$form->prepare();
 	
 	echo $this->form()->openTag($form);
 	echo $this->formHidden($form->get('id'));
-	echo $this->formHidden($form->get('dataInclusao')->setValue(date("Y-m-d")));
+	echo $this->formHidden($form->get('dataInclu')->setValue($now->format('Y-m-d H:i:s')));
+	echo $this->formHidden($form->get('dataDesa')->setValue($old->format('Y-m-d H:i:s')));
+	echo $this->formHidden($form->get('idInstituicao')->setValue($userID));
 	echo "<div class='form-group col-lg-8 padding-zero'>".$this->formRow($form->get('titulo'))."</div>";
 	echo "<div class='form-group col-lg-2'>".$this->formRow($form->get('quantidade'))."</div>";
 	echo "<div class='form-group'>".$this->formRow($form->get('descricao'))."</div>";
