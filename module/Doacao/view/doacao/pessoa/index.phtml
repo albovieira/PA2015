@@ -3,11 +3,15 @@
         <div class="well">
             <?php
             //var_dump($this->dadosPessoa);
-            $dadosPessoa = $this->dadosPessoa;
-            echo "<img class='img img-responsive' style='width:280px' src='".$dadosPessoa->getFoto(). "' /><br>";
-            echo "<strong class='text-info'>".$dadosPessoa->getNome().'</strong><br>';
-            echo $dadosPessoa->getEmail().'<br>';
-            echo '<a class="btn-link" href="/pessoa/minha-conta">Editar Perfil</a>'
+            if($this->dadosPessoa){
+                $dadosPessoa = $this->dadosPessoa;
+                echo "<img class='img img-responsive' style='width:280px' src='".$dadosPessoa->getFoto(). "' /><br>";
+                echo "<strong class='text-info'>".$dadosPessoa->getNome().'</strong><br>';
+                echo $dadosPessoa->getEmail().'<br>';
+                echo '<a class="btn-link" href="/pessoa/minha-conta">Editar Perfil</a>';
+            }else{
+                echo "<img class='img img-responsive' style='width:280px' src='/img/data/sem-foto.jpg' /><br>";
+            }
             ?>
         </div>
     </div>

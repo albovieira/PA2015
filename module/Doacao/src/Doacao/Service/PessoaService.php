@@ -7,6 +7,7 @@ use Application\Entity\Evento;
 use Application\Service\AbstractService;
 use Zend\Authentication\AuthenticationService;
 use Doacao\Dao\PessoaDao;
+use Application\Entity\Instituicao;
 
 class PessoaService extends AbstractService{
 
@@ -16,15 +17,6 @@ class PessoaService extends AbstractService{
     public function __construct(){
         $this->pessoaDAO = new PessoaDao();
     }
-
-    /**
-     * @return array
-     */
-    public function getObjPessoa(){
-        $usuario = $this->getUserLogado();
-        return $this->pessoaDAO->selectPorUsuario($usuario);
-    }
-
 
     /**
      * @param $idPessoa
@@ -55,9 +47,13 @@ class PessoaService extends AbstractService{
      * @return bool|null
      */
     public function jaPossuiInstituicao($idPessoa,$idInstituicao){
-        return $this->pessoaDAO->selectMinhaInstituicao($idPessoa,$idInstituicao)
+
+        if($idPessoa){
+            return $this->pessoaDAO->selectMinhaInstituicao($idPessoa,$idInstituicao)
                 ? $this->pessoaDAO->selectMinhaInstituicao($idPessoa,$idInstituicao)
                 : null;
+        }
+        return null;
     }
 
     /**
@@ -86,15 +82,18 @@ class PessoaService extends AbstractService{
 
         /** * @var Instituicao $instituicao */
         foreach($objInstituicao as $key=>$instituicao){
-            if($instituicao != null){
-                $arrInstituicao[$key]['id'] = $instituicao->getId();
-                $arrInstituicao[$key]['nomeFantasia'] = $instituicao->getNomeFantasia();
-                $arrInstituicao[$key]['razaoSocial'] = $instituicao->getRazaoSocial();
-                $arrInstituicao[$key]['foto'] = $instituicao->getFoto();
-                $arrInstituicao[$key]['descricao'] = $instituicao->getDescricao();
-                $arrInstituicao[$key]['email'] = $instituicao->getEmail();
-                $arrInstituicao[$key]['cnpj'] = $instituicao->getCnpj();
-                $arrInstituicao[$key]['site'] = $instituicao->getSite();
+
+            if($instituicao instanceof Instituicao) {
+                if ($instituicao != null) {
+                    $arrInstituicao[$key]['id'] = $instituicao->getId();
+                    $arrInstituicao[$key]['nomeFantasia'] = $instituicao->getNomeFantasia();
+                    $arrInstituicao[$key]['razaoSocial'] = $instituicao->getRazaoSocial();
+                    $arrInstituicao[$key]['foto'] = $instituicao->getFoto();
+                    $arrInstituicao[$key]['descricao'] = $instituicao->getDescricao();
+                    $arrInstituicao[$key]['email'] = $instituicao->getEmail();
+                    $arrInstituicao[$key]['cnpj'] = $instituicao->getCnpj();
+                    $arrInstituicao[$key]['site'] = $instituicao->getSite();
+                }
             }
         }
 
@@ -105,24 +104,45 @@ class PessoaService extends AbstractService{
      * @return array
      */
     public function naoSegue(){
-        $objInstituicao = $this->pessoaDAO->todasInstituicoesQueNaoSegue();
-        return $this->bindInstituicao($objInstituicao);
+        $instituicao = null;
+        if($this->getObjPessoa()){
+            $objInstituicao = $this->pessoaDAO->todasInstituicoesQueNaoSegue();
+            return $this->bindInstituicao($objInstituicao);
+        }
+        return $instituicao;
+    }
+
+    /**
+     * @return array
+     */
+    public function getObjPessoa(){
+        $usuario = $this->getUserLogado();
+        return $this->pessoaDAO->selectPorUsuario($usuario);
     }
 
     /**
      * @return array
      */
     public function instituicoesPessoaSegue(){
-        $objInstituicao = $this->pessoaDAO->instituicoesPessoaSegue();
-        return $this->bindInstituicao($objInstituicao);
+
+        $instituicao = null;
+        if($this->getObjPessoa()){
+            $objInstituicao = $this->pessoaDAO->instituicoesPessoaSegue($this->getObjPessoa()->getId());
+            $instituicao = $this->bindInstituicao($objInstituicao);
+        }
+        return $instituicao;
     }
 
     /**
      * @return array
      */
     public function getEventosInstituicoes(){
-        $objEvento = $this->pessoaDAO->selectEventosInstituicao();
-        return $this->bindEvento($objEvento);
+        $evento = null;
+        if($this->getObjPessoa()){
+            $objEvento = $this->pessoaDAO->selectEventosInstituicao($this->getObjPessoa()->getId());
+            $evento = $this->bindEvento($objEvento);
+        }
+        return $evento;
     }
 
     /**
@@ -163,8 +183,12 @@ class PessoaService extends AbstractService{
      * @return array
      */
     public function getEventosInstituicoesRecentes(){
-        $objEvento = $this->pessoaDAO->selectEventosInstituicaoRecente();
-        return $this->bindEvento($objEvento);
+        $evento = null;
+        if($this->getObjPessoa()){
+            $objEvento = $this->pessoaDAO->selectEventosInstituicaoRecente($this->getObjPessoa()->getId());
+            $evento = $this->bindEvento($objEvento);
+        }
+        return $evento;
     }
 
     /**

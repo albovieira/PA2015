@@ -75,24 +75,31 @@ class PessoaDao extends AbstractDao{
         return $result[0]->getId();
     }
 
-    public function instituicoesPessoaSegue(){
+    public function instituicoesPessoaSegue($idpessoa){
         $query = $this->em->createQuery(
             "SELECT tbinst FROM Application\Entity\Instituicao tbinst
                      INNER JOIN Application\Entity\MinhaInstituicao mininst WITH tbinst.id = mininst.idInstituicao
+                     WHERE mininst.idPessoa = :idpessoa
             ");
+        $query->setParameters(
+            array(
+                'idpessoa' => $idpessoa
+            ));
         $result = $query->getResult();
         return $result;
     }
 
     public function todasInstituicoesQueNaoSegue(){
-
-        $query = $this->em->createQuery(
-            "SELECT tbinst,mininst FROM Application\Entity\Instituicao tbinst
-                     LEFT JOIN Application\Entity\MinhaInstituicao mininst WITH tbinst.id = mininst.idInstituicao
-                WHERE mininst.idPessoa is null
-            ");
-//        echo $query->getSql();exit;
-        $result = $query->getResult();
+        $qb  = $this->em->createQueryBuilder();
+        $qbSub = $qb;
+        $qbSub->select('identity(mininst.idInstituicao)')
+            ->from('Application\Entity\MinhaInstituicao', 'mininst');
+        $qb  = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('tbinst')
+            ->from('Application\Entity\Instituicao', 'tbinst')
+            ->where($qb->expr()->notIn('tbinst.id', $qbSub->getDQL())
+            );
+        $result = $qb->getQuery()->getResult();
         return $result;
     }
 
@@ -126,19 +133,24 @@ class PessoaDao extends AbstractDao{
         return $result;
     }
 
-    public function selectEventosInstituicao(){
+
+
+    public function selectEventosInstituicao($idpessoa){
         $query = $this->em->createQuery(
             "SELECT evento,tbinst FROM Application\Entity\Evento evento
                      LEFT JOIN Application\Entity\Instituicao tbinst WITH evento.idInstituicao = tbinst.id
                      INNER JOIN Application\Entity\MinhaInstituicao mininst WITH evento.idInstituicao = mininst.idInstituicao
+                     WHERE mininst.idPessoa = :idpessoa
                 ");
-        //echo $query->getSql();exit;
-        //var_dump($query->getResult());exit;
+        $query->setParameters(
+            array(
+                'idpessoa' => $idpessoa
+            ));
         $result = $query->getResult();
         return $result;
     }
 
-    public function selectEventosInstituicaoRecente(){
+    public function selectEventosInstituicaoRecente($idpessoa){
         $query = $this->em->createQuery(
             "SELECT evento,tbinst FROM Application\Entity\Evento evento
                      LEFT JOIN Application\Entity\Instituicao tbinst WITH evento.idInstituicao = tbinst.id
@@ -146,10 +158,13 @@ class PessoaDao extends AbstractDao{
                      WHERE
                      evento.dataFim BETWEEN
                      CURRENT_DATE()-15 AND CURRENT_DATE()
+                     AND mininst.idPessoa = :idpessoa
                      ORDER BY evento.dataInicio DESC
                 ");
-        //echo $query->getSql();exit;
-        //var_dump($query->getResult());exit;
+        $query->setParameters(
+            array(
+                'idpessoa' => $idpessoa
+            ));
         $result = $query->getResult();
         return $result;
     }
@@ -166,8 +181,6 @@ class PessoaDao extends AbstractDao{
             array(
                 'termoAuto' => '%' .$termo. '%'
             ));
-        //echo $query->getSql();exit;
-        //var_dump($query->getResult());exit;
         $result = $query->getResult();
         return $result;
     }

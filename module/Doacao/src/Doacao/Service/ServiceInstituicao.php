@@ -31,9 +31,7 @@ class ServiceInstituicao extends AbstractService{
 	}
 
 	public function buscaUmaInstituicao($id){
-		$instituicao = new Instituicao();
-		$em = self::getServiceLocator();
-		$instituicao = $em->find('\Application\Entity\Instituicao',$id);
+		$instituicao = $this->instituicaoDao->findById($id,'Application\Entity\Instituicao');
 		return $instituicao;
 	}
 		

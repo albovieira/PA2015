@@ -131,7 +131,6 @@ class PessoaController extends AbstractDoctrineCrudController
 
     //Acao para seguir  instituicao
     public function seguirAction(){
-
         $seguido = null;
         $request = $this->getRequest();
         if ($request->isPost()) {

@@ -20,24 +20,32 @@
 <div id="containerInstituicao" class='row-fluid'>
 
     <?php
-    foreach($instituicoes as $instituicao){
-        echo "
-            <div class='col-md-4 col-sm-6'>
-                <form class='formSeguir' method='post'>
-                <input class='instituicaoID' type='hidden' name='id' value='".$instituicao['id'] ."'>
+    if($instituicoes){
+        foreach($instituicoes as $instituicao){
+            echo "
+                <div class='col-md-4 col-sm-6'>
+                    <form class='formSeguir' method='post'>
+                    <input class='instituicaoID' type='hidden' name='id' value='".$instituicao['id'] ."'>
 
-                <div class='panel panel-default'>
-                    <div class='panel-heading'><a href='#' class='pull-right'>Ver mais</a> <h4>". $instituicao['nomeFantasia']."</h4></div>
-                    <div class='panel-body'>
-                            <p>" . $instituicao['descricao'] ."<img src={$instituicao['foto']} class='img-circle pull-right img-profile'> <a href='#'></a></p>
-                            <div class='clearfix'></div>
-                            <hr>
-                            <input type='button' class='btn btn-primary btn-seguir' value='Seguir'>
+                    <div class='panel panel-default'>
+                        <div class='panel-heading'><a href='#' class='pull-right'>Ver mais</a> <h4>". $instituicao['nomeFantasia']."</h4></div>
+                        <div class='panel-body'>
+                                <p>" . $instituicao['descricao'] ."<img src={$instituicao['foto']} class='img-circle pull-right img-profile'> <a href='#'></a></p>
+                                <div class='clearfix'></div>
+                                <hr>
+                                <input type='button' class='btn btn-primary btn-seguir' value='Seguir'>
+                        </div>
                     </div>
-                </div>
-                </form>
-            </div>"
-        ;
+                    </form>
+                </div>"
+            ;
+        }
+    }
+    else{
+        echo '<div class="container">';
+        echo "<strong>Finalize seu cadastro</strong><br>";
+        echo '<a href="/pessoa/minha-conta" >Meus dados</a>';
+        echo '</div>';
     }
     ?>
 
