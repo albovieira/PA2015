@@ -65,151 +65,75 @@ class Donativos extends AbstractEntity{
 	 * @ORM\JoinColumn(name="id_instituicao", referencedColumnName="id_instituicao")
 	 */
 	private $instituicao;
-
-	/**
-	 * @return mixed
-	 */
-	public function getId()
-	{
+	
+	
+	
+	public function getId(){
 		return $this->id;
 	}
-
-	/**
-	 * @param mixed $id
-	 */
-	public function setId($id)
-	{
-		$this->id = $id;
-	}
-
-	/**
-	 * @return mixed
-	 */
-	public function getDescricao()
-	{
+	
+	public function getDescricao(){
 		return $this->descricao;
 	}
-
-	/**
-	 * @param mixed $descricao
-	 */
-	public function setDescricao($descricao)
-	{
-		$this->descricao = $descricao;
-	}
-
-	/**
-	 * @return mixed
-	 */
-	public function getTitulo()
-	{
+	
+	public function getTitulo(){
 		return $this->titulo;
 	}
-
-	/**
-	 * @param mixed $titulo
-	 */
-	public function setTitulo($titulo)
-	{
-		$this->titulo = $titulo;
-	}
-
-	/**
-	 * @return mixed
-	 */
-	public function getQuantidade()
-	{
+	
+	public function getQuantidade(){
 		return $this->quantidade;
 	}
-
-	/**
-	 * @param mixed $quantidade
-	 */
-	public function setQuantidade($quantidade)
-	{
-		$this->quantidade = $quantidade;
-	}
-
-	/**
-	 * @return mixed
-	 */
-	public function getDataInclu()
-	{
+	
+	public function getDataInclusao(){
 		return $this->dataInclu;
 	}
-
-	/**
-	 * @param mixed $dataInclu
-	 */
-	public function setDataInclu($dataInclu)
-	{
-		$this->dataInclu = $dataInclu;
-	}
-
-	/**
-	 * @return mixed
-	 */
-	public function getDataDesa()
-	{
+	
+	public function getDataDesativacao(){
 		return $this->dataDesa;
 	}
-
-	/**
-	 * @param mixed $dataDesa
-	 */
-	public function setDataDesa($dataDesa)
-	{
-		$this->dataDesa = $dataDesa;
-	}
-
-	/**
-	 * @return mixed
-	 */
-	public function getIdInstituicao()
-	{
+	
+	public function getIdInstituicao(){
 		return $this->idInstituicao;
 	}
-
-	/**
-	 * @param mixed $idInstituicao
-	 */
-	public function setIdInstituicao($idInstituicao)
-	{
-		$this->idInstituicao = $idInstituicao;
-	}
-
-	/**
-	 * @return mixed
-	 */
-	public function getIdCategoria()
-	{
+	
+	public function getIdCategoria(){
 		return $this->idCategoria;
 	}
-
-	/**
-	 * @param mixed $idCategoria
-	 */
-	public function setIdCategoria($idCategoria)
-	{
-		$this->idCategoria = $idCategoria;
+	
+	public function setId($value){
+		$this->id = $value;
 	}
-
-	/**
-	 * @return mixed
-	 */
-	public function getInstituicao()
-	{
-		return $this->instituicao;
+	
+	public function setDescricao($value){
+		$this->descricao = $value;
 	}
-
-	/**
-	 * @param mixed $instituicao
-	 */
-	public function setInstituicao($instituicao)
-	{
+	
+	public function setTitulo($value){
+		$this->titulo = $value;
+	}
+	
+	public function setQuantidade($value){
+		$this->quantidade = $value;
+	}
+	
+	public function setDataInclusao($value){
+		
+		$this->dataInclu;
+	}
+	
+	public function setDataDesativacao($value){
+		$this->dataDesa = $value;
+	}
+	
+	public function setIdCategoria($value){
+		$this->idCategoria = $value;
+	}
+	
+	public function setInstituicao(Instituicao $instituicao){
 		$this->instituicao = $instituicao;
 	}
-
+	
 	public function getInputFilter(){}
-
+	public function getArrayCopy(){}
+	
 }
