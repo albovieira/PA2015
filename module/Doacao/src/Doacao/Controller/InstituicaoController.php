@@ -21,24 +21,39 @@ use Zend\Paginator\Paginator;
 use Zend\View\Helper\Json;
 use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
+use Doacao\Service;
 
 class InstituicaoController extends AbstractDoctrineCrudController
 {
+	private $service;
+	
     public function __construct(){
-
+    }
+    
+    /**
+     * Seta o layout padrão para as páginas de instituicão
+     */
+    private function setLayout(){
+    	return $this->layout()->setTemplate('layout/layout_menu_Instituicao');
     }
 
-     public function indexAction()
-     {
-         $this->layout()->setTemplate('layout/layout_menu_Instituicao');
-         $service = new ServiceInstituicao();
-         $id = $_GET['id'];
-         $instituicao = $service->buscaUmaInstituicao($id);
-         $donativo = $service->listaDonativos($instituicao);
-         $perfil = $service->montaPerfilHtml($instituicao);
-         return new ViewModel(array(
-             'perfil'=> $perfil,
-             'listaDonativos' => $donativo
-         ));
-     }
+    public function indexAction()
+    {
+    	$this->setLayout();
+       	$this->service = new ServiceInstituicao();
+       	$id = $this->service->getUserLogado();
+       	$instituicao = $this->service->buscaUmaInstituicao($id);
+       	$donativo = $this->service->listaDonativos($instituicao);
+       	$perfil = $this->service->montaPerfilHtml($instituicao);
+       	return new ViewModel(array(
+        	'perfil'=> $perfil,
+           	'listaDonativos' => $donativo
+       	));
+    }
+    
+    public function novoAction(){
+    	
+    }
+    
+    
 }
