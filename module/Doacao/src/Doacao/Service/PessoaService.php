@@ -4,7 +4,6 @@ namespace Doacao\Service;
 
 use Application\Entity\MinhaInstituicao;
 use Application\Entity\Evento;
-use Application\Proxy\__CG__\Application\Entity\Instituicao;
 use Application\Service\AbstractService;
 use Zend\Authentication\AuthenticationService;
 use Doacao\Dao\PessoaDao;
@@ -18,16 +17,24 @@ class PessoaService extends AbstractService{
         $this->pessoaDAO = new PessoaDao();
     }
 
+    /**
+     * @return array
+     */
     public function getObjPessoa(){
         $usuario = $this->getUserLogado();
         return $this->pessoaDAO->selectPorUsuario($usuario);
     }
 
 
+    /**
+     * @param $idPessoa
+     * @param $idInstituicao
+     * @return string
+     */
     public function salvarSeguir($idPessoa,$idInstituicao){
 
         //valida se ja segue uma instituicao, sim sim exclui senao adiciona
-        $possuiInstituicao = $this->jaPossuiInstituicao($idPessoa->getId(), $idInstituicao->__get('id'));
+        $possuiInstituicao = $this->jaPossuiInstituicao($idPessoa->getId(), $idInstituicao->getId());
         if($possuiInstituicao != null){
             $this->pessoaDAO->excluir($this->pessoaDAO->findById($possuiInstituicao, 'Application\Entity\MinhaInstituicao'));
             return "nseguido";
@@ -42,21 +49,38 @@ class PessoaService extends AbstractService{
         }
     }
 
+    /**
+     * @param $idPessoa
+     * @param $idInstituicao
+     * @return bool|null
+     */
     public function jaPossuiInstituicao($idPessoa,$idInstituicao){
         return $this->pessoaDAO->selectMinhaInstituicao($idPessoa,$idInstituicao)
                 ? $this->pessoaDAO->selectMinhaInstituicao($idPessoa,$idInstituicao)
                 : null;
     }
 
+    /**
+     * @param $term
+     * @return mixed
+     */
     public function getPesquisaInstituicaoPorNome($term){
         return $this->pessoaDAO->selectAutoComplete($term);
     }
 
+    /**
+     * @param $term
+     * @return array
+     */
     public function getPesquisaRapidaInstituicaoPorNome($term){
         $objInstituicao = $this->pessoaDAO->selectPesquisaRapida($term);
         return $this->bindInstituicao($objInstituicao);
     }
 
+    /**
+     * @param $objInstituicao
+     * @return array
+     */
     public function bindInstituicao($objInstituicao){
         $arrInstituicao = [];
 
@@ -77,21 +101,34 @@ class PessoaService extends AbstractService{
         return $arrInstituicao;
     }
 
+    /**
+     * @return array
+     */
     public function naoSegue(){
         $objInstituicao = $this->pessoaDAO->todasInstituicoesQueNaoSegue();
         return $this->bindInstituicao($objInstituicao);
     }
 
+    /**
+     * @return array
+     */
     public function instituicoesPessoaSegue(){
         $objInstituicao = $this->pessoaDAO->instituicoesPessoaSegue();
         return $this->bindInstituicao($objInstituicao);
     }
 
+    /**
+     * @return array
+     */
     public function getEventosInstituicoes(){
         $objEvento = $this->pessoaDAO->selectEventosInstituicao();
         return $this->bindEvento($objEvento);
     }
 
+    /**
+     * @param $objEvento
+     * @return array
+     */
     public function bindEvento($objEvento){
         $arrEvento = [];
 
@@ -99,7 +136,7 @@ class PessoaService extends AbstractService{
             // necessario pois o retorno esta trazendo as instituicoes tbm
             if($evento instanceof Evento){
                 $arrEvento[$key]['id'] = $key;
-                $arrEvento[$key]['nomeFantasia'] = $evento->getIdInstituicao()->__get('nomeFantasia');
+                $arrEvento[$key]['nomeFantasia'] = $evento->getIdInstituicao()->getNomeFantasia();
                 $arrEvento[$key]['descEvento'] = $evento->getDescEvento();
                 $arrEvento[$key]['siteEvento'] = $evento->getSiteEvento();
                 $arrEvento[$key]['objetivos'] = $evento->getObjetivos();
@@ -114,15 +151,26 @@ class PessoaService extends AbstractService{
         return $arrEvento;
     }
 
+    /**
+     * @param $data
+     * @return mixed
+     */
     public function dateToString($data){
         return $data->format('d/m/Y');
     }
 
+    /**
+     * @return array
+     */
     public function getEventosInstituicoesRecentes(){
         $objEvento = $this->pessoaDAO->selectEventosInstituicaoRecente();
         return $this->bindEvento($objEvento);
     }
 
+    /**
+     * @param $termo
+     * @return array
+     */
     public function getEventosComFiltro($termo){
         $objEvento = $this->pessoaDAO->selectEventosInstituicaoComFiltro($termo);
         return $this->bindEvento($objEvento);

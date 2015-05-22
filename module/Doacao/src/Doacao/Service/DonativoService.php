@@ -14,13 +14,18 @@ class DonativoService extends AbstractService{
 		$this->dao = new DonativoDAO();
 	}
 	
+	public function save($data){
+
+		$error = $this->dao->savedata($this->setData($data));
+	}
+	
 	/**
 	 * Constroi o objeto Donativos e verifica potênciais erros nos dados passados
 	 * @param unknown $data
 	 */
 	private function setData($data){
 		$donativo = new Donativos();
-		
+
 		$item->setId($novoItem->id);
 		$item->setTitulo($novoItem->titulo);
 		$item->setDescricao($novoItem->descricao);
@@ -29,13 +34,8 @@ class DonativoService extends AbstractService{
 		$item->setDataDesativacao(new \DateTime($novoItem->dataDesa));
 		$item->setInstituicao((new ServiceInstituicao())->buscaUmaInstituicao($novoItem->idInstituicao));
 		$item->setIdCategoria(1);
-		
+
 		return $donativo;
-	}
-	
-	public function save($data){
-		
-		$error = $this->dao->savedata($this->setData($data));
 	}
 	
 }

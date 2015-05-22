@@ -73,17 +73,16 @@ class PessoaController extends AbstractDoctrineCrudController
 
         /** @var Pessoa $pessoa */
         $pessoa = $this->pessoaService->getObjPessoa();
-
-        $formPessoa->bind($pessoa);
-
-        //$formPessoa->get('foto')->setValue($pessoa->getFoto());
-        //data nao tava retornando
-        $formPessoa->get('dataNasc')->setValue($pessoa->getDataNasc()->format('Y-m-d'));
-
+        $img = '/img/data/sem-foto.jpg';
+        if(null != $pessoa ){
+            $formPessoa->bind($pessoa);
+            $formPessoa->get('dataNasc')->setValue($pessoa->getDataNasc()->format('Y-m-d'));
+            $img = $pessoa->getFoto();
+        }
         return new ViewModel(
             array(
                 'form' => $formPessoa,
-                'img' => $pessoa->getFoto()
+                'img' => $img
             )
         );
     }
