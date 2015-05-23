@@ -71,7 +71,9 @@ class PessoaController extends AbstractDoctrineCrudController
         $this->layout()->setTemplate('layout/layout_modal');
         $formPessoa = new PessoaForm();
 
-        /** @var Pessoa $pessoa */
+
+        $request = $this->getRequest();
+            /** @var Pessoa $pessoa */
         $pessoa = $this->pessoaService->getObjPessoa();
         $img = '/img/data/sem-foto.jpg';
         if(null != $pessoa ){
@@ -79,6 +81,18 @@ class PessoaController extends AbstractDoctrineCrudController
             $formPessoa->get('dataNasc')->setValue($pessoa->getDataNasc()->format('Y-m-d'));
             $img = $pessoa->getFoto();
         }
+        if ($request->isPost()) {
+            //$request->getPost
+            //var_dump($request->getPost());die;
+            $formPessoa->setData($request->getPost());
+            if($formPessoa->isValid()){
+
+            }
+
+           //$this->pessoaService->salvarPessoa();
+        }
+
+
         return new ViewModel(
             array(
                 'form' => $formPessoa,
@@ -86,6 +100,7 @@ class PessoaController extends AbstractDoctrineCrudController
             )
         );
     }
+
 
     //
     public function instituicaoAction(){

@@ -24,14 +24,17 @@ var principal = {
         $(window).load(principal.ajustaRodape());
     },
     openModalLogin: function () {
-
         $('#btnLogin').click(function(event) {
-            $.get("/user/login", function(data) {
-                $('.modal-body').html(data);
-                $('.form-signin').next('a').addClass('btn btn-lg btn-primary btn-block');
+            $.ajax({
+                type: 'GET',
+                url:'/user/login',
+                success: function (data) {
+                    $('.modal-body').html(data);
+                    $('.form-signin').next('a').addClass('btn btn-lg btn-primary btn-block');
+                    $(".modal").modal("show");
+                }
             });
         });
-
     }
 }
 

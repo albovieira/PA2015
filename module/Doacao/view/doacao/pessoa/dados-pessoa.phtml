@@ -24,6 +24,9 @@
     .input-foto:hover{
         cursor: pointer;
     }
+    .ajuste-form{
+        margin-bottom: 10px;
+    }
 
 </style>
 
@@ -36,7 +39,6 @@ $form->prepare();
 <?=$this->formInput($form->get('id'))?>
 
 <h3 class="text-info">Dados Pessoa</h3>
-<hr>
 <div class="col-xs-3">
     <div class="col-xs-12">
         <label for="foto" id="lbl-img" ><img class="img img-responsive img-perfil" src="<?php echo $this->img ?>" />
@@ -44,9 +46,8 @@ $form->prepare();
         </label>
     </div>
 </div>
-
 <div class="col-xs-9">
-    <div class="col-xs-12">
+    <div class="col-xs-12 ajuste-form">
         <div class="col-xs-4"><?=$this->formLabel
             ($form->get('nome'))?>
         </div>
@@ -55,7 +56,7 @@ $form->prepare();
         </div>
     </div>
 
-    <div class="col-xs-12">
+    <div class="col-xs-12 ajuste-form">
         <div class="col-xs-4"><?=$this->formLabel
             ($form->get('email'))?>
         </div>
@@ -64,7 +65,7 @@ $form->prepare();
         </div>
     </div>
 
-    <div class="col-xs-12">
+    <div class="col-xs-12 ajuste-form">
         <div class="col-xs-4"><?=$this->formLabel
             ($form->get('sexo'))?>
         </div>
@@ -73,7 +74,7 @@ $form->prepare();
         </div>
     </div>
 
-    <div class="col-xs-12">
+    <div class="col-xs-12 ajuste-form">
         <div class="col-xs-4"><?=$this->formLabel($form->get('telCel'))?>
         </div>
         <div class="col-xs-8"><?=$this->formInput
@@ -81,7 +82,7 @@ $form->prepare();
         </div>
     </div>
 
-    <div class="col-xs-12">
+    <div class="col-xs-12 ajuste-form">
         <div class="col-xs-4"><?=$this->formLabel($form->get('telFixo'))?>
         </div>
         <div class="col-xs-8"><?=$this->formInput
@@ -89,14 +90,14 @@ $form->prepare();
         </div>
     </div>
 
-    <div class="col-xs-12">
+    <div class="col-xs-12 ajuste-form">
         <div class="col-xs-4"><?=$this->formLabel
             ($form->get('dataNasc'))?></div>
         <div class="col-xs-8"><?=$this->formDate
             ($form->get('dataNasc'))?></div>
     </div>
 
-    <div class="col-xs-2 pull-right">
+    <div class="col-xs-2 pull-right ajuste-form">
         <?=$this->formButton($form->get('salvar'))?>
     </div>
 </div>
