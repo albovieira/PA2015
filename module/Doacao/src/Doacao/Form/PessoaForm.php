@@ -50,11 +50,11 @@ class PessoaForm extends Form{
 
         $this->add(array(
             'name' => 'dataNasc',
+            'type' => 'Date',
             'options' => array(
                 'label' => 'Data Nascimento',
             ),
             'attributes' => array(
-                'type' => 'date',
                 'class'=> 'form-control'
             ),
         ));
@@ -137,7 +137,8 @@ class PessoaForm extends Form{
             ),
             'attributes' => array(
                 'type' => 'text',
-                'class'=> 'btn btn-primary'
+                'class'=> 'btn btn-primary',
+                'value' => 'salvar'
             ),
         ));
 

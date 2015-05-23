@@ -10,6 +10,7 @@ namespace Application\Entity;
 
 use Components\Entity\AbstractEntity;
 use Doctrine\ORM\Mapping as ORM;
+use Zend\Form\Annotation\InputFilter;
 
 
 /**
@@ -117,10 +118,15 @@ class Pessoa extends AbstractEntity{
     }
 
     /**
+     * Necessário verificar se o objeto a ser setado é datetime
+     *
      * @param date $dataNasc
      */
     public function setDataNasc($dataNasc)
     {
+        if(!$dataNasc instanceof \DateTime){
+            $dataNasc = new \DateTime($dataNasc);
+        }
         $this->dataNasc = $dataNasc;
     }
 
@@ -238,6 +244,12 @@ class Pessoa extends AbstractEntity{
 
 
     public function getInputFilter(){
+        if (!$this->inputFilter) {
+            $inputFilter = new \Zend\InputFilter\InputFilter();
+            $this->inputFilter = $inputFilter;
+        }
+
+        return $this->inputFilter;
 
     }
 

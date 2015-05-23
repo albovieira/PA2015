@@ -12,11 +12,13 @@ namespace Doacao\Controller;
 use Application\Entity\TesteAnexo;
 use Components\MVC\Controller\AbstractCrudController;
 use Components\MVC\Controller\AbstractDoctrineCrudController;
+use Doacao\Filter\PessoaFilter;
 use Doacao\Form\PessoaForm;
 use Doacao\Service\PessoaService;
 use Doacao\Service\ServiceInstituicao;
 use Doctrine\DBAL\Schema\View;
 use Zend\Authentication\AuthenticationService;
+use Zend\Form\Element\DateTime;
 use Zend\Mail\Storage\Writable\Maildir;
 use Zend\Paginator\Adapter\ArrayAdapter;
 use Zend\Paginator\Paginator;
@@ -67,31 +69,36 @@ class PessoaController extends AbstractDoctrineCrudController
         $this->layout()->setTemplate('layout/layout_pessoa');
         return new ViewModel();
     }
+
     public function dadosPessoaAction(){
         $this->layout()->setTemplate('layout/layout_modal');
         $formPessoa = new PessoaForm();
-
-
         $request = $this->getRequest();
-            /** @var Pessoa $pessoa */
+
+        /** @var Pessoa $pessoa */
         $pessoa = $this->pessoaService->getObjPessoa();
+
+        //preenche o formulario se ja houver pessoa - requisicao ajax
         $img = '/img/data/sem-foto.jpg';
         if(null != $pessoa ){
             $formPessoa->bind($pessoa);
             $formPessoa->get('dataNasc')->setValue($pessoa->getDataNasc()->format('Y-m-d'));
             $img = $pessoa->getFoto();
         }
-        if ($request->isPost()) {
-            //$request->getPost
-            //var_dump($request->getPost());die;
-            $formPessoa->setData($request->getPost());
-            if($formPessoa->isValid()){
 
+        if($request->isPost()){
+            $post = $request->getPost();
+
+            if(!empty($post['salvar'])){
+                //alterar para uma classe somente de filtro
+                $pessoa = new Pessoa();
+                $formPessoa->setInputFilter($pessoa->getInputFilter());
+                $formPessoa->setData($post);
+                if($formPessoa->isValid()){
+                    $this->pessoaService->salvarPessoa($formPessoa->getData());
+                }
             }
-
-           //$this->pessoaService->salvarPessoa();
         }
-
 
         return new ViewModel(
             array(

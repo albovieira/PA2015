@@ -4,7 +4,9 @@ namespace Doacao\Service;
 
 use Application\Entity\MinhaInstituicao;
 use Application\Entity\Evento;
+use Application\Entity\Pessoa;
 use Application\Service\AbstractService;
+use Components\Entity\AbstractEntity;
 use Zend\Authentication\AuthenticationService;
 use Doacao\Dao\PessoaDao;
 use Application\Entity\Instituicao;
@@ -200,8 +202,8 @@ class PessoaService extends AbstractService{
         return $this->bindEvento($objEvento);
     }
 
-    public function salvarPessoa(){
-        $this->pessoaDAO->salvar();
+    public function salvarPessoa(Pessoa $pessoa){
+        $this->pessoaDAO->salvar($pessoa);
     }
 
 }
