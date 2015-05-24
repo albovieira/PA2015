@@ -88,8 +88,8 @@ class PessoaController extends AbstractDoctrineCrudController
 
         if($request->isPost()){
             $post = $request->getPost();
-
-            if(!empty($post['salvar'])){
+            //var_dump($post);
+            if(count($post) > 0){
                 //alterar para uma classe somente de filtro
                 $pessoa = new Pessoa();
                 $formPessoa->setInputFilter($pessoa->getInputFilter());

@@ -25,9 +25,10 @@ class PessoaForm extends Form{
 
         $this->setAttributes(
             array(
-                'action' => '/pessoa/dados-pessoa',
+                //'action' => '/pessoa/dados-pessoa',
                 'method' => 'post',
-                'class' => 'form form-group'
+                'class' => 'form form-group',
+                'id' => 'pessoa-form'
             )
         );
 
