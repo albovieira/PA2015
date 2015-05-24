@@ -96,15 +96,16 @@ class PessoaController extends AbstractDoctrineCrudController
                 $formPessoa->setInputFilter($pessoa->getInputFilter());
                 $formPessoa->setData($post);
 
+                //valida se o formulario é valido , se tiver id atualiza senao insere um novo
                 if($formPessoa->isValid()){
                     if($post['id']){
-                        $this->pessoaService->salvarPessoa($formPessoa->getData());
+                        $objpessoa = $formPessoa->getData();
                     }else{
                         $pessoa->exchangeArray($post);
                         $pessoa->setUsuario($this->getModel($this->getIdUserLogado(), 'Application\Entity\User'));
-                        $this->pessoaService->salvarPessoa($pessoa);
+                        $objpessoa = $pessoa;
                     }
-
+                    $this->pessoaService->salvarPessoa($objpessoa);
                 }
             }
         }
