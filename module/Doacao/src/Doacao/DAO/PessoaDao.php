@@ -89,16 +89,21 @@ class PessoaDao extends AbstractDao{
         return $result;
     }
 
-    public function todasInstituicoesQueNaoSegue(){
+    public function todasInstituicoesQueNaoSegue($idpessoa){
+
         $qb  = $this->em->createQueryBuilder();
         $qbSub = $qb;
         $qbSub->select('identity(mininst.idInstituicao)')
-            ->from('Application\Entity\MinhaInstituicao', 'mininst');
-        $qb  = $this->getEntityManager()->createQueryBuilder();
+            ->from('Application\Entity\MinhaInstituicao', 'mininst')
+            ->where($qbSub->expr()->eq('mininst.idPessoa', $idpessoa));
+
+        $qb  = $this->em->createQueryBuilder();
         $qb->select('tbinst')
             ->from('Application\Entity\Instituicao', 'tbinst')
             ->where($qb->expr()->notIn('tbinst.id', $qbSub->getDQL())
             );
+
+
         $result = $qb->getQuery()->getResult();
         return $result;
     }

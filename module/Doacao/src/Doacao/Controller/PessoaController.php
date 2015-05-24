@@ -96,10 +96,7 @@ class PessoaController extends AbstractDoctrineCrudController
                 $formPessoa->setInputFilter($pessoa->getInputFilter());
                 $formPessoa->setData($post);
 
-                //var_dump($formPessoa);die;
-                // form is validd - estava dando problema vefificar
-                if(true){
-                    //var_dump($formPessoa->getData());
+                if($formPessoa->isValid()){
                     if($post['id']){
                         $this->pessoaService->salvarPessoa($formPessoa->getData());
                     }else{

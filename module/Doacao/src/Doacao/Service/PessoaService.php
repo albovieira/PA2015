@@ -108,7 +108,7 @@ class PessoaService extends AbstractService{
     public function naoSegue(){
         $instituicao = null;
         if($this->getObjPessoa()){
-            $objInstituicao = $this->pessoaDAO->todasInstituicoesQueNaoSegue();
+            $objInstituicao = $this->pessoaDAO->todasInstituicoesQueNaoSegue($this->getObjPessoa()->getId());
             return $this->bindInstituicao($objInstituicao);
         }
         return $instituicao;
