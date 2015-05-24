@@ -253,4 +253,14 @@ class Pessoa extends AbstractEntity{
 
     }
 
+    public function exchangeArray($array)
+    {
+            $this->id = $array['id'];
+            $this->dataNasc = new \DateTime($array['dataNasc']) ;
+            $this->dataCad = new \DateTime('now');
+            $this->nome = $array['nome'];
+            $this->email = $array['email'];
+            $this->foto = isset($array['foto']) ? $array['foto'] : '/img/data/sem-foto.jpg';
+            $this->sexo = $array['sexo'];
+    }
 }

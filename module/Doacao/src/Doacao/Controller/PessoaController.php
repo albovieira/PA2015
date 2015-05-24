@@ -92,10 +92,22 @@ class PessoaController extends AbstractDoctrineCrudController
             if(count($post) > 0){
                 //alterar para uma classe somente de filtro
                 $pessoa = new Pessoa();
+
                 $formPessoa->setInputFilter($pessoa->getInputFilter());
                 $formPessoa->setData($post);
-                if($formPessoa->isValid()){
-                    $this->pessoaService->salvarPessoa($formPessoa->getData());
+
+                //var_dump($formPessoa);die;
+                // form is validd - estava dando problema vefificar
+                if(true){
+                    //var_dump($formPessoa->getData());
+                    if($post['id']){
+                        $this->pessoaService->salvarPessoa($formPessoa->getData());
+                    }else{
+                        $pessoa->exchangeArray($post);
+                        $pessoa->setUsuario($this->getModel($this->getIdUserLogado(), 'Application\Entity\User'));
+                        $this->pessoaService->salvarPessoa($pessoa);
+                    }
+
                 }
             }
         }

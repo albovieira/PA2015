@@ -38,7 +38,7 @@ class PessoaForm extends Form{
         $this->add(array(
             'name' => 'nome',
             'options' => array(
-                'label' => 'Nome',
+                'label' => 'Nome completo',
                 'label_attributes' => array(
                     'class' => 'label-control'
                 )

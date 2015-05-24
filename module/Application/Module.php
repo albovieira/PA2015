@@ -82,17 +82,17 @@ class Module
                 'class' => 'form-control'
             ));
 
-            $form->add(
-                array(
-                    'name' => 'perfil',
-                    'options' => array(
-                        'label' => 'Cadastrar como instituicao?',
+            $form->add(array(
+                'type' => 'radio',
+                'name' => 'perfil',
+                'options' => array(
+                    'label' => 'Tipo:',
+                    'value_options' => array(
+                        '2' => 'Pessoa',
+                        '3' => 'Instituicao',
                     ),
-                    'attributes' => array(
-                        'type'  => 'radio',
-                    ),
-                )
-            );
+                ),
+            ));
             $form->get('submit')->setAttributes(array(
                 'class' => 'btn btn-success'
             ));

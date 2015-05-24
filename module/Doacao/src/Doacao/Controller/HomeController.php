@@ -31,7 +31,6 @@ class HomeController extends AbstractDoctrineCrudController
 
     public function __construct(){
 
-
         if(!$this->homeService){
             $this->homeService = new HomeService();
             $this->pessoaService = new PessoaService();

@@ -20,11 +20,14 @@ class IndexController extends AbstractDoctrineCrudController
 {
 
     public function __construct(){
-        $this->modelClass = 'Application\Model\Usuario';
     }
 
    public function indexAction()
     {
+        if($this->getIdUserLogado()){
+            return $this->redirect()->toRoute('doacao');
+        }
+
         return new ViewModel();
     }
 }

@@ -25,10 +25,10 @@ abstract class AbstractDoctrineCrudController extends AbstractActionController
         return $auth->getIdentity();
     }
 
-    protected function getModel($key)
+    protected function getModel($key, $model)
     {
         $em = $GLOBALS['entityManager'];
-        return $em->getRepository($this->modelClass)->find($key);
+        return $em->getRepository($model)->find($key);
     }
 
     protected function getSm()
