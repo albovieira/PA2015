@@ -52,10 +52,6 @@ class EventoDao extends AbstractDao{
         return $arrayObjs;
     }
 
-    public function select(){
-        //$this->entityManager
-    }
-
     public function selectMinhaInstituicao($idPessoa,$idInstituicao){
        $query = $this->em->createQuery(
             "SELECT minInst FROM Application\Entity\MinhaInstituicao minInst

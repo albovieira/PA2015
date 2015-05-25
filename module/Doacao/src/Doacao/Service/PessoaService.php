@@ -141,43 +141,6 @@ class PessoaService extends AbstractService{
         return $instituicao;
     }
 
-    /**
-     * @return array
-     */
-    public function getEventosInstituicoes(){
-        $evento = null;
-        if($this->getObjPessoa()){
-            $objEvento = $this->pessoaDAO->selectEventosInstituicao($this->getObjPessoa()->getId());
-            $evento = $this->bindEvento($objEvento);
-        }
-        return $evento;
-    }
-
-    /**
-     * @param $objEvento
-     * @return array
-     */
-    public function bindEvento($objEvento){
-        $arrEvento = [];
-
-        foreach($objEvento as $key=>$evento){
-            // necessario pois o retorno esta trazendo as instituicoes tbm
-            if($evento instanceof Evento){
-                $arrEvento[$key]['id'] = $key;
-                $arrEvento[$key]['nomeFantasia'] = $evento->getIdInstituicao()->getNomeFantasia();
-                $arrEvento[$key]['descEvento'] = $evento->getDescEvento();
-                $arrEvento[$key]['siteEvento'] = $evento->getSiteEvento();
-                $arrEvento[$key]['objetivos'] = $evento->getObjetivos();
-                $arrEvento[$key]['tituloEvento'] = $evento->getTituloEvento();
-                $arrEvento[$key]['dataInicio'] = $evento->getDataInicio();
-                $arrEvento[$key]['dataFim'] = $this->dateToString($evento->getDataFim());
-                $arrEvento[$key]['imagem1'] = $evento->getImagem1();
-                $arrEvento[$key]['imagem2'] = $evento->getImagem2();
-                $arrEvento[$key]['imagem3'] = $evento->getImagem3();
-            }
-        }
-        return $arrEvento;
-    }
 
     /**
      * @param $data
@@ -185,27 +148,6 @@ class PessoaService extends AbstractService{
      */
     public function dateToString($data){
         return $data->format('d/m/Y');
-    }
-
-    /**
-     * @return array
-     */
-    public function getEventosInstituicoesRecentes(){
-        $evento = null;
-        if($this->getObjPessoa()){
-            $objEvento = $this->pessoaDAO->selectEventosInstituicaoRecente($this->getObjPessoa()->getId());
-            $evento = $this->bindEvento($objEvento);
-        }
-        return $evento;
-    }
-
-    /**
-     * @param $termo
-     * @return array
-     */
-    public function getEventosComFiltro($termo){
-        $objEvento = $this->pessoaDAO->selectEventosInstituicaoComFiltro($termo);
-        return $this->bindEvento($objEvento);
     }
 
     public function salvarPessoa(Pessoa $pessoa){

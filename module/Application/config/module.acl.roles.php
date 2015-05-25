@@ -13,6 +13,7 @@ return array(
         'doacao',
         'pessoa',
         'instituicao',
+        'evento'
     ),
 );
 

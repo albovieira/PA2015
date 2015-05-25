@@ -14,6 +14,7 @@ use Components\MVC\Controller\AbstractCrudController;
 use Components\MVC\Controller\AbstractDoctrineCrudController;
 use Doacao\Filter\PessoaFilter;
 use Doacao\Form\PessoaForm;
+use Doacao\Service\EventoService;
 use Doacao\Service\PessoaService;
 use Doacao\Service\ServiceInstituicao;
 use Doctrine\DBAL\Schema\View;
@@ -32,10 +33,29 @@ class EventoController extends AbstractDoctrineCrudController
     private $eventoService;
 
     public function __construct(){
-
         if(!$this->eventoService){
-            $this->eventoService = new PessoaService();
+            $this->eventoService = new EventoService();
         }
+    }
+
+    // era eventos action
+    public function indexAction(){
+        $this->layout()->setTemplate('layout/layout_pessoa');
+        $eventos = $this->eventoService->getEventosInstituicoes();
+
+        return new ViewModel(
+            array(
+                'eventos' => $eventos
+            )
+        );
+    }
+
+    public function listarAutocompleteEventoAction(){
+
+        $termo = $this->params()->fromQuery('term');
+        $retorno = $this->eventoService->getEventosComFiltro($termo);
+
+        return new JsonModel($retorno);
     }
 
 }

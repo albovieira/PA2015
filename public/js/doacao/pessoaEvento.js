@@ -15,7 +15,7 @@ var pessoaEvento = {
                 $.ajax({
                     data: DTO,
                     type: 'GET',
-                    url:'/pessoa/listar-autocomplete-evento',
+                    url:'/evento/listar-autocomplete-evento',
                     success: function (data) {
 
                         var arrEventos = [];

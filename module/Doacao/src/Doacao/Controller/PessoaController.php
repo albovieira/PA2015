@@ -14,6 +14,7 @@ use Components\MVC\Controller\AbstractCrudController;
 use Components\MVC\Controller\AbstractDoctrineCrudController;
 use Doacao\Filter\PessoaFilter;
 use Doacao\Form\PessoaForm;
+use Doacao\Service\EventoService;
 use Doacao\Service\PessoaService;
 use Doacao\Service\ServiceInstituicao;
 use Doctrine\DBAL\Schema\View;
@@ -40,7 +41,6 @@ class PessoaController extends AbstractDoctrineCrudController
 
      public function indexAction()
      {
-
          //TODO verificar se user tem pessoa, se nao tiver redirecionar para dashboard editavel;
          $this->layout()->setTemplate('layout/layout_pessoa');
 
@@ -49,7 +49,8 @@ class PessoaController extends AbstractDoctrineCrudController
              $doacoes = "Não há doações, siga instituições e doe.<br><a href='/pessoa/instituicao' class='btn btn-success'>Ver Instituicoes </a>";
          }
 
-         $campanhas = $this->pessoaService->getEventosInstituicoesRecentes();
+         $eventoService = new EventoService();
+         $campanhas = $eventoService->getEventosInstituicoesRecentes();
          if(!$campanhas){
              $campanhas = "No momento nenhuma instituicao que voce segue tem campanhas.<br>";
          }
@@ -147,17 +148,6 @@ class PessoaController extends AbstractDoctrineCrudController
         );
     }
 
-    public function eventosAction(){
-        $this->layout()->setTemplate('layout/layout_pessoa');
-        $eventos = $this->pessoaService->getEventosInstituicoes();
-
-        return new ViewModel(
-            array(
-                'eventos' => $eventos
-            )
-        );
-    }
-
     //Acao para seguir  instituicao
     public function seguirAction(){
         $seguido = null;
@@ -197,22 +187,10 @@ class PessoaController extends AbstractDoctrineCrudController
         ));
     }
 
-    public function listarAutocompleteEventoAction(){
-
-        $termo = $this->params()->fromQuery('term');
-        $retorno = $this->pessoaService->getEventosComFiltro($termo);
-
-        return new JsonModel($retorno);
-    }
-    public function pesquisarEventoAction(){
-        /*$nomeInstituicao = $this->params()->fromQuery('descricao');
-        $instituicoes = $this->pessoaService->getPesquisaRapidaInstituicaoPorNome($nomeInstituicao);
-        return new JsonModel(array(
-            'instituicoes' => $instituicoes
-        ));*/
-    }
-
+    //Pegar instituicao, eventos, donativos referentes a instituicao
     public function instituicaoPageAction(){
+        $this->layout()->setTemplate('layout/layout_pessoa');
+
         $id = 2;
         $instituicaoService = new ServiceInstituicao();
 
@@ -221,7 +199,7 @@ class PessoaController extends AbstractDoctrineCrudController
 
         return new ViewModel(
             array(
-                'instituicoes' => $instituicao
+                'instituicao' => $instituicao
             )
         );
     }

@@ -56,6 +56,16 @@ return array(
                     ),
                 ),
             ),
+            'evento' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route'    => '/evento[/:action]',
+                    'defaults' => array(
+                        'controller' => 'Doacao\Controller\Evento',
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
 
             'donativo' => array(
                 'type' => 'segment',
@@ -124,6 +134,7 @@ return array(
         'invokables' => array(
             'Doacao\Controller\Home' => 'Doacao\Controller\HomeController',
             'Doacao\Controller\Pessoa' => 'Doacao\Controller\PessoaController',
+            'Doacao\Controller\Evento' => 'Doacao\Controller\EventoController',
             'Doacao\Controller\Instituicao' => 'Doacao\Controller\InstituicaoController',
             'Doacao\Controller\Donativo' => 'Doacao\Controller\DonativoController',
         ),
