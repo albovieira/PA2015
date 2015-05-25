@@ -7,6 +7,7 @@ use Doctrine\DBAL\LockMode;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Query\Expr;
+use Doctrine\ORM\QUERY\ResultSetMapping;
 use Zend\EventManager\EventManagerAwareInterface;
 use Zend\EventManager\EventManagerInterface;
 
@@ -23,6 +24,7 @@ class AbstractDao
         $this->entityManager = $GLOBALS['entityManager'];
         return $this->entityManager;
     }
+    
     public function salvar(AbstractEntity $entity){
         $this->entityManager->persist($entity);
         $this->entityManager->flush();
@@ -45,5 +47,22 @@ class AbstractDao
         $em = $this->entityManager;
         return $em->getRepository($entity)->findAll();
     }
+    
+    public function queryNativa($columns = null, $table){
+    	    	
+    	if($columns === null){
+    		$columns = '*';
+    	}elseif(is_array($columns)){
+    		$columns = implode(',', $columns);
+    	}
+    	
+    	$em = $this->entityManager;
+    	$conn = $em->getConnection();
+    	$statement = "SELECT {$columns}  FROM {$table}";
+    	$result_set = $conn->fetchAll($statement);
+    	
+    	return $result_set;
+    }
+   
 
 }

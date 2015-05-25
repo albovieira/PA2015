@@ -28,26 +28,17 @@ class InstituicaoController extends AbstractDoctrineCrudController
 	private $service;
 	
     public function __construct(){
-    }
-    
-    /**
-     * Seta o layout padrão para as páginas de instituicão
-     */
-    private function setLayout(){
-    	return $this->layout()->setTemplate('layout/layout_menu_Instituicao');
+    	$this->service = new ServiceInstituicao();
     }
 
     public function indexAction()
     {
-    	$this->setLayout();
-       	$this->service = new ServiceInstituicao();
-       	$id = $this->service->getUserLogado();
-       	$instituicao = $this->service->buscaUmaInstituicao($id);
+    	$this->layout()->setTemplate('layout/layout_menu_Instituicao');
+       	$instituicao = $this->service->getObjInstituicao();
        	$donativo = $this->service->listaDonativos($instituicao);
-       	$perfil = $this->service->montaPerfilHtml($instituicao);
        	return new ViewModel(array(
-        	'perfil'=> $perfil,
-           	'listaDonativos' => $donativo
+        	'perfil'=> $instituicao,
+           	'donativos' => $donativo
        	));
     }
     

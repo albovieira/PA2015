@@ -33,28 +33,17 @@ class DonativoController extends AbstractDoctrineCrudController
 		self::$service = new DonativoService();
 	}
 	
-	public function init(){
-		$contextAjax = $this->_helper->getHelper('AjaxContext');
-		$contextAjax->addActionContext('teste','html')
-					->initContext();
-
-	}
-	
-	/**
-	 * Seta o layout padrão para as páginas de instituicão
-	 */
-	private function setLayout(){
-		return $this->layout()->setTemplate('layout/layout_menu_Instituicao');
-	}
-	
 	public function indexAction()
 	{
-		$this->setLayout();
+		$this->layout()->setTemplate('layout/layout_menu_Instituicao');
+		$donativos = self::$service->donativosPorInstituicao(1);
+		
+		return(new ViewModel())->setVariable('donativos',$donativos);
+		
 	}
 	
 	public function novoAction(){
 		$form = new DonativoForm();
-		$request = $this->getRequest();
 		$jsonRequest = true;
 		
 		return (new ViewModel())
@@ -62,25 +51,64 @@ class DonativoController extends AbstractDoctrineCrudController
 		->setVariable('form', $form)
 		->setVariable('e_json', $jsonRequest)
 		->setVariable('userID', (new AbstractService())->getUserLogado())
-		->setVariable('now', (new \DateTime("now")))
-		->setVariable('old', (new \DateTime("1900-01-01")));
+		->setVariable('now', (new \DateTime("now", (new DonativoService())->getTimeZoneBrasil())));
 		
 	}
 	
 	public function validaAjaxAction(){
-		$form = new DonativoForm();
 		$request = $this->getRequest();
-		$responde = $this->getResponse();
-		
+		$response = $this->getResponse();
+
 		if($request->isPost()){
 			$data = $request->getPost();
-			self::$service->save($data);
+			
+			$status = self::$service->save($data); 
+			
+			if($status == ""){
+				$response = \Zend\Json\Json::encode(array('success'=>1));
+			}else{
+				$response = \Zend\Json\Json::encode(array('error'=>$status));
+			}
+			
+			$jm = new JsonModel();
+			$jm->setTerminal(true);
+			$jm->setVariable('data',$response);
 		}
 		
-		return "{'insercao':'Ok'}";exit();
+		return $jm;
+	}
+	
+	public function desativarAction(){
+		$request = $this->getRequest();
+		$response = $this->getResponse();
+		$id = $request->getPost();
+		
+		if (self::$service->desativa($id->id)){
+			$response =  \Zend\Json\Json::encode(array("success"=>1));
+		}
+		
+		$jm = new JsonModel();
+		$jm->setTerminal(true);
+		$jm->setVariable('data',$response);
+		
+		return $jm;
+	}
+	
+	public function editarAction(){
+		
 	}
 	
 	public function doarAction(){
-		$this->setLayout();
+		$request = $this->getRequest();
+		$response = $this->getRresponse();
+		$data = $request->getPost();
+		$pessoa = $data->pessoa;
+		$instituicao = $data->instituicao;
+		$donativo = $data->donativo;
+		$dataTransacao = $data->diaAbertura;
+		$dataExpiracao = $data->diaAbertura + 30; //Expira em X dias;
+		$quantidade = $data->quantidade;
+		
 	}
+	
 }

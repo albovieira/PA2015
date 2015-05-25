@@ -23,11 +23,11 @@ class AbstractService {
      * @param String $association
      * @return multitype:
      */
-    protected function decompoeObjeto($objectArray, $association){
-        $associationArray = array();
-        foreach($objectArray->__get($association) as $decomposte):
-            array_push($associationArray,$decomposte);
-        endforeach;
-        return $associationArray;
-    }
+	protected function decompoeObjeto($objeto){
+		$associacao = array();
+		foreach($objeto as $instancia):
+			array_push($associacao, $instancia);
+		endforeach;
+		return $associacao;
+	}
 }

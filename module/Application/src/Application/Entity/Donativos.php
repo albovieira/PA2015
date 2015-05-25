@@ -118,7 +118,7 @@ class Donativos extends AbstractEntity{
 	
 	public function setDataInclusao($value){
 		
-		$this->dataInclu;
+		$this->dataInclu = $value;
 	}
 	
 	public function setDataDesativacao($value){
