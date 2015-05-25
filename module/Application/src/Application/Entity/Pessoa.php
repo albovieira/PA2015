@@ -237,14 +237,7 @@ class Pessoa extends AbstractEntity{
     }
 
 
-
-
-
-
     public function getInputFilter(){
-
-    }
-    public function getArrayCopy(){
 
     }
 

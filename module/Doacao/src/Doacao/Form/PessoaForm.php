@@ -15,11 +15,14 @@ use Zend\Form\Element\Radio;
 use Zend\Form\Element\Text;
 use Zend\Form\Form;
 use Zend\InputFilter\FileInput;
+use Zend\Stdlib\Hydrator\ClassMethods;
 
 class PessoaForm extends Form{
 
     public function __construct(){
         parent::__construct();
+        $this->setHydrator(new ClassMethods);
+
         $this->setAttributes(
             array(
                 'action' => '/pessoa/salvar-pessoa',
@@ -32,7 +35,7 @@ class PessoaForm extends Form{
         $this->add($element);
 
         $this->add(array(
-            'name' => 'nomePessoa',
+            'name' => 'nome',
             'options' => array(
                 'label' => 'Nome',
                 'label_attributes' => array(
@@ -41,6 +44,17 @@ class PessoaForm extends Form{
             ),
             'attributes' => array(
                 'type' => 'text',
+                'class'=> 'form-control'
+            ),
+        ));
+
+        $this->add(array(
+            'name' => 'dataNasc',
+            'options' => array(
+                'label' => 'Data Nascimento',
+            ),
+            'attributes' => array(
+                'type' => 'date',
                 'class'=> 'form-control'
             ),
         ));
@@ -58,9 +72,9 @@ class PessoaForm extends Form{
         ));
 
         $this->add(array(
-            'name' => 'dataNasc',
+            'name' => 'dataCad',
             'options' => array(
-                'label' => 'Data Nascimento',
+                'label' => 'Data Cadastro',
             ),
             'attributes' => array(
                 'type' => 'date',
@@ -69,24 +83,61 @@ class PessoaForm extends Form{
         ));
 
         $this->add(array(
+            'name' => 'email',
+            'options' => array(
+                'label' => 'Email',
+            ),
+            'attributes' => array(
+                'type' => 'text',
+                'class'=> 'form-control'
+            ),
+        ));
+
+        $element = new Hidden('usuario');
+        $this->add($element);
+
+
+        $this->add(array(
             'name' => 'foto',
             'options' => array(
                 'label' => 'Foto',
             ),
             'attributes' => array(
                 'type' => 'file',
-                'class'=> ''
+                'class'=> 'input-foto'
             ),
         ));
 
         $this->add(array(
             'name' => 'telCel',
             'options' => array(
-                'label' => 'Telefone',
+                'label' => 'Celular',
             ),
             'attributes' => array(
                 'type' => 'text',
                 'class'=> 'form-control'
+            ),
+        ));
+
+        $this->add(array(
+            'name' => 'telFixo',
+            'options' => array(
+                'label' => 'Telefone Fixo',
+            ),
+            'attributes' => array(
+                'type' => 'text',
+                'class'=> 'form-control'
+            ),
+        ));
+
+        $this->add(array(
+            'name' => 'salvar',
+            'options' => array(
+                'label' => 'Salvar',
+            ),
+            'attributes' => array(
+                'type' => 'text',
+                'class'=> 'btn btn-primary'
             ),
         ));
 

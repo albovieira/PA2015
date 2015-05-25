@@ -22,8 +22,6 @@ class PessoaDao extends AbstractDao{
     private $em;
 
     public function __construct(){
-
-        /** @var  em */
         $this->em = $this->getEntityManager();
     }
 

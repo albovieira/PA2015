@@ -93,7 +93,6 @@ class Module
                     ),
                 )
             );
-
             $form->get('submit')->setAttributes(array(
                 'class' => 'btn btn-success'
             ));

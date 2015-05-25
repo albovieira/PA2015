@@ -1,44 +1,103 @@
+<style xmlns="http://www.w3.org/1999/html">
+    
+    #lbl-img{
+        width: 165px;
+        height: 110px;
+        z-index: 3;
+        border: solid 1px #4285f4;
+        box-shadow: 1px 1px 1px;
+    }
+    .img-perfil{
+        height: 108px;
+        width: 164px;
+    }
+    .input-foto {
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        display: block;
+        position: relative;
+        /* z-index: 2; */
+        top: -90px;
+        background-color: blanchedalmond;
+    }
+    .input-foto:hover{
+        cursor: pointer;
+    }
+
+</style>
+
 <?php
 $form = $this->form;
 $form->prepare();
 ?>
 
 <?php echo $this->form()->openTag($form) ?>
+<?=$this->formInput($form->get('id'))?>
 
-<div class="col-xs-12">
-    <div class="col-xs-4"><?=$this->formLabel
-        ($form->get('foto'))?></div>
-    <div class="col-xs-8"><?=$this->formFile
-        ($form->get('foto'))?></div>
+<h3 class="text-info">Dados Pessoa</h3>
+<hr>
+<div class="col-xs-3">
+    <div class="col-xs-12">
+        <label for="foto" id="lbl-img" ><img class="img img-responsive img-perfil" src="<?php echo $this->img ?>" />
+            <?=$this->formFile($form->get('foto'))?>
+        </label>
+    </div>
 </div>
 
-<div class="col-xs-12">
-    <div class="col-xs-4"><?=$this->formLabel
-        ($form->get('nomePessoa'))?></div>
-    <div class="col-xs-8"><?=$this->formInput
-        ($form->get('nomePessoa'))?></div>
+<div class="col-xs-9">
+    <div class="col-xs-12">
+        <div class="col-xs-4"><?=$this->formLabel
+            ($form->get('nome'))?>
+        </div>
+        <div class="col-xs-8"><?=$this->formInput
+            ($form->get('nome'))?>
+        </div>
+    </div>
+
+    <div class="col-xs-12">
+        <div class="col-xs-4"><?=$this->formLabel
+            ($form->get('email'))?>
+        </div>
+        <div class="col-xs-8"><?=$this->formInput
+            ($form->get('email'))?>
+        </div>
+    </div>
+
+    <div class="col-xs-12">
+        <div class="col-xs-4"><?=$this->formLabel
+            ($form->get('sexo'))?>
+        </div>
+        <div class="col-xs-8"><?=$this->formRadio
+            ($form->get('sexo'))?>
+        </div>
+    </div>
+
+    <div class="col-xs-12">
+        <div class="col-xs-4"><?=$this->formLabel($form->get('telCel'))?>
+        </div>
+        <div class="col-xs-8"><?=$this->formInput
+            ($form->get('telCel'))?>
+        </div>
+    </div>
+
+    <div class="col-xs-12">
+        <div class="col-xs-4"><?=$this->formLabel($form->get('telFixo'))?>
+        </div>
+        <div class="col-xs-8"><?=$this->formInput
+            ($form->get('telFixo'))?>
+        </div>
+    </div>
+
+    <div class="col-xs-12">
+        <div class="col-xs-4"><?=$this->formLabel
+            ($form->get('dataNasc'))?></div>
+        <div class="col-xs-8"><?=$this->formDate
+            ($form->get('dataNasc'))?></div>
+    </div>
+
+    <div class="col-xs-2 pull-right">
+        <?=$this->formButton($form->get('salvar'))?>
+    </div>
 </div>
-
-<div class="col-xs-12">
-    <div class="col-xs-4"><?=$this->formLabel
-        ($form->get('sexo'))?></div>
-    <div class="col-xs-8"><?=$this->formRadio
-        ($form->get('sexo'))?></div>
-</div>
-
-<div class="col-xs-12">
-    <div class="col-xs-4"><?=$this->formLabel
-        ($form->get('telCel'))?></div>
-    <div class="col-xs-8"><?=$this->formInput
-        ($form->get('telCel'))?></div>
-</div>
-
-<div class="col-xs-12">
-    <div class="col-xs-4"><?=$this->formLabel
-        ($form->get('dataNasc'))?></div>
-    <div class="col-xs-8"><?=$this->formDate
-        ($form->get('dataNasc'))?></div>
-</div>
-
-
 <?php echo $this->form()->closeTag($form) ?>

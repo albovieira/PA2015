@@ -4,3 +4,4 @@
 composer
 zendframework
 autoload.php
+!generalcomponents
