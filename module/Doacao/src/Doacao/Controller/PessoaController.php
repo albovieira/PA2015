@@ -88,11 +88,8 @@ class PessoaController extends AbstractDoctrineCrudController
 
         if($request->isPost()){
             $post = $request->getPost();
-            //var_dump($post);
             if(count($post) > 0){
-                //alterar para uma classe somente de filtro
                 $pessoa = new Pessoa();
-
                 $formPessoa->setInputFilter($pessoa->getInputFilter());
                 $formPessoa->setData($post);
 
@@ -102,7 +99,7 @@ class PessoaController extends AbstractDoctrineCrudController
                         $objpessoa = $formPessoa->getData();
                     }else{
                         $pessoa->exchangeArray($post);
-                        $pessoa->setUsuario($this->getModel($this->getIdUserLogado(), 'Application\Entity\User'));
+                        $pessoa->setUsuario($this->getEntity($this->getIdUserLogado(), 'Application\Entity\User'));
                         $objpessoa = $pessoa;
                     }
                     $this->pessoaService->salvarPessoa($objpessoa);

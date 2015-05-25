@@ -36,6 +36,7 @@ class Module
 
 
         $this->personalizaLoginForm($e);
+        $this->personalizaChangeForm($e);
     }
 
     public function initAcl(MvcEvent $e) {
@@ -50,16 +51,16 @@ class Module
             $allResources = array_merge($resources, $allResources);
 
             foreach ($resources as $resource) {
-                if(!$acl ->hasResource($resource))
-                    $acl -> addResource(new \Zend\Permissions\Acl\Resource\GenericResource($resource));
+                if(!$acl->hasResource($resource))
+                    $acl->addResource(new \Zend\Permissions\Acl\Resource\GenericResource($resource));
             }
 
             foreach ($allResources as $resource) {
-                $acl -> allow($role, $resource);
+                $acl->allow($role, $resource);
             }
         }
 
-        $e -> getViewModel() -> acl = $acl;
+        $e->getViewModel()->acl = $acl;
 
     }
 
@@ -96,13 +97,44 @@ class Module
             $form->get('submit')->setAttributes(array(
                 'class' => 'btn btn-success'
             ));
-            // Do what you please with the form instance ($form)
         });
+
+        // aplicar filtros
         $events->attach('ZfcUser\Form\RegisterFilter','init', function($e) {
             $filter = $e->getTarget();
-            // Do what you please with the filter instance ($filter)
         });
     }
+
+    public function personalizaChangeForm(MvcEvent $e){
+        $events = $e->getApplication()->getEventManager()->getSharedManager();
+        $events->attach('ZfcUser\Form\ChangePassword','init', function($e) {
+            /** @var \ZfcUser\Form\ChangePassword $form */
+            $form = $e->getTarget();
+
+            $form->setAttribute('id', 'change-form');
+
+            $form->get('credential')->setLabel('Senha');
+            $form->get('credential')->setAttributes(array(
+                'class' => 'form-control'
+            ));
+
+            $form->get('newCredential')->setLabel('Nova senha');
+            $form->get('newCredential')->setAttributes(array(
+                'class' => 'form-control'
+            ));
+
+            $form->get('newCredentialVerify')->setLabel('Confirmar senha');
+            $form->get('newCredentialVerify')->setAttributes(array(
+                'class' => 'form-control'
+            ));
+
+            $form->get('submit')->setValue('Alterar Senha');
+            $form->get('submit')->setAttributes(array(
+                'class' => 'btn btn-success btn-alterar-senha'
+            ));
+        });
+    }
+
 
     public function getConfig()
     {
@@ -126,6 +158,7 @@ class Module
         $userRole = 'guest';
         $auth = new AuthenticationService();
         if($auth->getIdentity() != null){
+            //TODO pegar perfil para tratar problema de usuario logado poder acessar pessoa e insstituicao
             $userRole = 'admin';
         };
 
