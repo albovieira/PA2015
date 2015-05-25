@@ -10,7 +10,7 @@ use Zend\Mime\Decode;
 use Zend\View\Helper\ViewModel;
 
 class ServiceInstituicao extends AbstractService{
-	
+
 	private static $em;
 	private static $instituicao;
 	private $instituicaoDao;
@@ -30,9 +30,9 @@ class ServiceInstituicao extends AbstractService{
 		$usuario = $this->getUserLogado();
 		return $this->instituicaoDao->selectPorUsuario($usuario);
 	}
-		
+
 	public function save($data){
-		
+
 	}
 
 	public function buscaUmaInstituicao($id){
@@ -46,7 +46,7 @@ class ServiceInstituicao extends AbstractService{
 	public function listaDonativos(Instituicao $instituicao){
 		return $this->decompoeObjeto($instituicao->getDonativos());
 	}
-	
+
 	protected function decompoeObjeto($objeto){
 		$associacao = array();
 		foreach($objeto as $instancia):

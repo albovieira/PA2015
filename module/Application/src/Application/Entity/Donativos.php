@@ -66,24 +66,38 @@ class Donativos extends AbstractEntity{
 	 */
 	private $instituicao;
 	
-	/**
-	 * @return mixed
-	 */
-	public function getId()
-	{
+	
+	
+	public function getId(){
 		return $this->id;
+	}
+	
+	public function setId($value){
+		$this->id = $value;
 	}
 	
 	public function getDescricao(){
 		return $this->descricao;
 	}
 	
+	public function setDescricao($value){
+		$this->descricao = $value;
+	}
+	
 	public function getTitulo(){
 		return $this->titulo;
 	}
 	
+	public function setTitulo($value){
+		$this->titulo = $value;
+	}
+	
 	public function getQuantidade(){
 		return $this->quantidade;
+	}
+	
+	public function setQuantidade($value){
+		$this->quantidade = $value;
 	}
 	
 	public function getDataInclusao(){
@@ -101,143 +115,25 @@ class Donativos extends AbstractEntity{
 	public function getIdCategoria(){
 		return $this->idCategoria;
 	}
-
-	/**
-	 * @param mixed $id
-	 */
-	public function setId($id)
-	{
-		$this->id = $id;
+	
+	public function setIdCategoria($value){
+		$this->idCategoria = $value;
 	}
+	
+	public function setDataInclusao($value){
 
-	/**
-	 * @return mixed
-	 */
-	public function getDescricao()
-	{
-		return $this->descricao;
+		$this->dataInclu;
 	}
-
-	/**
-	 * @param mixed $descricao
-	 */
-	public function setDescricao($descricao)
-	{
-		$this->descricao = $descricao;
+	
+	public function setDataDesativacao($value){
+		$this->dataDesa = $value;
 	}
-
-	/**
-	 * @return mixed
-	 */
-	public function getTitulo()
-	{
-		return $this->titulo;
-	}
-
-	/**
-	 * @param mixed $titulo
-	 */
-	public function setTitulo($titulo)
-	{
-		$this->titulo = $titulo;
-	}
-
-	/**
-	 * @return mixed
-	 */
-	public function getQuantidade()
-	{
-		return $this->quantidade;
-	}
-
-	/**
-	 * @param mixed $quantidade
-	 */
-	public function setQuantidade($quantidade)
-	{
-		$this->quantidade = $quantidade;
-	}
-
-	/**
-	 * @return mixed
-	 */
-	public function getDataInclu()
-	{
-		return $this->dataInclu;
-	}
-
-	/**
-	 * @param mixed $dataInclu
-	 */
-	public function setDataInclu($dataInclu)
-	{
-		$this->dataInclu = $dataInclu;
-	}
-
-	/**
-	 * @return mixed
-	 */
-	public function getDataDesa()
-	{
-		return $this->dataDesa;
-	}
-
-	/**
-	 * @param mixed $dataDesa
-	 */
-	public function setDataDesa($dataDesa)
-	{
-		$this->dataDesa = $dataDesa;
-	}
-
-	/**
-	 * @return mixed
-	 */
-	public function getIdInstituicao()
-	{
-		return $this->idInstituicao;
-	}
-
-	/**
-	 * @param mixed $idInstituicao
-	 */
-	public function setIdInstituicao($idInstituicao)
-	{
-		$this->idInstituicao = $idInstituicao;
-	}
-
-	/**
-	 * @return mixed
-	 */
-	public function getIdCategoria()
-	{
-		return $this->idCategoria;
-	}
-
-	/**
-	 * @param mixed $idCategoria
-	 */
-	public function setIdCategoria($idCategoria)
-	{
-		$this->idCategoria = $idCategoria;
-	}
-
-	/**
-	 * @return mixed
-	 */
-	public function getInstituicao()
-	{
-		return $this->instituicao;
-	}
-
-	/**
-	 * @param mixed $instituicao
-	 */
-	public function setInstituicao($instituicao)
-	{
+	
+	public function setInstituicao(Instituicao $instituicao){
 		$this->instituicao = $instituicao;
 	}
-
+	
 	public function getInputFilter(){}
-
+	public function getArrayCopy(){}
+	
 }

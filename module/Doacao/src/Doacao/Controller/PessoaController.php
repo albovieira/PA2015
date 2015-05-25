@@ -212,9 +212,18 @@ class PessoaController extends AbstractDoctrineCrudController
         ));*/
     }
 
+    public function instituicaoPageAction(){
+        $id = 2;
+        $instituicaoService = new ServiceInstituicao();
 
-    public function testeAnexoAction(){
-        $this->layout()->setTemplate('layout/layout_pessoa');
-        return new ViewModel();
+        $instituicao = $instituicaoService->buscaUmaInstituicao($id);
+
+
+        return new ViewModel(
+            array(
+                'instituicoes' => $instituicao
+            )
+        );
     }
+
 }

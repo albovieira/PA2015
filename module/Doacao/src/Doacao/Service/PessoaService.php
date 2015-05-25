@@ -11,6 +11,8 @@ use Zend\Authentication\AuthenticationService;
 use Doacao\Dao\PessoaDao;
 use Application\Entity\Instituicao;
 
+//TODO retirar metodos de evento e instituicoes e passar para services especificos
+
 class PessoaService extends AbstractService{
 
     const QTDREGISTRO = 0;
@@ -44,6 +46,7 @@ class PessoaService extends AbstractService{
     }
 
     /**
+     *
      * @param $idPessoa
      * @param $idInstituicao
      * @return bool|null
@@ -59,6 +62,7 @@ class PessoaService extends AbstractService{
     }
 
     /**
+     * Autocomplete , instituicoes por nome
      * @param $term
      * @return mixed
      */
@@ -67,6 +71,8 @@ class PessoaService extends AbstractService{
     }
 
     /**
+     * Pesquisa instituicoes por nome
+     *
      * @param $term
      * @return array
      */
