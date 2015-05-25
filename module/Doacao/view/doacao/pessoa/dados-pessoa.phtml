@@ -54,6 +54,7 @@ $form->prepare();
         <div class="col-xs-8"><?=$this->formInput
             ($form->get('nome'))?>
         </div>
+        <?php echo $this->formElementErrors($this->form->get('nome'), array('class' => 'has-error')); ?>
     </div>
 
     <div class="col-xs-12 ajuste-form">

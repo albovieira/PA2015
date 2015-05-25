@@ -34,7 +34,12 @@ class ServiceInstituicao extends AbstractService{
 	public function save($data){
 		
 	}
-	
+
+	public function buscaUmaInstituicao($id){
+		$instituicao = $this->instituicaoDao->findById($id,'Application\Entity\Instituicao');
+		return $instituicao;
+	}
+
 	/**
 	 * @param Instituicao $object
 	 */

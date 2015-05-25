@@ -249,6 +249,17 @@ class Pessoa extends AbstractEntity{
             $this->inputFilter = $inputFilter;
         }
 
+        // acrescentar os outros filtros
+        $this->inputFilter->add(array(
+            'name' => 'nome',
+            'required' => true,
+            'validators' => array(
+                array(
+                    'name' => 'NotEmpty',
+                )
+            )
+        ));
+
         return $this->inputFilter;
 
     }

@@ -1,6 +1,8 @@
 /**
  * Created by Albo on 11/05/2015.
  */
+// responsavel pela geracao da tela alterar senha via ajax
+
 var alterarSenha = {
     aplicarEventos: function () {
        alterarSenha.bindAlterarSenhaForm();

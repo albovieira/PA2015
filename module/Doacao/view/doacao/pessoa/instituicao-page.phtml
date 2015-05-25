@@ -1,0 +1,55 @@
+
+
+
+<div class='row-fluid'>
+    <div class="col-xs-12" style="margin-bottom: 50px">
+        <form id="pesquisar" class="navbar-form pull-left" method="get">
+            <div class="input-group" style="max-width:470px;">
+                <input type="text" class="form-control" placeholder="Pesquisar" name="buscaPesquisa" id="buscaPesquisa" style="width: 260px">
+                <div class="input-group-btn">
+                    <button class="btn btn-default btn-primary" id="btnPesquisar" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                    <span style="margin-left: 10px"><input type="radio" name="filtro" value="todos" id="todos" /><label for="todos" style="padding-left: 5px">Instituicoes para Seguir</label></span>
+                    <span style="margin-left: 10px"><input type="radio" name="filtro" value="minhas" id="minhas" /><label for="minhas" style="padding-left: 5px">Minhas instituições</label></span>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!--Inicio Instituicao -->
+<div id="containerInstituicao" class='row-fluid'>
+
+    <?php
+    if($instituicoes){
+        foreach($instituicoes as $instituicao){
+            echo "
+                <div class='col-md-4 col-sm-6'>
+                    <form class='formSeguir' method='post'>
+                    <input class='instituicaoID' type='hidden' name='id' value='".$instituicao['id'] ."'>
+
+                    <div class='panel panel-default'>
+                        <div class='panel-heading'><a href='#' class='pull-right'>Ver mais</a> <h4>". $instituicao['nomeFantasia']."</h4></div>
+                        <div class='panel-body'>
+                                <p>" . $instituicao['descricao'] ."<img src={$instituicao['foto']} class='img-circle pull-right img-profile'> <a href='#'></a></p>
+                                <div class='clearfix'></div>
+                                <hr>
+                                <input type='button' class='btn btn-primary btn-seguir' value='Seguir'>
+                        </div>
+                    </div>
+                    </form>
+                </div>"
+            ;
+        }
+    }
+    else{
+        echo '<div class="container">';
+        echo "<strong>Finalize seu cadastro</strong><br>";
+        echo '<a href="/pessoa/minha-conta" >Meus dados</a>';
+        echo '</div>';
+    }
+    ?>
+
+</div>
+<!--Fim Instituicao -->
+
+<script src="/js/doacao/pessoaInstituicao.js"></script>

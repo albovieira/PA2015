@@ -1,6 +1,7 @@
 /**
  * Created by Albo on 11/05/2015.
  */
+// gera o conteudo para dados pessoa via ajax
 var dadosPessoa = {
     aplicarEventos: function () {
        dadosPessoa.bindPessoaForm();
