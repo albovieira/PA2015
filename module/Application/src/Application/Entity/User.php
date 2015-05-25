@@ -17,7 +17,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  */
 
-class User implements UserInterface,IdentityInterface
+class User implements UserInterface
 {
     /**
      * @var int

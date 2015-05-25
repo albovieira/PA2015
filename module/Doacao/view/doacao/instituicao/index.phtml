@@ -2,7 +2,34 @@
 <br><br><br><br>
 <div class="col-xs-12">
     <div class="col-lg-3">
-    	<?php echo $perfil;?>
+    	<?php 
+    	$id = $perfil->getId();
+    	$razaoSocial = $perfil->getRazaoSocial();
+    	$nomeFantasia = $perfil->getNomeFantasia();
+    	$descricao = $perfil->getDescricao();
+    	$email = $perfil->getEmail();
+    	$site = $perfil->getSite();
+    	$foto = $perfil->getFoto();
+    	$dataCadastro = $perfil->getDataCadastro();
+    	
+    	echo "
+		<div class='sidebar-flat-perfil panel label-primary'>
+            <br>
+            <div class='emulate-img label-default center-block img-circle'></div>
+            <br>
+            <li class='list-group-item-special' data-toggle='collapse' href='#perfilcollapse' aria-expanded='false' aria-controls='perfilcollapse'>
+				<b>Perfil <i class='caret'></i></b>
+			</li>
+            <ul class='list-group list-flat in' id='perfilcollapse' data-toggle='collapse'>
+                <li class='list-group-item'><span class='glyphicon glyphicon-user'></span> {$razaoSocial}</li>
+                <li class='list-group-item'><span class='glyphicon glyphicon-credit-card'></span> {$nomeFantasia}</li>
+                <li class='list-group-item'><span class='glyphicon glyphicon-envelope'></span> {$email}</li>
+                <li class='list-group-item'><span class='glyphicon glyphicon-link'></span> {$site}</li>
+                <li class='list-group-item'><span class='glyphicon glyphicon-calendar'></span> Membro desde {$dataCadastro->format('d/m/Y')}</li>
+                <li class='list-group-item'><span class='glyphicon glyphicon-book'></span> {$descricao}</li>
+            </ul>
+        </div>
+		";?>
     </div>
     <div class="col-lg-5">
         <div class="panel padding-zero panel-default">
@@ -14,7 +41,36 @@
                 	<span class="glyphicon glyphicon-plus"></span>
                 </button>
             </li>
-            <?php echo $listaDonativos;?>
+            <?php 
+            foreach ($donativos as $item):
+	            $id = $item->getId();
+	            $titulo = $item->getTitulo();
+	            $descricao = $item->getDescricao();
+	            $quantidade = $item->getQuantidade();
+	            $dataInclu = $item->getDataInclusao()->format('d/m/Y');
+	            $dataDesa = $item->getDataDesativacao()->format('d/m/Y');
+	            echo
+		            "<li class='list-group-item list-group-item-special' data-toggle='collapse' href='#donativo-{$id}' aria-expanded='false' aria-controls='perfilcollapse'>
+		            {$titulo}
+		            <br>
+		            <sub>Incluído em: {$dataInclu}</sub>
+		            <span class='badge pull-rigth'>Pedidos: {$quantidade}</span><span class='badge pull-rigth label-info'>Doados: 36</span>
+		            </li>
+		            <ul class='list-flat list-group in' data-toggle='collapse' id='donativo-{$id}'>
+		            <li class='list-group-item panel-body'>
+		            {$descricao}
+		            <br>
+		            <sub>Expira em: {$dataDesa}</sub>
+		            <div class='pull-right btn-group btn-group-sm'>
+		            <a class='btn btn-warning' href=".$this->url('donativo',array('action'=>'ditar')).">Gerenciar</a>
+		            <a class='btn btn-danger' onclick='desativa_donativo({$id})'>Desativar</a>
+		            </div>
+		            </li>
+		            </ul>
+		            ";
+            endforeach;
+            
+            ?>
         </div>
     </div>
     <div class="col-lg-4">

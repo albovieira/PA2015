@@ -67,14 +67,10 @@ class Instituicao extends AbstractEntity{
 	private $dataCadastro;
 	
 	/**
-	 * @ORM\Column(name="usuarios_id",type="integer")
+	 * @ORM\OneToOne(targetEntity="User")
+	 * @ORM\JoinColumn(name="usuarios_id", referencedColumnName="user_id")
 	 */
-	private $idUsuario;
-	/*
-	/**
-	 * @ORM\OneToOne(targetEntity="Usuario", mappedBy="usuario")
-	 /*/
-//	private $usuario;
+	private $usuario;
 	
 	/**
 	 * @ORM\OneToMany(targetEntity="Enderecos", mappedBy="instituicao")
@@ -85,16 +81,11 @@ class Instituicao extends AbstractEntity{
 	 * @ORM\OneToMany(targetEntity="Donativos",mappedBy="instituicao")
 	 */
 	private $donativos;
-
 	
 	public function __construct(){
 		$this->enderecos = new ArrayCollection();
 		$this->donativos = new ArrayCollection();
 	}
-	
-	
-	
-	public function getInputFilter(){}
 	
 	/**
 	 *
@@ -253,16 +244,16 @@ class Instituicao extends AbstractEntity{
 	 *
 	 * @return the integer
 	 */
-	public function getIdUsuario() {
-		return $this->idUsuario;
+	public function getUsuario() {
+		return $this->usuario;
 	}
 	
 	/**
 	 *
 	 * @param integer $idUsuario        	
 	 */
-	public function setIdUsuario($idUsuario) {
-		$this->idUsuario = $idUsuario;
+	public function setUsuario($usuario) {
+		$this->usuario = $usuario;
 		return $this;
 	}
 	
@@ -276,30 +267,13 @@ class Instituicao extends AbstractEntity{
 	
 	/**
 	 *
-	 * @param object $enderecos        	
-	 */
-	public function setEnderecos($enderecos) {
-		$this->enderecos = $enderecos;
-		return $this;
-	}
-	
-	/**
-	 *
-	 * @return the unknown_type
+	 * @return the Object
 	 */
 	public function getDonativos() {
 		return $this->donativos;
 	}
 	
-	/**
-	 *
-	 * @param unknown_type $donativos        	
-	 */
-	public function setDonativos($donativos) {
-		$this->donativos = $donativos;
-		return $this;
-	}
-	
-	
+	public function getArrayCopy(){}
+	public function getInputFilter(){}
 }
 ?>

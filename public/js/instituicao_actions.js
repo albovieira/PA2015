@@ -1,18 +1,22 @@
 $(function(){
-    $('form').submit(function(event){
-    	var dataSerial = $(':input').serialize();
+    $('#formdonativos').submit(function(event){
+    	var dataSerial = $('form').serialize();
     	$.ajax({
-    		url : $('form').attr('action'),
-    		dataType : 'json',
+    		url : 'https://sisdo.com/donativo/validaajax',
     		type: 'POST',
+    		dataType: 'json',
+    		async: true,
     		data: dataSerial,
     		success: function(data,textStatus){
-    			alert(textStatus);
+    			if(data.success == 1){
+    				alert('Donativo cadastrado com sucesso');
+    			};
+    		},
+    		error: function(xhr,txt){
+    			alert("Não foi possível validar a requisição.");
     		}
     		
     	});
-    	
-    	event.preventDefault;
-    	return true;
+    	return false;
     });
 });
