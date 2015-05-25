@@ -66,9 +66,11 @@ class Donativos extends AbstractEntity{
 	 */
 	private $instituicao;
 	
-	
-	
-	public function getId(){
+	/**
+	 * @return mixed
+	 */
+	public function getId()
+	{
 		return $this->id;
 	}
 	
@@ -99,41 +101,143 @@ class Donativos extends AbstractEntity{
 	public function getIdCategoria(){
 		return $this->idCategoria;
 	}
-	
-	public function setId($value){
-		$this->id = $value;
+
+	/**
+	 * @param mixed $id
+	 */
+	public function setId($id)
+	{
+		$this->id = $id;
 	}
-	
-	public function setDescricao($value){
-		$this->descricao = $value;
+
+	/**
+	 * @return mixed
+	 */
+	public function getDescricao()
+	{
+		return $this->descricao;
 	}
-	
-	public function setTitulo($value){
-		$this->titulo = $value;
+
+	/**
+	 * @param mixed $descricao
+	 */
+	public function setDescricao($descricao)
+	{
+		$this->descricao = $descricao;
 	}
-	
-	public function setQuantidade($value){
-		$this->quantidade = $value;
+
+	/**
+	 * @return mixed
+	 */
+	public function getTitulo()
+	{
+		return $this->titulo;
 	}
-	
-	public function setDataInclusao($value){
-		
-		$this->dataInclu = $value;
+
+	/**
+	 * @param mixed $titulo
+	 */
+	public function setTitulo($titulo)
+	{
+		$this->titulo = $titulo;
 	}
-	
-	public function setDataDesativacao($value){
-		$this->dataDesa = $value;
+
+	/**
+	 * @return mixed
+	 */
+	public function getQuantidade()
+	{
+		return $this->quantidade;
 	}
-	
-	public function setIdCategoria($value){
-		$this->idCategoria = $value;
+
+	/**
+	 * @param mixed $quantidade
+	 */
+	public function setQuantidade($quantidade)
+	{
+		$this->quantidade = $quantidade;
 	}
-	
-	public function setInstituicao(Instituicao $instituicao){
+
+	/**
+	 * @return mixed
+	 */
+	public function getDataInclu()
+	{
+		return $this->dataInclu;
+	}
+
+	/**
+	 * @param mixed $dataInclu
+	 */
+	public function setDataInclu($dataInclu)
+	{
+		$this->dataInclu = $dataInclu;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getDataDesa()
+	{
+		return $this->dataDesa;
+	}
+
+	/**
+	 * @param mixed $dataDesa
+	 */
+	public function setDataDesa($dataDesa)
+	{
+		$this->dataDesa = $dataDesa;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getIdInstituicao()
+	{
+		return $this->idInstituicao;
+	}
+
+	/**
+	 * @param mixed $idInstituicao
+	 */
+	public function setIdInstituicao($idInstituicao)
+	{
+		$this->idInstituicao = $idInstituicao;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getIdCategoria()
+	{
+		return $this->idCategoria;
+	}
+
+	/**
+	 * @param mixed $idCategoria
+	 */
+	public function setIdCategoria($idCategoria)
+	{
+		$this->idCategoria = $idCategoria;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getInstituicao()
+	{
+		return $this->instituicao;
+	}
+
+	/**
+	 * @param mixed $instituicao
+	 */
+	public function setInstituicao($instituicao)
+	{
 		$this->instituicao = $instituicao;
 	}
-	
+
 	public function getInputFilter(){}
-	public function getArrayCopy(){}
-	
+
 }
