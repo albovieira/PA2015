@@ -36,6 +36,18 @@ return array(
                     ),
                 ),
             ),
+
+            'minhaconta' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route'    => '/pessoa/minha-conta',
+                    'defaults' => array(
+                        'controller' => 'Doacao\Controller\Pessoa',
+                        'action'     => 'minha-conta',
+                    ),
+                ),
+            ),
+
             'pessoa' => array(
                 'type' => 'segment',
                 'options' => array(
