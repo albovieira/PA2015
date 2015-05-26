@@ -67,7 +67,6 @@ class Donativos extends AbstractEntity{
 	private $instituicao;
 	
 	
-	
 	public function getId(){
 		return $this->id;
 	}
@@ -100,11 +99,11 @@ class Donativos extends AbstractEntity{
 		$this->quantidade = $value;
 	}
 	
-	public function getDataInclusao(){
+	public function getDataInclu(){
 		return $this->dataInclu;
 	}
 	
-	public function getDataDesativacao(){
+	public function getDataDesa(){
 		return $this->dataDesa;
 	}
 	
@@ -120,12 +119,11 @@ class Donativos extends AbstractEntity{
 		$this->idCategoria = $value;
 	}
 	
-	public function setDataInclusao($value){
-
-		$this->dataInclu;
+	public function setDataInclu($value){
+		$this->dataInclu = $value;
 	}
 	
-	public function setDataDesativacao($value){
+	public function setDataDesa($value){
 		$this->dataDesa = $value;
 	}
 	

@@ -49,7 +49,7 @@ return array(
             'instituicao' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route'    => '/instituicao[/][/:action]',
+                    'route'    => '/instituicao[/:action]',
                     'defaults' => array(
                         'controller' => 'Doacao\Controller\Instituicao',
                         'action'     => 'index',
@@ -60,7 +60,7 @@ return array(
             'donativo' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route'    => '/donativo[/][/:action]',
+                    'route'    => '/donativo[/:action][/page/:page]',
                     'defaults' => array(
                         'controller' => 'Doacao\Controller\Donativo',
                         'action'     => 'index',
@@ -153,4 +153,9 @@ return array(
             ),
         ),
     ),
+	'view_helpers'=>array(
+			'invokables'=>array(
+				'PaginationHelper' => 'Doacao\View\Helper\PaginationHelper'
+			),
+	)
 );

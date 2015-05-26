@@ -27,9 +27,39 @@ var instituicao = {
 				},
 			});
 		},
+		exclui_donativo:function(id){
+			$.ajax({
+				url: 'https://sisdo.com/donativo/excluir',
+				type: 'POST',
+				dataType: 'json',
+				data: {id:id},
+				success:function(data,txt){
+					alert('Donativo Excluído com sucesso!');
+				},
+				error:function(xhr,txt){
+					alert("Não foi possível excluir!");
+				}
+			});
+		}
 };
 
-$(function(){
-	instituicao.open();
-	instituicao.desativa_donativo(id);
-});
+var util = {
+		dialog:function(type, msg){
+			var modal = "";
+			var classe = "";			
+			switch(type){
+			case 'error':
+				classe = "alert-danger"; 
+			break;
+			case 'success':
+				classe = "alert-success";
+				break;
+			}
+			
+			var modal = '<div role="alert" class="alert' + classe +' alert-dismissible fade in">' +
+		      			'<button aria-label="Close" data-dismiss="alert" class="close" type="button"><span aria-hidden="true">×</span></button>' +
+		      			msg + '</div>';
+			
+			return modal;
+		}
+}
