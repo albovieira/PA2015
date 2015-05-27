@@ -49,7 +49,7 @@ class Donativos extends AbstractEntity{
 	 * @ORM\Column(name="dt_desativacao_dnv",type="datetime")
 	 */
 	private $dataDesa;
-	
+
 	/**
 	 * @ORM\Column(name="id_instituicao",type="integer")
 	 */
@@ -103,8 +103,16 @@ class Donativos extends AbstractEntity{
 		return $this->dataInclu;
 	}
 	
+	public function setDataInclu($value){
+		$this->dataInclu = $value;
+	}
+	
 	public function getDataDesa(){
 		return $this->dataDesa;
+	}
+	
+	public function setDataDesa($value){
+		$this->dataDesa = $value;
 	}
 	
 	public function getIdInstituicao(){
@@ -119,18 +127,18 @@ class Donativos extends AbstractEntity{
 		$this->idCategoria = $value;
 	}
 	
-	public function setDataInclu($value){
-		$this->dataInclu = $value;
+	/**
+	 * @return mixed
+	 */
+	public function getInstituicao()
+	{
+		return $this->instituicao;
 	}
-	
-	public function setDataDesa($value){
-		$this->dataDesa = $value;
-	}
-	
+
 	public function setInstituicao(Instituicao $instituicao){
 		$this->instituicao = $instituicao;
 	}
-	
+
 	public function getInputFilter(){}
 	public function getArrayCopy(){}
 	

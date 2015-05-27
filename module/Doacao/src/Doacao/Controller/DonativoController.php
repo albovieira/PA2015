@@ -9,8 +9,10 @@
 
 namespace Doacao\Controller;
 
+use Application\Proxy\__CG__\Application\Entity\Instituicao;
 use Components\MVC\Controller\AbstractCrudController;
 use Components\MVC\Controller\AbstractDoctrineCrudController;
+use Doacao\Service\ServiceInstituicao;
 use Doctrine\DBAL\Schema\View;
 use Zend\Authentication\AuthenticationService;
 use Zend\Paginator\Adapter\ArrayAdapter;
@@ -134,6 +136,16 @@ class DonativoController extends AbstractDoctrineCrudController
 		$filtro = $this->params()->fromQuery('id');
 
 
+		$instituicaoService = new ServiceInstituicao();
+		$instituicao = $instituicaoService->buscaUmaInstituicao($filtro);
+
+		$donativos = self::$service->donativosInstituicaoById($instituicao);
+
+		return new JsonModel(
+			array(
+				'donativos' => $donativos
+			)
+		);
 	}
 	
 }

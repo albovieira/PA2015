@@ -175,11 +175,49 @@ var pessoaInstituicao = {
     },
 
     instituicaoVerMais: function(){
-        $.ajax({
-            type: 'GET',
-            url:'/pessoa/pesquisar-instituicao',
-            success: function (data) {
+         /*
+        <div class="col-sm-4">
+        <div class="list-group">
+        <a href="#" class="list-group-item active">
+        <h4 class="list-group-item-heading">List group item heading</h4>
+        <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+        </a>
+        <a href="#" class="list-group-item">
+        <h4 class="list-group-item-heading">List group item heading</h4>
+        <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+        </a>
+        <a href="#" class="list-group-item">
+        <h4 class="list-group-item-heading">List group item heading</h4>
+        <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+        </a>
+        </div>
+        </div>*/
 
+        var $_GET = getQueryParams(document.location.search);
+        var idInstituicao = {'id' : $_GET};
+        $.ajax({
+            data: idInstituicao,
+            type: 'GET',
+            url:'/donativo/get-donativos',
+            success: function (data) {
+                var html;
+                var arrEventos = [];
+                $.each( data, function( key, value ) {
+                    console.log(data.donativos);
+                    html = "" +
+                    "<div class='col-xs-12'>" +
+                    "<div class='list-group'>" +
+                    "<a href='#' class='list-group-item '>" +
+                    "<h4 class='list-group-item-heading'>"+data.donativos.titulo+"</h4>" +
+                    "<p class='list-group-item-text'>"+data.donativos.descricao+"</p><br>" +
+                    "<p class='list-group-item-text'><strong>Doação disponivel até: "+data.donativos.dataDesa+"<strong></strong></p><br>" +
+                    "<button class='btn btn-primary'>Doar</button>" +
+                    "</a>" +
+                    "</div>" +
+                    "</div>";
+                });
+
+                $('#donativoConteudo').html(html);
             }
         });
     }
@@ -190,3 +228,18 @@ $(document).ready(function () {
     pessoaInstituicao.aplicarEventos();
     pessoaInstituicao.aplicaSeguir();
 });
+
+
+function getQueryParams(qs) {
+    qs = qs.split("+").join(" ");
+    var params = {},
+        tokens,
+        re = /[?&]?([^=]+)=([^&]*)/g;
+
+    while (tokens = re.exec(qs)) {
+        params[decodeURIComponent(tokens[1])]
+            = decodeURIComponent(tokens[2]);
+    }
+
+    return params;
+}

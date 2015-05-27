@@ -24,11 +24,11 @@ class DonativoDAO extends AbstractDao{
 	
 	public function donativosInstituicao($instituicaoId){
 		$donativos = $this->em->getRepository('Application\Entity\Donativos')
-		->findBy(array('instituicao'=>$instituicaoId));
-		
+		->findBy(array('idInstituicao'=>$instituicaoId));
+
 		return $donativos;
 	}
-	
+
 	public function categorias(){
 		$conn = $this->em->getConnection();
 		$categorias = $conn->fetchAll("SELECT id_categoria, desc_categoria FROM tb_categoria_donativo");
