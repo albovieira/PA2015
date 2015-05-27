@@ -17,11 +17,19 @@ class DonativoService extends AbstractService{
 		$this->instituicao = (new ServiceInstituicao())->getObjInstituicao();
 	}
 	
+	public function retornaData($data){
+		return new \DateTime($data, new \DateTimeZone('America/Sao_Paulo'));
+	}
+	
+	private function calculaDataEntrega($data,$tempo){
+		return $data->add(new \DateInterval("P{$tempo}D"));
+	}
+	
 	public function save($data){
 		$resposta = false;
 		$dataResposta = $this->retornaData($data->dataInclu);
 		$tempo = $data->tempo_maximo;
-
+		
 		//Seta todos os dados da entity
 		$this->donativo->setTitulo($data->titulo);
 		$this->donativo->setDescricao($data->descricao);
@@ -30,22 +38,14 @@ class DonativoService extends AbstractService{
 		$this->donativo->setInstituicao($this->instituicao);
 		$this->donativo->setIdCategoria($data->categorias);
 		$this->donativo->setDataDesa($this->calculaDataEntrega($dataResposta, $tempo));
-
+				
 		if($this->dao->save($this->donativo)){
 			$resposta = true;
 		}
-
+		
 		return $resposta;
-
-
-	}
-	
-	public function retornaData($data){
-		return new \DateTime($data, new \DateTimeZone('America/Sao_Paulo'));
-	}
-	
-	private function calculaDataEntrega($data,$tempo){
-		return $data->add(new \DateInterval("P{$tempo}D"));
+		
+		
 	}
 	
 	public function listaCategorias(){
@@ -61,21 +61,10 @@ class DonativoService extends AbstractService{
 		return $this->dao->donativosInstituicao($id);	
 	}
 	
-	public function pagina($page){
-
-		$limit = 5;
-		$offset = ($page == 0) ? 0 : ($page - 1) * $limit;
-		$em = $this->dao->getEntityManager();
-		$pagedDonativos = $this->getPagedDonativos($offset,$limit);
-
-		return $pagedDonativos;
-
-	}
-	
 	public function getPagedDonativos($offset = 0, $limit = 0){
 		$em = $this->dao->getEntityManager();
 		$qb = $em->createQueryBuilder();
-
+		
 		$qb->select('d')
 			->from('\Application\Entity\Donativos','d')
 			->where('d.instituicao = ?0')
@@ -83,10 +72,21 @@ class DonativoService extends AbstractService{
 			->setFirstResult($offset)
 			->setParameter(0,$this->instituicao);
 		$query = $qb->getQuery();
-
+		
 		$paginator = new Paginator($query);
-
+		
 		return $paginator;
+	}
+	
+	public function pagina($page){
+		
+		$limit = 5;
+		$offset = ($page == 0) ? 0 : ($page - 1) * $limit;
+		$em = $this->dao->getEntityManager();
+		$pagedDonativos = $this->getPagedDonativos($offset,$limit);
+		
+		return $pagedDonativos;
+		
 	}
 	
 	public function desativa($id){

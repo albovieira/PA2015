@@ -12,8 +12,6 @@ namespace Doacao\Controller;
 use Components\MVC\Controller\AbstractCrudController;
 use Components\MVC\Controller\AbstractDoctrineCrudController;
 use Doctrine\DBAL\Schema\View;
-use Tropa\Form\LanternaForm;
-use Tropa\Model\Lanterna;
 use Zend\Authentication\AuthenticationService;
 use Zend\Paginator\Adapter\ArrayAdapter;
 use Zend\Paginator\Paginator;
@@ -24,6 +22,7 @@ use Application\Entity\Donativos;
 use Doacao\Form\DonativoForm;
 use Doacao\Service\DonativoService;
 use Application\Service\AbstractService;
+use Doacao\Service\TransacaoService;
 
 class DonativoController extends AbstractDoctrineCrudController
 {
@@ -36,9 +35,14 @@ class DonativoController extends AbstractDoctrineCrudController
 	public function indexAction()
 	{
 		$this->layout()->setTemplate('layout/layout_menu_Instituicao');
-		$donativos = self::$service->donativosPorInstituicao(1);
+		$page = $this->params()->fromRoute('page',1);
+		$paginacao = self::$service->pagina($page);
+		$donativos = self::$service->donativosPorInstituicao();
 		
-		return(new ViewModel())->setVariable('donativos',$donativos);
+		$vm = new ViewModel();
+		$vm->setVariable('page', $page);
+		$vm->setVariable('donativos', $paginacao);
+		return $vm;
 		
 	}
 	
@@ -51,7 +55,7 @@ class DonativoController extends AbstractDoctrineCrudController
 		->setVariable('form', $form)
 		->setVariable('e_json', $jsonRequest)
 		->setVariable('userID', (new AbstractService())->getUserLogado())
-		->setVariable('now', (new \DateTime("now", (new DonativoService())->getTimeZoneBrasil())));
+		->setVariable('now', self::$service->retornaData("now"));
 		
 	}
 	
@@ -96,6 +100,21 @@ class DonativoController extends AbstractDoctrineCrudController
 	
 	public function editarAction(){
 		
+	}
+	
+	public function excluirAction(){
+		$request = $this->getRequest();
+		$response = $this->getResponse();
+		$id = $request->getPost();
+		
+		if(self::$service->exclui($id->id)){
+			$response = \Zend\Json\Json::encode(array("success"=>1));
+		}
+		$jm = new JsonModel();
+		$jm->setTerminal(true);
+		$jm->setVariable('data',$response);
+		
+		return $jm;
 	}
 	
 	public function doarAction(){
