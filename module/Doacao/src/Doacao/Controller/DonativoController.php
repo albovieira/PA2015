@@ -129,5 +129,11 @@ class DonativoController extends AbstractDoctrineCrudController
 		$quantidade = $data->quantidade;
 		
 	}
+
+	public function getDonativosAction(){
+		$filtro = $this->params()->fromQuery('id');
+
+
+	}
 	
 }

@@ -191,11 +191,10 @@ class PessoaController extends AbstractDoctrineCrudController
     public function instituicaoPageAction(){
         $this->layout()->setTemplate('layout/layout_pessoa');
 
-        $id = 2;
+        $id = $this->params()->fromQuery('id');
         $instituicaoService = new ServiceInstituicao();
-
         $instituicao = $instituicaoService->buscaUmaInstituicao($id);
-
+        
 
         return new ViewModel(
             array(

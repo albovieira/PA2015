@@ -8,7 +8,7 @@ var pessoaInstituicao = {
         this.bindFiltroMinhas();
         this.autocomplete();
         this.bindClickBuscaInstituicao();
-
+        this.instituicaoVerMais();
     },
     bindFiltroTodos: function (){
         $('#todos').click(function () {
@@ -24,7 +24,7 @@ var pessoaInstituicao = {
                         "<form class='formSeguir' method='post'>"+
                         "<input class='instituicaoID' type='hidden' name='id' value='"+data.instituicoes[i].id +"'>" +
                         "<div class='panel panel-default'>"+
-                        "<div class='panel-heading'><a href='#' class='pull-right'>Ver mais</a> <h4>"+ data.instituicoes[i].nomeFantasia +"</h4></div>"+
+                        "<div class='panel-heading'><a href='/pessoa/instituicao-page?id="+data.instituicoes[i].id + "' class='pull-right'>Ver mais</a> <h4>"+ data.instituicoes[i].nomeFantasia +"</h4></div>"+
                         "<div class='panel-body'>" +
                         "<p>" + data.instituicoes[i].descricao +
                         "<img src="+ data.instituicoes[i].foto + " class='img-circle pull-right img-profile'> <a href='#'></a></p>"+
@@ -58,7 +58,7 @@ var pessoaInstituicao = {
                         "<form class='formSeguir' method='post'>"+
                         "<input class='instituicaoID' type='hidden' name='id' value='"+data.instituicoes[i].id +"'>" +
                         "<div class='panel panel-default'>"+
-                        "<div class='panel-heading'><a href='#' class='pull-right'>Ver mais</a> <h4>"+ data.instituicoes[i].nomeFantasia +"</h4></div>"+
+                        "<div class='panel-heading'><a href='/pessoa/instituicao-page?id="+data.instituicoes[i].id + "' class='pull-right'>Ver mais</a> <h4>"+ data.instituicoes[i].nomeFantasia +"</h4></div>"+
                         "<div class='panel-body'>" +
                         "<p>" + data.instituicoes[i].descricao +
                         "<img src="+ data.instituicoes[i].foto + " class='img-circle pull-right img-profile'> <a href='#'></a></p>"+
@@ -105,7 +105,6 @@ var pessoaInstituicao = {
 
     autocomplete: function(){
         $('#buscaPesquisa').autocomplete({
-
             minLength: 1,
             source: function (request, response) {
                 var DTO = { "term": request.term };
@@ -173,6 +172,16 @@ var pessoaInstituicao = {
     
     limpaModal: function () {
         
+    },
+
+    instituicaoVerMais: function(){
+        $.ajax({
+            type: 'GET',
+            url:'/pessoa/pesquisar-instituicao',
+            success: function (data) {
+
+            }
+        });
     }
 
 }
