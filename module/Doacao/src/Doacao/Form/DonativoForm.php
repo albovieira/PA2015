@@ -20,10 +20,6 @@ class DonativoForm extends Form{
 			'type'=>'Hidden'
 		));
 		$this->add(array(
-			'name'=>'idInstituicao',
-			'type'=>'Hidden'
-		));
-		$this->add(array(
 			'name'=>'titulo',
 			'type'=>'Text',
 			'options'=>array(
@@ -77,9 +73,10 @@ class DonativoForm extends Form{
 			'name'=>'submit',
 			'type'=>'Submit',
 			'attributes'=>array(
-				'value'=>'Savar',
+				'value'=>'Salvar',
 				'id'=>'submitbutton',
 				'class'=>'btn btn-info',
+				'onsubmit'=>'donativo.envia_formulario()'
 			),
 		));
 		

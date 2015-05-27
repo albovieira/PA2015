@@ -53,6 +53,5 @@ class InstituicaoDao extends AbstractDao{
 
         return $arrayObjs;
     }
-
-
+    
 }

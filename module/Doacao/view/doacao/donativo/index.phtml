@@ -1,3 +1,11 @@
+<?php 
+use Doacao\View\Helper\PaginationHelper;
+use Doacao\Service\TransacaoService;
+
+$transacao = new TransacaoService();
+var_dump($transacao);
+?>
+<br><br><br><br><br>
 <div class="col-lg-5">
         <div class="panel padding-zero panel-default">
             <i></i>
@@ -14,14 +22,15 @@
 	            $titulo = $item->getTitulo();
 	            $descricao = $item->getDescricao();
 	            $quantidade = $item->getQuantidade();
-	            $dataInclu = $item->getDataInclusao()->format('d/m/Y');
-	            $dataDesa = $item->getDataDesativacao()->format('d/m/Y');
+	            $dataInclu = $item->getDataInclu()->format('d/m/Y');
+	            $dataDesa = $item->getDataDesa()->format('d/m/Y');
+	            $oferecidos = $transacao->totalPorDonativo($id);
 	            echo
 		            "<li class='list-group-item list-group-item-special' data-toggle='collapse' href='#donativo-{$id}' aria-expanded='false' aria-controls='perfilcollapse'>
 		            {$titulo}
 		            <br>
 		            <sub>Incluído em: {$dataInclu}</sub>
-		            <span class='badge pull-rigth'>Pedidos: {$quantidade}</span><span class='badge pull-rigth label-info'>Doados: 36</span>
+		            <span class='badge pull-rigth'>Pedidos: {$quantidade}</span><span class='badge pull-rigth label-info'>Recebidos: {$oferecidos}</span>
 		            </li>
 		            <ul class='list-flat list-group in' data-toggle='collapse' id='donativo-{$id}'>
 		            <li class='list-group-item panel-body'>
@@ -29,15 +38,14 @@
 		            <br>
 		            <sub>Expira em: {$dataDesa}</sub>
 		            <div class='pull-right btn-group btn-group-sm'>
-		            <a class='btn btn-primary'>Editar</a>
-		            <a class='btn btn-default' onclick='desativa_donativo({$id})'>Desativar</a>
-		            <a class='btn btn-danger' onclick='excluir_donativo({$id})'>Excluir</a>
+		            <a class='btn btn-primary' onclick='editar_donativo({$id})'>Editar</a>
+		            <a class='btn btn-default' onclick='instituicao.desativa_donativo({$id})'>Desativar</a>
+		            <a class='btn btn-danger' onclick='instituicao.excluir_donativo({$id})'>Excluir</a>
 		            </div>
 		            </li>
 		            </ul>
 		            ";
             endforeach;
-            
             ?>
         </div>
     </div>

@@ -3,21 +3,18 @@ use Zend\Form\Element\DateTime;
 use Zend\Form\Element\DateTimeLocal;
 use Doctrine\DBAL\Types\DateTimeType;
 
-echo $this->headScript()->appendFile($this->basePath . '/js/instituicao_actions.js');
-
-	if($e_json = true):
-		$form->setAttribute('action',"{$this->serverUrl()}{$this->url('donativo',array('action'=>'validaajax'))}");
-	else:
-		$form->setAttribute('action',$this->url('donativo',array('action'=>'novo')));
-	endif;
+echo $this->headScript()->appendFile($this->basePath . '/js/doacao/donativo.js');
+	
+/* 	if($e_json){
+		$form->setAttribute('action',$this->url('donativo',array('action'=>'validaajax')));
+	} */
 	
 	$form->setAttribute('id','formdonativos');
 	$form->prepare();
 	
 	echo $this->form()->openTag($form);
 	echo $this->formHidden($form->get('id'));
-	echo $this->formHidden($form->get('dataInclu')->setValue($now->format('Y-m-d H:i:s')));
-	echo $this->formHidden($form->get('idInstituicao')->setValue($userID));
+	echo $this->formHidden($form->get('dataInclu')->setValue($now->format('Y-m-d')));
 	echo "<div class='form-group'>".$this->formRow($form->get('titulo')).
 			$this->formRow($form->get('quantidade'))."</div>";
 	echo "<div class='form-group'>".$this->formRow($form->get('categorias'))."</div>";

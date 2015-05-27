@@ -16,6 +16,7 @@
                         ->prependStylesheet($this->basePath() . '/css/jquery-ui.css')
                         ->prependStylesheet($this->basePath() . '/css/jquery-ui.structure.css')
                         ->prependStylesheet($this->basePath() . '/css/jquery-ui.theme.css') ?>
+        <?php $this->headScript()->appendFile($this->basePath() . '/js/doacao/instituicao.js')?>
 
         <!-- Scripts -->
         <?php echo $this->headScript()
@@ -24,7 +25,6 @@
             ->prependFile($this->basePath() . '//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js')
             ->prependFile($this->basePath() . '/js/jquery.js')
             ->prependFile($this->basePath() . '/js/scripts.js')
-            ->appendFile($this->basePath() . '/js/instituicao.js')
             ->prependFile($this->basePath() . '/js/respond.min.js', 'text/javascript', array('conditional' => 'lt IE 9',))
             ->prependFile($this->basePath() . '/js/html5shiv.js',   'text/javascript', array('conditional' => 'lt IE 9',))
         ; 
@@ -75,7 +75,7 @@
                     <li class="active"><a href="<?php echo $this->url('instituicao',array('action'=>'index'));?>">Minha Página</a></li>
                     <li><a href="#">Meus Doadores</a></li>
                     <li><a href="#loginModal" role="button" data-toggle="modal">Eventos</a></li>
-                    <li><a href="#aboutModal" role="button" data-toggle="modal">Lista de Desejos</a></li>
+                    <li><a role="button" data-toggle="modal" href="<?php echo $this->url('donativo');?>">Donativos</a></li>
                     <li><a href="#aboutModal" role="button" data-toggle="modal">Denunciar Abusos</a></li>
                 </ul>
             </div>

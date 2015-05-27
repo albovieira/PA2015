@@ -1,26 +1,62 @@
 <?php
-//var_dump($instituicao);die;
 $instituicao = $this->instituicao;
-
-
-// montar pagina com
 ?>
 
+<style>
+    .foto{
+        width: 140px;
+        height: 140px;
+    }
+    .img-local-inst{
+        width: 200px;
+        height: 200px;
+        outline: 1px solid #222222;
+        box-shadow: 1px 2px 3px #ccc;
+    }
+</style>
 
 
 <div class="col-xs-12">
     <div class="row">
-        <div class="col-xs-4">
-            <img src="<?php echo $instituicao->getFoto()?>" />
-            <div><strong>Nome Fantasia:</strong><?php echo $instituicao->getNomeFantasia() ?></div>
-            <div><strong>Email:</strong><?php echo $instituicao->getEmail() ?></div>
-            <div><strong>Site:</strong><?php echo $instituicao->getSite() ?></div>
-            <div><strong>CNPJ</strong><?php echo $instituicao->getCnpj() ?></div>
+        <div class="col-xs-2">
+            <img class="img foto img-circle" src="<?php echo $instituicao->getFoto()?>" />
+            <div><strong>Nome Fantasia: </strong><?php echo $instituicao->getNomeFantasia() ?></div>
+            <div><strong>Email: </strong><?php echo $instituicao->getEmail() ?></div>
+            <div><strong>Site: </strong><a href="<?php echo $instituicao->getSite()?>"><?php echo $instituicao->getSite()?></a></div>
+            <div><strong>CNPJ: </strong><?php echo $instituicao->getCnpj() ?></div>
         </div>
 
-        <div class="col-xs-8">
-            <?php echo $instituicao->getDescricao() ?>
+        <div class="col-xs-6">
+            <h4>Bem vindo a página da instituicao <?php echo $instituicao->getNomeFantasia() ?></h4>
+            <p><?php echo $instituicao->getDescricao() ?></p>
+            <div class="">
+                <?php
+                    foreach($instituicao->getFotosLocal() as $key=>$linkFoto){
+                        echo "<img src='{$linkFoto}' class='img img-local-inst' />";
+                    }
+                ?>
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+            <div class="list-group">
+                <a href="#" class="list-group-item active">
+                    <h4 class="list-group-item-heading">List group item heading</h4>
+                    <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+                </a>
+                <a href="#" class="list-group-item">
+                    <h4 class="list-group-item-heading">List group item heading</h4>
+                    <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+                </a>
+                <a href="#" class="list-group-item">
+                    <h4 class="list-group-item-heading">List group item heading</h4>
+                    <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+                </a>
+            </div>
         </div>
 
     </div>
 </div>
+
+
+<script src="/js/doacao/pessoaInstituicao.js"></script>

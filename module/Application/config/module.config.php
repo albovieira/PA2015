@@ -152,4 +152,9 @@ return array(
             ),
         ),
     ),
+	'view_helpers'=>array(
+			'invokables'=>array(
+				'PaginationHelper' => 'Doacao\View\Helper\PaginationHelper'
+			),
+	)
 );
