@@ -25,12 +25,6 @@ class PessoaDao extends AbstractDao{
         $this->em = $this->getEntityManager();
     }
 
-    //retorna querybuilder
-    public function createQueryBuilder(){
-        return $qb = $this->em->createQueryBuilder();
-    }
-
-
     public function selectPorUsuario($idUsuario){
         $query = $this->em->createQuery(
             "SELECT pes FROM Application\Entity\Pessoa pes

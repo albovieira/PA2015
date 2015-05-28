@@ -8,21 +8,26 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Query\Expr;
 use Doctrine\ORM\QUERY\ResultSetMapping;
-use Zend\EventManager\EventManagerAwareInterface;
-use Zend\EventManager\EventManagerInterface;
+use Doctrine\DBAL\Query\QueryBuilder;
 
 
 class AbstractDao
 {
+    /** @var EntityManager em */
     private $entityManager;
 
-    public function __construct(){
+    public function __construc(){
         $this->getEntityManager();
     }
 
     public function getEntityManager(){
         $this->entityManager = $GLOBALS['entityManager'];
         return $this->entityManager;
+    }
+
+    //retorna querybuilder
+    public function createQueryBuilder(){
+        return $qb = $this->em->createQueryBuilder();
     }
     
     public function salvar(AbstractEntity $entity){

@@ -3,7 +3,10 @@ namespace Doacao\DAO;
 
 use Application\Dao\AbstractDao;
 use Application\Entity\Donativos;
+use Doctrine\ORM\EntityManager;
+
 class DonativoDAO extends AbstractDao{
+	/** @var EntityManager em */
 	private $em;
 	
 	public function __construct(){
@@ -59,6 +62,8 @@ class DonativoDAO extends AbstractDao{
 		
 		return $r;
 	}
+
+
 	
 	
 }
