@@ -10,7 +10,6 @@ use Components\Entity\AbstractEntity;
 use Zend\Authentication\AuthenticationService;
 use Doacao\Dao\PessoaDao;
 use Application\Entity\Instituicao;
-
 //TODO retirar metodos de evento e instituicoes e passar para services especificos
 
 class PessoaService extends AbstractService{
@@ -30,6 +29,7 @@ class PessoaService extends AbstractService{
     public function salvarSeguir($idPessoa,$idInstituicao){
 
         //valida se ja segue uma instituicao, sim sim exclui senao adiciona
+
         $possuiInstituicao = $this->jaPossuiInstituicao($idPessoa->getId(), $idInstituicao->getId());
         if($possuiInstituicao != null){
             $this->pessoaDAO->excluir($this->pessoaDAO->findById($possuiInstituicao, 'Application\Entity\MinhaInstituicao'));
@@ -136,6 +136,8 @@ class PessoaService extends AbstractService{
         $instituicao = null;
         if($this->getObjPessoa()){
             $objInstituicao = $this->pessoaDAO->instituicoesPessoaSegue($this->getObjPessoa()->getId());
+
+
             $instituicao = $this->bindInstituicao($objInstituicao);
         }
         return $instituicao;

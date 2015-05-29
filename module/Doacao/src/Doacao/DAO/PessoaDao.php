@@ -16,9 +16,10 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Query\Expr;
 
-
 class PessoaDao extends AbstractDao{
 
+    protected $entity = 'Application\Entity\Pessoa';
+    protected $tbalias = 'pes';
     private $em;
 
     public function __construct(){
@@ -26,43 +27,36 @@ class PessoaDao extends AbstractDao{
     }
 
     public function selectPorUsuario($idUsuario){
-        $query = $this->em->createQuery(
-            "SELECT pes FROM Application\Entity\Pessoa pes
-                     WHERE pes.usuario = :id
-                ");
-
-        $query->setParameters(
-            array(
-                'id' => $idUsuario,
-            ));
+            $qb = $this->em
+                ->createQueryBuilder()
+                ->select($this->getTbAlias())
+                ->from($this->getEntity(), $this->getTbAlias())
+                ->where('pes.usuario = :id')
+                ->setParameter('id',$idUsuario);
 
         $arrayObjs = [];
-        $result = $query->getResult();
+        $result = $qb->getQuery()->getResult();
 
         foreach($result as $itens){
             $arrayObjs = $itens;
         }
-
         return $arrayObjs;
-    }
 
-    public function select(){
-        //$this->entityManager
     }
 
     public function selectMinhaInstituicao($idPessoa,$idInstituicao){
-       $query = $this->em->createQuery(
-            "SELECT minInst FROM Application\Entity\MinhaInstituicao minInst
-                     WHERE minInst.idPessoa = :idPessoa AND
-                           minInst.idInstituicao = :idInstituicao
-            ");
+        $qb = $this->em
+                ->createQueryBuilder()
+                ->select('minInst')
+                ->from('Application\Entity\MinhaInstituicao', 'minInst')
+                ->where('minInst.idPessoa = :idPessoa AND
+                           minInst.idInstituicao = :idInstituicao')
+                ->setParameters(array(
+                   'idPessoa' => $idPessoa,
+                    'idInstituicao' => $idInstituicao
+                ));
 
-        $query->setParameters(
-            array(
-                'idPessoa' => $idPessoa,
-                'idInstituicao' => $idInstituicao
-            ));
-        $result = $query->getResult();
+        $result = $qb->getQuery()->getResult();
         if(empty($result)){
             return false;
         }

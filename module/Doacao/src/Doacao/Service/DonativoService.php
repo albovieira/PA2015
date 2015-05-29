@@ -66,15 +66,17 @@ class DonativoService extends AbstractService{
 		/** @var Donativos $objDonativo */
 		$objDonativo = $this->dao->donativosInstituicao($id);
 		$arrDonativo = [];
-
-		foreach($objDonativo as $donativo){
-			$arrDonativo['id'] = $donativo->getId();
-			$arrDonativo['descricao'] = $donativo->getDescricao();
-			$arrDonativo['titulo'] = $donativo->getTitulo();
-			$arrDonativo['quantidade'] = $donativo->getQuantidade();
-			$arrDonativo['dataInclu'] = $donativo->getDataInclu()->format('d-m-y');
-			$arrDonativo['dataDesa'] = $donativo->getDataDesa()->format('d-m-y');
-			$arrDonativo['instituicao'] = $donativo->getInstituicao()->getNomeFantasia();
+		if($objDonativo != null){
+			$arrDonativo = [];
+			foreach($objDonativo as $key=>$donativo){
+				$arrDonativo[$key]['id'] = $donativo->getId();
+				$arrDonativo[$key]['descricao'] = $donativo->getDescricao();
+				$arrDonativo[$key]['titulo'] = $donativo->getTitulo();
+				$arrDonativo[$key]['quantidade'] = $donativo->getQuantidade();
+				$arrDonativo[$key]['dataInclu'] = $donativo->getDataInclu()->format('d-m-y');
+				$arrDonativo[$key]['dataDesa'] = $donativo->getDataDesa()->format('d-m-y');
+				$arrDonativo[$key]['instituicao'] = $donativo->getInstituicao()->getNomeFantasia();
+			}
 		}
 
 		return $arrDonativo;

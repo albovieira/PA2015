@@ -13,10 +13,12 @@ use Doctrine\DBAL\Query\QueryBuilder;
 
 class AbstractDao
 {
+    protected $entity;
+    protected $tbalias;
     /** @var EntityManager em */
     private $entityManager;
 
-    public function __construc(){
+    public function __construct(){
         $this->getEntityManager();
     }
 
@@ -25,7 +27,16 @@ class AbstractDao
         return $this->entityManager;
     }
 
+    public function getEntity(){
+        return $this->entity;
+    }
+
+    public function getTbAlias(){
+        return $this->tbalias;
+    }
+
     //retorna querybuilder
+
     public function createQueryBuilder(){
         return $qb = $this->em->createQueryBuilder();
     }

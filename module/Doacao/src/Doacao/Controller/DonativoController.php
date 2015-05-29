@@ -136,16 +136,13 @@ class DonativoController extends AbstractDoctrineCrudController
 		$filtro = $this->params()->fromQuery('id');
 
 
+		//busca a instituicao vinda do get para buscar donativos
 		$instituicaoService = new ServiceInstituicao();
 		$instituicao = $instituicaoService->buscaUmaInstituicao($filtro);
 
 		$donativos = self::$service->donativosInstituicaoById($instituicao);
 
-		return new JsonModel(
-			array(
-				'donativos' => $donativos
-			)
-		);
+		return new JsonModel($donativos);
 	}
 	
 }
