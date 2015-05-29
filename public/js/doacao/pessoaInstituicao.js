@@ -109,6 +109,7 @@ var pessoaInstituicao = {
             source: function (request, response) {
                 var DTO = { "term": request.term };
                 $.ajax({
+                    global: false,
                     data: DTO,
                     type: 'GET',
                     url:'/pessoa/listar-autocomplete-instituicao',

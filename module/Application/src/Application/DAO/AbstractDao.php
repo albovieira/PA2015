@@ -3,12 +3,8 @@
 namespace Application\Dao;
 
 use Components\Entity\AbstractEntity;
-use Doctrine\DBAL\LockMode;
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Query\Expr;
-use Doctrine\ORM\QUERY\ResultSetMapping;
-use Doctrine\DBAL\Query\QueryBuilder;
 
 
 class AbstractDao

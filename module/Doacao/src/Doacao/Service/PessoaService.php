@@ -2,14 +2,12 @@
 
 namespace Doacao\Service;
 
+use Application\Entity\Instituicao;
 use Application\Entity\MinhaInstituicao;
-use Application\Entity\Evento;
 use Application\Entity\Pessoa;
 use Application\Service\AbstractService;
-use Components\Entity\AbstractEntity;
-use Zend\Authentication\AuthenticationService;
 use Doacao\Dao\PessoaDao;
-use Application\Entity\Instituicao;
+
 //TODO retirar metodos de evento e instituicoes e passar para services especificos
 
 class PessoaService extends AbstractService{
@@ -67,7 +65,7 @@ class PessoaService extends AbstractService{
      * @return mixed
      */
     public function getPesquisaInstituicaoPorNome($term){
-        return $this->pessoaDAO->selectAutoComplete($term);
+        return $this->pessoaDAO->selectInstituicaoAutoComplete($term);
     }
 
     /**

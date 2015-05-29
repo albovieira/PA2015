@@ -2,15 +2,10 @@
 
 namespace Doacao\Service;
 
-use Application\Entity\MinhaInstituicao;
 use Application\Entity\Evento;
-use Application\Entity\Pessoa;
 use Application\Service\AbstractService;
-use Components\Entity\AbstractEntity;
 use Doacao\Dao\EventoDao;
-use Zend\Authentication\AuthenticationService;
 use Doacao\Dao\PessoaDao;
-use Application\Entity\Instituicao;
 
 //TODO retirar metodos de evento e instituicoes e passar para services especificos
 
@@ -40,8 +35,9 @@ class EventoService extends AbstractService{
      * @return array
      */
     public function getObjPessoa(){
+        $pessoaDao = new PessoaDao();
         $usuario = $this->getUserLogado();
-        return $this->eventoDAO->selectPorUsuario($usuario);
+        return $pessoaDao->selectPorUsuario($usuario);
     }
 
     /**
@@ -50,7 +46,6 @@ class EventoService extends AbstractService{
      */
     public function bindEvento($objEvento){
         $arrEvento = [];
-
         foreach($objEvento as $key=>$evento){
             // necessario pois o retorno esta trazendo as instituicoes tbm
             if($evento instanceof Evento){

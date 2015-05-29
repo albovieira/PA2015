@@ -9,11 +9,6 @@
 namespace Doacao\Dao;
 
 use Application\Dao\AbstractDao;
-use Doctrine\DBAL\Query\QueryBuilder;
-use Components\Entity\AbstractEntity;
-use Doctrine\DBAL\LockMode;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Query\Expr;
 
 class PessoaDao extends AbstractDao{
@@ -64,17 +59,15 @@ class PessoaDao extends AbstractDao{
     }
 
     public function instituicoesPessoaSegue($idpessoa){
-        $query = $this->em->createQuery(
-            "SELECT tbinst FROM Application\Entity\Instituicao tbinst
-                     INNER JOIN Application\Entity\MinhaInstituicao mininst WITH tbinst.id = mininst.idInstituicao
-                     WHERE mininst.idPessoa = :idpessoa
-            ");
-        $query->setParameters(
-            array(
-                'idpessoa' => $idpessoa
-            ));
-        $result = $query->getResult();
-        return $result;
+
+        $qb = $this->em
+            ->createQueryBuilder()
+            ->select('i')
+            ->from('Application\Entity\Instituicao', 'i')
+            ->innerJoin('Application\Entity\MinhaInstituicao', 'm', 'WITH', 'i.id = m.idInstituicao')
+            ->where("m.idPessoa = {$idpessoa}");
+        ;
+        return $result = $qb->getQuery()->getResult();
     }
 
     public function todasInstituicoesQueNaoSegue($idpessoa){
@@ -91,91 +84,32 @@ class PessoaDao extends AbstractDao{
             ->where($qb->expr()->notIn('tbinst.id', $qbSub->getDQL())
             );
 
-
         $result = $qb->getQuery()->getResult();
         return $result;
     }
 
-    public function selectAutoComplete($termo){
-        $query = $this->em->createQuery(
-            "SELECT tbinst.nomeFantasia FROM Application\Entity\Instituicao tbinst
-                     WHERE tbinst.nomeFantasia LIKE :termoAuto
-                     ORDER BY tbinst.nomeFantasia ASC
-                ");
-        $query->setParameters(
-            array(
-                'termoAuto' => '%' .$termo. '%'
-            ));
-        //echo $query->getSql();exit;
-        $result = $query->getResult();
-        return $result;
+    // retorna array
+    public function selectInstituicaoAutoComplete($termo){
+
+        $qb = $this->em
+            ->createQueryBuilder()
+            ->select('tbinst.nomeFantasia')
+            ->from('Application\Entity\Instituicao', 'tbinst')
+            ->where("tbinst.nomeFantasia LIKE '%{$termo}%'")
+            ->orderBy('tbinst.nomeFantasia', 'asc');
+        return $qb->getQuery()->getResult();
     }
 
+    // retorna objeto
     public function selectPesquisaRapida($termo){
-        $query = $this->em->createQuery(
-            "SELECT tbinst FROM Application\Entity\Instituicao tbinst
-                     WHERE tbinst.nomeFantasia LIKE :termoAuto
-                     ORDER BY tbinst.nomeFantasia ASC
-                ");
-        $query->setParameters(
-            array(
-                'termoAuto' => '%' .$termo. '%'
-            ));
-        //echo $query->getSql();exit;
-        $result = $query->getResult();
-        return $result;
-    }
 
-
-
-    public function selectEventosInstituicao($idpessoa){
-        $query = $this->em->createQuery(
-            "SELECT evento,tbinst FROM Application\Entity\Evento evento
-                     LEFT JOIN Application\Entity\Instituicao tbinst WITH evento.idInstituicao = tbinst.id
-                     INNER JOIN Application\Entity\MinhaInstituicao mininst WITH evento.idInstituicao = mininst.idInstituicao
-                     WHERE mininst.idPessoa = :idpessoa
-                ");
-        $query->setParameters(
-            array(
-                'idpessoa' => $idpessoa
-            ));
-        $result = $query->getResult();
-        return $result;
-    }
-
-    public function selectEventosInstituicaoRecente($idpessoa){
-        $query = $this->em->createQuery(
-            "SELECT evento,tbinst FROM Application\Entity\Evento evento
-                     LEFT JOIN Application\Entity\Instituicao tbinst WITH evento.idInstituicao = tbinst.id
-                     INNER JOIN Application\Entity\MinhaInstituicao mininst WITH evento.idInstituicao = mininst.idInstituicao
-                     WHERE
-                     evento.dataFim BETWEEN
-                     CURRENT_DATE()-15 AND CURRENT_DATE()
-                     AND mininst.idPessoa = :idpessoa
-                     ORDER BY evento.dataInicio DESC
-                ");
-        $query->setParameters(
-            array(
-                'idpessoa' => $idpessoa
-            ));
-        $result = $query->getResult();
-        return $result;
-    }
-
-    public function selectEventosInstituicaoComFiltro($termo){
-        $query = $this->em->createQuery(
-            "SELECT evento,tbinst FROM Application\Entity\Evento evento
-                     LEFT JOIN Application\Entity\Instituicao tbinst WITH evento.idInstituicao = tbinst.id
-                     INNER JOIN Application\Entity\MinhaInstituicao mininst WITH evento.idInstituicao = mininst.idInstituicao
-                     WHERE tbinst.nomeFantasia LIKE :termoAuto
-                     ORDER BY tbinst.nomeFantasia ASC
-                ");
-        $query->setParameters(
-            array(
-                'termoAuto' => '%' .$termo. '%'
-            ));
-        $result = $query->getResult();
-        return $result;
+        $qb = $this->em
+            ->createQueryBuilder()
+            ->select('tbinst')
+            ->from('Application\Entity\Instituicao', 'tbinst')
+            ->where("tbinst.nomeFantasia LIKE '%{$termo}%'")
+            ->orderBy('tbinst.nomeFantasia', 'asc');
+        return $qb->getQuery()->getResult();
     }
 
 }
