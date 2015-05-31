@@ -2,7 +2,7 @@
     <div class="col-xs-3">
         <div class="well">
             <?php
-            //var_dump($this->dadosPessoa);
+
             if($this->dadosPessoa){
                 $dadosPessoa = $this->dadosPessoa;
                 echo "<img class='img img-responsive' style='width:280px' src='".$dadosPessoa->getFoto(). "' /><br>";
@@ -17,18 +17,25 @@
     </div>
 
 </div>
-'
+
+<!-- Colocar $this->formDivulgacao aqui-->
 <div class="row-fluid">
     <div class="col-xs-5">
         <div class="well">
-            <form class="form-horizontal" role="form">
-                <h4>Divulgue campanhas com seus amigos no facebook</h4>
-                <div class="form-group" style="padding:14px;">
-                    <textarea class="form-control" placeholder="Divulgue..."></textarea>
-                </div>
-                <button class="btn btn-primary pull-right" type="button">Publicar</button>
-                <ul class="list-inline"><li><a href="#"><i class="glyphicon glyphicon-align-left"></i></a></li><li><a href="#"><i class="glyphicon glyphicon-align-center"></i></a></li><li><a href="#"><i class="glyphicon glyphicon-align-right"></i></a></li></ul>
-            </form>
+            <h4>Divulgue campanhas com seus amigos no facebook</h4>
+            <?php
+                $form = $this->formDivulgacao;
+                $form->prepare();
+            ?>
+            <?=$this->form()->openTag($form)?>
+            <?=$this->formRow($form->get('idEvento'))?>
+            <?=$this->formRow($form->get('idPessoa'))?>
+            <div class="form-group" style="padding:14px;">
+                <?=$this->formRow($form->get('txtDivulgacao'))?><br>
+                <?=$this->formButton($form->get('publicar'))?>
+            </div>
+
+            <?=$this->form()->closeTag($form)?>
         </div>
     </div>
 
@@ -61,3 +68,60 @@
     </div>
 </div>
 
+<script>
+    //divulgacao-form
+    $(document).ready(function () {
+        $('#divulgacao-form').submit(function (e) {
+            e.preventDefault();
+
+            $.ajax({
+                data: $('#divulgacao-form').serialize(),
+                type: 'POST',
+                url:'/evento/publicar',
+                success: function (data) {
+
+                }
+            });
+
+        });
+    });
+
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId      : '822464164514417',
+            xfbml      : true,
+            version    : 'v2.3'
+        });
+        $('#btnPublicar').click(function () {
+            FB.ui(
+                {
+                    method: 'share',
+                    href: 'https://developers.facebook.com/docs/',
+                },
+                // callback
+                function(response) {
+                    if (response && !response.error_code) {
+                        alert('Posting completed.');
+                    } else {
+                        alert('Error while posting.');
+                    }
+                }
+            );
+        });
+    };
+    (function(d){
+        var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
+        js = d.createElement('script'); js.id = id; js.async = true;
+        js.src = "//connect.facebook.net/en_US/all.js";
+        d.getElementsByTagName('head')[0].appendChild(js);
+    }(document));
+    /*
+    (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/pt_BR/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+    */
+
+</script>

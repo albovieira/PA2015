@@ -52,26 +52,7 @@ class EventoDao extends AbstractDao{
                      AND mininst.idPessoa = {$idpessoa}")
             ->orderBy('evento.dataInicio', 'DESC');
 
-        //var_dump($qb->getQuery()->getResult());die;
         return $qb->getQuery()->getResult();
-      /*
-        $query = $this->em->createQuery(
-            "SELECT evento,tbinst FROM Application\Entity\Evento evento
-                     LEFT JOIN Application\Entity\Instituicao tbinst WITH evento.idInstituicao = tbinst.id
-                     INNER JOIN Application\Entity\MinhaInstituicao mininst WITH evento.idInstituicao = mininst.idInstituicao
-                     WHERE
-                     evento.dataFim BETWEEN
-                     CURRENT_DATE()-15 AND CURRENT_DATE()
-                     AND mininst.idPessoa = :idpessoa
-                     ORDER BY evento.dataInicio DESC
-                ");
-        $query->setParameters(
-            array(
-                'idpessoa' => $idpessoa
-            ));
-        $result = $query->getResult();
-        return $result;
-      */
     }
 
     public function selectEventosInstituicaoComFiltro($termo){

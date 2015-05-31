@@ -8,8 +8,6 @@
  */
 namespace Application;
 
-use Zend\Mvc\Application;
-
 return array(
 
     'doctrine' => array(
@@ -100,6 +98,7 @@ return array(
                     $sm->get('zfcuser_module_options')
                 );
             },
+
         ),
 
 

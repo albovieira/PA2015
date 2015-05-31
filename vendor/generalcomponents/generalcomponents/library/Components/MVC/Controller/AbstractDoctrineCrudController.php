@@ -25,6 +25,11 @@ abstract class AbstractDoctrineCrudController extends AbstractActionController
         return $auth->getIdentity();
     }
 
+    public function getUserLogado(){
+        $auth = new AuthenticationService();
+        return $auth;
+    }
+
     protected function getEntity($key, $model)
     {
         $em = $GLOBALS['entityManager'];

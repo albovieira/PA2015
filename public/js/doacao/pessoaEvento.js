@@ -29,6 +29,24 @@ var pessoaEvento = {
                 });
             }
         });
+    },
+
+    publicar: function(){
+        $.ajax({
+            global: false,
+            data: DTO,
+            type: 'GET',
+            url:'/evento/listar-autocomplete-evento',
+            success: function (data) {
+
+                var arrEventos = [];
+                $.each( data, function( key, value ) {
+                    arrEventos.push(value.nomeFantasia);
+                });
+                console.log(arrEventos);
+                return response(arrEventos);
+            }
+        });
     }
 
 }

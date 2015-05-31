@@ -13,6 +13,5 @@
         "doctrine/orm": "2.*",
         "zf-commons/zfc-user-doctrine-orm" : "1.*",
         "socalnick/scn-social-auth-doctrine-orm": "1.*"
-
     }
 }

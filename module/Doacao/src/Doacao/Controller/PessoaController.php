@@ -9,24 +9,16 @@
 
 namespace Doacao\Controller;
 
+use Application\Entity\Pessoa;
 use Application\Entity\TesteAnexo;
-use Components\MVC\Controller\AbstractCrudController;
 use Components\MVC\Controller\AbstractDoctrineCrudController;
-use Doacao\Filter\PessoaFilter;
+use Doacao\Form\DivulgacaoEventoForm;
 use Doacao\Form\PessoaForm;
 use Doacao\Service\EventoService;
 use Doacao\Service\PessoaService;
 use Doacao\Service\ServiceInstituicao;
-use Doctrine\DBAL\Schema\View;
-use Zend\Authentication\AuthenticationService;
-use Zend\Form\Element\DateTime;
-use Zend\Mail\Storage\Writable\Maildir;
-use Zend\Paginator\Adapter\ArrayAdapter;
-use Zend\Paginator\Paginator;
-use Zend\View\Helper\Json;
 use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
-use Application\Entity\Pessoa;
 
 class PessoaController extends AbstractDoctrineCrudController
 {
@@ -41,7 +33,6 @@ class PessoaController extends AbstractDoctrineCrudController
 
      public function indexAction()
      {
-         //TODO verificar se user tem pessoa, se nao tiver redirecionar para dashboard editavel;
          $this->layout()->setTemplate('layout/layout_pessoa');
 
          $doacoes = null;
@@ -57,11 +48,14 @@ class PessoaController extends AbstractDoctrineCrudController
 
          $dadosPessoa = $this->pessoaService->getObjPessoa();
 
+         $formDivulgacao = new DivulgacaoEventoForm();
+
          return new ViewModel(
              array(
                  'doacoes' => $doacoes,
                  'campanhas' => $campanhas,
-                 'dadosPessoa' => $dadosPessoa
+                 'dadosPessoa' => $dadosPessoa,
+                 'formDivulgacao' => $formDivulgacao
              )
          );
      }

@@ -99,7 +99,10 @@ h3,h4,h5 {
    font-size: 20px;
 }
 .padrao-header:hover{
- color: #ccc;
+ color: #c5c5c5 !important;
+}
+.padrao-header:active{
+ color: #c5c5c5 !important;
 }
 .padrao-login{
    color: #fff;
@@ -154,4 +157,8 @@ footer{
 .img-profile {
  width: 80px !important;
  height: 80px !important;
+}
+
+.link-layout:hover{
+  color: #c5c5c5 !important;
 }

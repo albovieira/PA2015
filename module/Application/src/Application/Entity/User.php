@@ -2,10 +2,8 @@
 
 namespace Application\Entity;
 
-use ZfcRbac\Identity\IdentityInterface;
-use ZfcUser\Entity\User as ZfcUserEntity;
-use ZfcUser\Entity\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
+use ZfcUser\Entity\UserInterface;
 
 
 //class User extends ZfcUserEntity

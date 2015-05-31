@@ -30,6 +30,11 @@ $settings = array(
      */
     'facebook_secret' => 'e3bfcbad2deb306e4fa47dc1ff5e8f6f',
 
+    'facebook_scope' => 'email, user_about_me, user_birthday, user_hometown, user_website, read_stream, publish_actions'
+
+     //'scope' => "email, user_about_me, user_birthday, user_hometown, user_website, read_stream, publish_actions"
+
+
     /**
      * Foursquare Client ID
      *
@@ -237,6 +242,7 @@ $settings = array(
     /**
      * End of ScnSocialAuth configuration
      */
+
 );
 
 /**
