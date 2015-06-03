@@ -59,7 +59,7 @@
                     echo "<strong>Titulo:</strong> ".$campanha['tituloEvento'] . '<br>';
                     echo "<strong>Instituicao:</strong> ".$campanha['nomeFantasia'] . '<br>';
                     echo "<strong>Fim do evento:</strong> ".$campanha['dataFim'] . '<br>';
-                    echo "<a style='margin-top: 4%' class='btn btn-default btn-sm' href='#'>Ver Mais</a>";
+                    echo "<a style='margin-top: 4%' class='btn btn-default btn-sm' href='/pessoa/instituicao-page?id={$campanha['idInstituicao']}'>Ver Mais</a>";
                     echo "</div>";
                 }
             }
@@ -96,7 +96,7 @@
             FB.ui(
                 {
                     method: 'share',
-                    href: 'https://developers.facebook.com/docs/',
+                    href: 'http://sisdo.com/'
                 },
                 // callback
                 function(response) {
@@ -115,13 +115,5 @@
         js.src = "//connect.facebook.net/en_US/all.js";
         d.getElementsByTagName('head')[0].appendChild(js);
     }(document));
-    /*
-    (function(d, s, id){
-        var js, fjs = d.getElementsByTagName(s)[0];
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/pt_BR/sdk.js";
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-    */
 
 </script>

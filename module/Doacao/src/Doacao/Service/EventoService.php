@@ -49,19 +49,22 @@ class EventoService extends AbstractService{
         foreach($objEvento as $key=>$evento){
             // necessario pois o retorno esta trazendo as instituicoes tbm
             if($evento instanceof Evento){
-                $arrEvento[$key]['id'] = $key;
+                $arrEvento[$key]['id'] = $evento->getId();
+                $arrEvento[$key]['idInstituicao'] = $evento->getIdInstituicao()->getId();
                 $arrEvento[$key]['nomeFantasia'] = $evento->getIdInstituicao()->getNomeFantasia();
+                $arrEvento[$key]['fotoInstituicao'] = $evento->getIdInstituicao()->getFoto();
                 $arrEvento[$key]['descEvento'] = $evento->getDescEvento();
                 $arrEvento[$key]['siteEvento'] = $evento->getSiteEvento();
                 $arrEvento[$key]['objetivos'] = $evento->getObjetivos();
                 $arrEvento[$key]['tituloEvento'] = $evento->getTituloEvento();
-                $arrEvento[$key]['dataInicio'] = $evento->getDataInicio();
+                $arrEvento[$key]['dataInicio'] =  $this->dateToString($evento->getDataInicio());
                 $arrEvento[$key]['dataFim'] = $this->dateToString($evento->getDataFim());
                 $arrEvento[$key]['imagem1'] = $evento->getImagem1();
                 $arrEvento[$key]['imagem2'] = $evento->getImagem2();
                 $arrEvento[$key]['imagem3'] = $evento->getImagem3();
             }
         }
+
         return $arrEvento;
     }
 
@@ -71,6 +74,12 @@ class EventoService extends AbstractService{
      */
     public function dateToString($data){
         return $data->format('d/m/Y');
+    }
+
+    public function getEventoPorID($id){
+        //$objEvento = $this->eventoDAO->findById($id, $this->eventoDAO->getEntity());
+        $objEvento = $this->eventoDAO->findEventoByID($id);
+        return $this->bindEvento($objEvento);
     }
 
     /**

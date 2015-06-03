@@ -181,7 +181,6 @@ class PessoaController extends AbstractDoctrineCrudController
         ));
     }
 
-    //Pegar instituicao, eventos, donativos referentes a instituicao
     public function instituicaoPageAction(){
         $this->layout()->setTemplate('layout/layout_pessoa');
 

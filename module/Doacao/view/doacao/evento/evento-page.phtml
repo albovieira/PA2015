@@ -1,0 +1,71 @@
+<?php
+$evento = $this->evento;
+
+//var_dump($evento);
+?>
+
+<style xmlns="http://www.w3.org/1999/html">
+    .foto{
+        width: 140px;
+        height: 140px;
+    }
+    .img-local-inst{
+        width: 200px;
+        height: 200px;
+        outline: 1px solid #222222;
+        box-shadow: 1px 2px 3px #ccc;
+    }
+</style>
+
+
+    <div class="row">
+        <div class="text-center">
+            <img class='img img-circle' width="100px" height="100px" src="<?php echo  $evento['fotoInstituicao'] ?>" /><br>
+            <a href="/pessoa/instituicao-page<?php echo $evento['idInstituicao']?>"><?php echo $evento['nomeFantasia'] ?></a><br>
+            <a href="<?php echo  isset($evento['siteEvento']) ? $evento['siteEvento'] : '' ?>"><?php echo  isset($evento['siteEvento']) ? $evento['siteEvento'] : '' ?></a>
+
+            <h1 class="text-info"><?php echo  $evento['tituloEvento'] ?></h1>
+            <p>Iniciado em: <strong><?php echo  $evento['dataInicio'] ?></strong> , terminará em: <strong><?php echo $evento['dataFim'] ?></strong></p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="container">
+            <div class="col-xs-12">
+                <div class="row" style="margin-top: 20px">
+                    <div class="col-xs-10">
+                        <p><strong>Objetivos: </strong><?php echo  $evento['objetivos'] ?></p>
+                        <p><?php echo  $evento['descEvento'] ?></p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <img width="300px" height="300px" src="<?php echo  $evento['imagem1'] ?>" />
+                    <img width="300px" height="300px" src="<?php echo  $evento['imagem2'] ?>" />
+                    <img width="300px" height="300px" src="<?php echo  $evento['imagem3'] ?>" />
+
+                    <div id="fb-root"></div>
+                    <div class="fb-comments" data-href="http://developers.facebook.com/docs/plugins/comments/" data-numposts="5" data-colorscheme="light"></div>
+                </div>
+            </div>
+    </div>
+
+
+<script>
+
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId      : '822464164514417',
+            xfbml      : true,
+            version    : 'v2.3'
+        });
+    };
+
+    (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v2.3&appId=822464164514417";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>

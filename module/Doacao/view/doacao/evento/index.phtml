@@ -36,19 +36,20 @@
             echo "<div class='col-sm-6 col-md-4'>";
             echo "<div class='thumbnail'>";
             echo "<h3 class='text-center'><a class='text-info' href='#'>{$evento['tituloEvento']}</a></h3>";
-            echo "<h4 class='text-center'><a class='text-success' href='#'>{$evento['nomeFantasia']}</a></h4>";
+            echo "<h4 class='text-center'><a class='text-success' href='/pessoa/instituicao-page?id={$evento['idInstituicao']}'>{$evento['nomeFantasia']}</a></h4>";
             echo "<img class='img img-responsive imagem-evento' src='{$evento['imagem1']}' alt='...' >";
             echo "<div class='caption'>
                     <h3></h3>
                     ";
-            echo "<p><strong>Periodo:</strong> {$evento['dataInicio']->format('d/m/Y')} à {$evento['dataFim']}</p>";
+            echo "<p><strong>Periodo:</strong> {$evento['dataInicio']} à {$evento['dataFim']}</p>";
             if(!empty($evento['siteEvento'])){
                 echo "<p><strong>Site:</strong> <a target='_blank' href='http://{$evento['siteEvento']}'>{$evento['siteEvento']}</a></p>";
             }
             echo "<p><strong>Objetivos:</strong> {$evento['objetivos']}</p>
                     <p>{$evento['descEvento']}</p>
-                    <p> <a href='#' class='btn btn-primary' role='button'>Compartilhar</a>
-                        <a href='#' class='btn btn-default' role='button'>Doar</a></p>
+                    <p> <a href='#' class='btn btn-default' role='button'>Doar</a>
+                        <a id='shareEvento' href='#' class='btn btn-primary' role='button'>Compartilhar</a>
+                        <a href='/evento/evento-page?id={$evento['id']}' class='btn btn-success' role='button'>Abrir Evento</a></p>
                   </div>
                  </div>
                  </div>

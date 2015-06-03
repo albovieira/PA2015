@@ -27,6 +27,16 @@ class EventoDao extends AbstractDao{
         return $qb = $this->em->createQueryBuilder();
     }
 
+    public function findEventoByID($id){
+        $qb = $this->em
+            ->createQueryBuilder()
+            ->select($this->getTbAlias(), 'tbinst')
+            ->from($this->getEntity(), $this->getTbAlias())
+            ->leftJoin('Application\Entity\Instituicao', 'tbinst' , 'WITH', 'evento.idInstituicao = tbinst.id')
+            ->where("evento.id = {$id}");
+        return $qb->getQuery()->getResult();
+    }
+
     public function selectEventosInstituicao($idpessoa){
 
         $qb = $this->em
@@ -65,7 +75,8 @@ class EventoDao extends AbstractDao{
             ->innerJoin('Application\Entity\MinhaInstituicao' ,'mininst','WITH', 'evento.idInstituicao = mininst.idInstituicao')
             ->where("tbinst.nomeFantasia LIKE '%{$termo}%'")
             ->orderBy('tbinst.nomeFantasia', 'ASC');
-        $qb->getQuery()->getResult();
+
+       return $qb->getQuery()->getResult();
     }
 
 }

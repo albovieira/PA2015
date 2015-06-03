@@ -91,7 +91,7 @@ h3,h4,h5 {
 }
 
 #main {
- padding-top:120px;
+ padding-top:80px;
 }
 
 .padrao-header{
@@ -137,7 +137,7 @@ h3,h4,h5 {
  position:absolute;
  left:50%; /* centers the loading animation horizontally one the screen */
  top:50%; /* centers the loading animation vertically one the screen */
- background-image:url('http://pa2015/img/loader.gif'); /* path to your loading animation */
+ background-image:url('http://sisdo.com/img/loader.gif'); /* path to your loading animation */
  background-repeat:no-repeat;
  background-position:center;
  margin:-100px 0 0 -100px; /* is width and height divided by two */
@@ -159,6 +159,14 @@ footer{
  height: 80px !important;
 }
 
-.link-layout:hover{
-  color: #c5c5c5 !important;
+.ativo{
+  background-color: #eeeeee !important;
+  border-left: solid 1px #cccccc !important;
 }
+
+.nav > li > a:hover, .nav > li > a:focus {
+   background-color: #eeeeee !important;
+   border-left: solid 1px #cccccc !important;
+}
+
+

@@ -37,10 +37,22 @@ class EventoController extends AbstractDoctrineCrudController
         );
     }
 
+    public function eventoPageAction(){
+        $this->layout()->setTemplate('layout/layout_pessoa');
+
+        $id = $this->params()->fromQuery('id');
+        $eventoService = new EventoService();
+        $evento = $eventoService->getEventoPorID($id);
+
+        return new ViewModel(
+            array(
+                'evento' => $evento[0]
+            )
+        );
+    }
+
     public function publicarAction(){
         $post = $this->getRequest()->getPost();
-
-
         return new JsonModel();
     }
 
@@ -52,5 +64,6 @@ class EventoController extends AbstractDoctrineCrudController
 
         return new JsonModel($retorno);
     }
+
 
 }
