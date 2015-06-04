@@ -45,7 +45,9 @@ class EventoDao extends AbstractDao{
             ->from($this->getEntity(), $this->getTbAlias())
             ->leftJoin('Application\Entity\Instituicao', 'tbinst' , 'WITH', 'evento.idInstituicao = tbinst.id')
             ->innerJoin('Application\Entity\MinhaInstituicao', 'mininst', 'WITH', 'evento.idInstituicao = mininst.idInstituicao')
-            ->where("mininst.idPessoa = {$idpessoa}");
+            ->where("mininst.idPessoa = {$idpessoa}")
+            ->andWhere("evento.dataFim >= CURRENT_DATE()")
+        ;
         return $qb->getQuery()->getResult();
     }
 
@@ -59,7 +61,9 @@ class EventoDao extends AbstractDao{
             ->innerJoin('Application\Entity\MinhaInstituicao', 'mininst', 'WITH', 'evento.idInstituicao = mininst.idInstituicao')
             ->where("evento.dataFim BETWEEN
                      CURRENT_DATE()-15 AND CURRENT_DATE()
-                     AND mininst.idPessoa = {$idpessoa}")
+                     AND mininst.idPessoa = {$idpessoa}
+                     AND evento.dataFim >= CURRENT_DATE()
+            ")
             ->orderBy('evento.dataInicio', 'DESC');
 
         return $qb->getQuery()->getResult();
@@ -73,7 +77,9 @@ class EventoDao extends AbstractDao{
             ->from($this->getEntity(), $this->getTbAlias())
             ->leftJoin('Application\Entity\Instituicao', 'inst','WITH', 'evento.idInstituicao = tbinst.id')
             ->innerJoin('Application\Entity\MinhaInstituicao' ,'mininst','WITH', 'evento.idInstituicao = mininst.idInstituicao')
-            ->where("tbinst.nomeFantasia LIKE '%{$termo}%'")
+            ->where("tbinst.nomeFantasia LIKE '%{$termo}%'
+                     AND evento.dataFim >= CURRENT_DATE()
+            ")
             ->orderBy('tbinst.nomeFantasia', 'ASC');
 
        return $qb->getQuery()->getResult();

@@ -3,15 +3,8 @@ namespace Application\Entity;
 
 
 use Components\Entity\AbstractEntity;
-use Components\InputFilter\InputFilter;
-use Zend\Filter\Int;
-use Zend\Filter\StringTrim;
-use Zend\Filter\StripTags;
-use Zend\Validator\NotEmpty;
-use Zend\Validator\StringLength;
-use Zend\Validator\Digits;
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
@@ -93,8 +86,11 @@ class Instituicao extends AbstractEntity{
 	private $usuario;
 
 	/**
-	 * @ORM\OneToMany(targetEntity="Enderecos", mappedBy="instituicao")
-	 */
+	 * @var Endereco
+	 *
+	 * @ORM\ManyToOne(targetEntity="Endereco")
+	 * @ORM\JoinColumn(name="id_endereco", referencedColumnName="id_enderecos")
+	 **/
 	private $enderecos;
 
 	/**

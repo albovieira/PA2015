@@ -10,7 +10,6 @@ namespace Application\Entity;
 
 use Components\Entity\AbstractEntity;
 use Doctrine\ORM\Mapping as ORM;
-use Zend\Form\Annotation\InputFilter;
 
 
 /**
@@ -76,6 +75,14 @@ class Pessoa extends AbstractEntity{
      * @var string
      * @ORM\Column(name="tel_cel" ,type="string") **/
     private $telCel;
+
+    /**
+     * @var Endereco
+     *
+     * @ORM\ManyToOne(targetEntity="Endereco")
+     * @ORM\JoinColumn(name="id_endereco", referencedColumnName="id_enderecos")
+     **/
+    private $idEndereco;
 
     /**
      * @return mixed

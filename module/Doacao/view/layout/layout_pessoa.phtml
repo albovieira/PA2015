@@ -61,6 +61,16 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li style="line-height: 50px;padding-right: 10px"><span><a class="link-layout" href="/pessoa/minha-conta" style="text-decoration: none;color: #fff;text-shadow: 1px 1px 2px #000">Bem Vindo <?php echo $this->zfcUserDisplayName()?></a></span></li>
                     <!--<li><a class="" href="/" title="Notificações"><i class="glyphicon glyphicon-globe"></i></a></li>-->
+                    <li>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-globe"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#"><span class="badge pull-right">40</span>Link</a></li>
+                            <li><a href="#"><span class="badge pull-right">2</span>Link</a></li>
+                            <li><a href="#"><span class="badge pull-right">0</span>Link</a></li>
+                            <li><a href="#"><span class="label label-info pull-right">1</span>Link</a></li>
+                            <li><a href="#"><span class="badge pull-right">13</span>Link</a></li>
+                        </ul>
+                    </li>
                     <li><a class="<?php echo  $uri == '/pessoa' ? 'ativo' : '' ?>" href="/pessoa" title="Inicio"><i class="glyphicon glyphicon-home"></i></a></li>
                     <li><a class="<?php echo  $uri == '/pessoa/instituicao' ? 'ativo' : '' ?>" href="/pessoa/instituicao" title="Instituicões"><i class="glyphicon glyphicon-transfer"></i></a></li>
                     <li><a class="<?php echo  $uri == '/evento' ? 'ativo' : '' ?>" href="/evento" title="Eventos"><i class="glyphicon glyphicon-th-large"></i></a></li>

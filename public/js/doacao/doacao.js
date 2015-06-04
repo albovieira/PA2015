@@ -50,9 +50,35 @@ var principal = {
         }
 
         return params;
+    },
+
+    // funcao para callback de insercoes e atualizações
+    testeAjaxAviso: function () {
+        $.ajax({
+            type: "GET",
+            url: "/pessoa/solicitacaoAjax",
+
+            async: true,
+            cache: false,
+            timeout:50000,
+
+            success: function(data){
+                console.log(data);
+                setTimeout(
+                    principal.testeAjaxAviso,
+                    1000
+                );
+            },
+            error: function(data){
+                console.log(data)
+                setTimeout(
+                    principal.testeAjaxAviso,
+                    15000);
+            }
+        });
     }
 
-}
+};
 
 $(document).ready(function () {
     principal.bindAjaxPreloader();
@@ -60,4 +86,5 @@ $(document).ready(function () {
     principal.ajustaRodape();
     principal.bindAjusteRodape();
     principal.openModalLogin();
+   // principal.testeAjaxAviso();
 });

@@ -13,6 +13,7 @@ use Application\Entity\Pessoa;
 use Application\Entity\TesteAnexo;
 use Components\MVC\Controller\AbstractDoctrineCrudController;
 use Doacao\Form\DivulgacaoEventoForm;
+use Doacao\Form\EnderecoForm;
 use Doacao\Form\PessoaForm;
 use Doacao\Service\EventoService;
 use Doacao\Service\PessoaService;
@@ -68,6 +69,7 @@ class PessoaController extends AbstractDoctrineCrudController
     public function dadosPessoaAction(){
         $this->layout()->setTemplate('layout/layout_modal');
         $formPessoa = new PessoaForm();
+        $formEndereco = new EnderecoForm();
         $request = $this->getRequest();
 
         /** @var Pessoa $pessoa */
@@ -105,6 +107,7 @@ class PessoaController extends AbstractDoctrineCrudController
         return new ViewModel(
             array(
                 'form' => $formPessoa,
+                'formEndereco' => $formEndereco,
                 'img' => $img
             )
         );
@@ -192,6 +195,17 @@ class PessoaController extends AbstractDoctrineCrudController
         return new ViewModel(
             array(
                 'instituicao' => $instituicao
+            )
+        );
+    }
+
+    public function solicitacaoAjaxAction(){
+
+
+
+        return new JsonModel(
+            array(
+
             )
         );
     }

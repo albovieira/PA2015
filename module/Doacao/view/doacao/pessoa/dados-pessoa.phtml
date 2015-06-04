@@ -1,5 +1,5 @@
 <style xmlns="http://www.w3.org/1999/html">
-    
+
     #lbl-img{
         width: 165px;
         height: 110px;
@@ -35,75 +35,188 @@ $form = $this->form;
 $form->prepare();
 ?>
 
-<?php echo $this->form()->openTag($form) ?>
-<?=$this->formInput($form->get('id'))?>
+<h3 class="text-info">Meus Dados</h3>
 
-<h3 class="text-info">Dados Pessoa</h3>
-<div class="col-xs-3">
-    <div class="col-xs-12">
-        <label for="foto" id="lbl-img" ><img class="img img-responsive img-perfil" src="<?php echo $this->img ?>" />
-            <?=$this->formFile($form->get('foto'))?>
-        </label>
+<div id="tabs">
+<ul style="background-color: #fff">
+    <li><a href="#tabs-1">Dados Pessoais</a></li>
+    <li><a href="#tabs-2">Endereço</a></li>
+
+    <!-- tab com os dados pessoais -->
+    <div id="tabs-1">
+        <div class="row" style="margin-bottom: 4%"></div>
+
+        <?php echo $this->form()->openTag($form) ?>
+        <?=$this->formInput($form->get('id'))?>
+
+        <div class="col-xs-3">
+            <div class="col-xs-12">
+                <label for="foto" id="lbl-img" ><img class="img img-responsive img-perfil" src="<?php echo $this->img ?>" />
+                    <?=$this->formFile($form->get('foto'))?>
+                </label>
+            </div>
+        </div>
+        <div class="col-xs-9">
+            <div class="col-xs-12 ajuste-form">
+                <div class="col-xs-4"><?=$this->formLabel
+                    ($form->get('nome'))?>
+                </div>
+                <div class="col-xs-8"><?=$this->formInput
+                    ($form->get('nome'))?>
+                </div>
+                <?php echo $this->formElementErrors($this->form->get('nome'), array('class' => 'has-error')); ?>
+            </div>
+
+            <div class="col-xs-12 ajuste-form">
+                <div class="col-xs-4"><?=$this->formLabel
+                    ($form->get('email'))?>
+                </div>
+                <div class="col-xs-8"><?=$this->formInput
+                    ($form->get('email'))?>
+                </div>
+            </div>
+
+            <div class="col-xs-12 ajuste-form">
+                <div class="col-xs-4"><?=$this->formLabel
+                    ($form->get('sexo'))?>
+                </div>
+                <div class="col-xs-8"><?=$this->formRadio
+                    ($form->get('sexo'))?>
+                </div>
+            </div>
+
+            <div class="col-xs-12 ajuste-form">
+                <div class="col-xs-4"><?=$this->formLabel($form->get('telCel'))?>
+                </div>
+                <div class="col-xs-8"><?=$this->formInput
+                    ($form->get('telCel'))?>
+                </div>
+            </div>
+
+            <div class="col-xs-12 ajuste-form">
+                <div class="col-xs-4"><?=$this->formLabel($form->get('telFixo'))?>
+                </div>
+                <div class="col-xs-8"><?=$this->formInput
+                    ($form->get('telFixo'))?>
+                </div>
+            </div>
+
+            <div class="col-xs-12 ajuste-form">
+                <div class="col-xs-4"><?=$this->formLabel
+                    ($form->get('dataNasc'))?></div>
+                <div class="col-xs-8"><?=$this->formDate
+                    ($form->get('dataNasc'))?></div>
+            </div>
+
+            <div class="col-xs-2 pull-right ajuste-form">
+                <?=$this->formButton($form->get('salvar'))?>
+            </div>
+        </div>
+        <?php echo $this->form()->closeTag($form) ?>
     </div>
+
+    <div id="tabs-2">
+        <div class="row" style="margin-bottom: 4%"></div>
+        <?php
+            $formEndereco = $this->formEndereco;
+            $formEndereco->prepare();
+        ?>
+        <?php echo $this->form()->openTag($formEndereco) ?>
+        <?=$this->formInput($formEndereco->get('id_endereco'))?>
+
+        <div class="col-xs-12 ajuste-form">
+            <div class="col-xs-4"><?=$this->formLabel
+                ($formEndereco->get('cep'))?>
+            </div>
+            <div class="col-xs-5"><?=$this->formInput
+                ($formEndereco->get('cep'))?>
+            </div>
+            <div class="col-xs-2" style="margin-left: -30px">
+                <button id="btn-busca-cep" class="btn btn-success"><i class="glyphicon glyphicon-search"></i></button>
+            </div>
+        </div>
+
+        <div class="col-xs-12 ajuste-form">
+            <div class="col-xs-4"><?=$this->formLabel
+                ($formEndereco->get('rua'))?>
+            </div>
+            <div class="col-xs-8"><?=$this->formInput
+                ($formEndereco->get('rua'))?>
+            </div>
+        </div>
+
+        <div class="col-xs-12 ajuste-form">
+            <div class="col-xs-4"><?=$this->formLabel
+                ($formEndereco->get('bairro'))?>
+            </div>
+            <div class="col-xs-8"><?=$this->formInput
+                ($formEndereco->get('bairro'))?>
+            </div>
+        </div>
+
+        <div class="col-xs-12 ajuste-form">
+            <div class="col-xs-4"><?=$this->formLabel
+                ($formEndereco->get('uf'))?>
+            </div>
+            <div class="col-xs-8"><?=$this->formInput
+                ($formEndereco->get('uf'))?>
+            </div>
+        </div>
+
+        <div class="col-xs-12 ajuste-form">
+            <div class="col-xs-4"><?=$this->formLabel
+                ($formEndereco->get('numero'))?>
+            </div>
+            <div class="col-xs-8"><?=$this->formInput
+                ($formEndereco->get('numero'))?>
+            </div>
+        </div>
+
+        <div class="col-xs-12 ajuste-form">
+            <div class="col-xs-4"><?=$this->formLabel
+                ($formEndereco->get('complemento'))?>
+            </div>
+            <div class="col-xs-8"><?=$this->formInput
+                ($formEndereco->get('complemento'))?>
+            </div>
+        </div>
+
+        <div class="col-xs-2 pull-right ajuste-form">
+            <?=$this->formButton($form->get('salvar'))?>
+        </div>
+
+        <?php echo $this->form()->closeTag($formEndereco) ?>
+    </div>
+
+</ul>
 </div>
-<div class="col-xs-9">
-    <div class="col-xs-12 ajuste-form">
-        <div class="col-xs-4"><?=$this->formLabel
-            ($form->get('nome'))?>
-        </div>
-        <div class="col-xs-8"><?=$this->formInput
-            ($form->get('nome'))?>
-        </div>
-        <?php echo $this->formElementErrors($this->form->get('nome'), array('class' => 'has-error')); ?>
-    </div>
 
-    <div class="col-xs-12 ajuste-form">
-        <div class="col-xs-4"><?=$this->formLabel
-            ($form->get('email'))?>
-        </div>
-        <div class="col-xs-8"><?=$this->formInput
-            ($form->get('email'))?>
-        </div>
-    </div>
-
-    <div class="col-xs-12 ajuste-form">
-        <div class="col-xs-4"><?=$this->formLabel
-            ($form->get('sexo'))?>
-        </div>
-        <div class="col-xs-8"><?=$this->formRadio
-            ($form->get('sexo'))?>
-        </div>
-    </div>
-
-    <div class="col-xs-12 ajuste-form">
-        <div class="col-xs-4"><?=$this->formLabel($form->get('telCel'))?>
-        </div>
-        <div class="col-xs-8"><?=$this->formInput
-            ($form->get('telCel'))?>
-        </div>
-    </div>
-
-    <div class="col-xs-12 ajuste-form">
-        <div class="col-xs-4"><?=$this->formLabel($form->get('telFixo'))?>
-        </div>
-        <div class="col-xs-8"><?=$this->formInput
-            ($form->get('telFixo'))?>
-        </div>
-    </div>
-
-    <div class="col-xs-12 ajuste-form">
-        <div class="col-xs-4"><?=$this->formLabel
-            ($form->get('dataNasc'))?></div>
-        <div class="col-xs-8"><?=$this->formDate
-            ($form->get('dataNasc'))?></div>
-    </div>
-
-    <div class="col-xs-2 pull-right ajuste-form">
-        <?=$this->formButton($form->get('salvar'))?>
-    </div>
-</div>
-<?php echo $this->form()->closeTag($form) ?>
-
-
+<script src="/js/jquery.maskedinput.js"></script>
 <script src="/js/doacao/dados-pessoa.js"></script>
 
+<script>
+    $(function() {
+        $( "#tabs" ).tabs();
+        $("#cep").mask("99.999-999");
+
+        $('#btn-busca-cep').click(function (e) {
+            e.preventDefault();
+
+            $.ajax({
+                type: 'GET',
+                data: '',
+                url:'http://cep.correiocontrol.com.br/' + $("#cep").val().replace('.','').replace('-','') + '.json',
+                success: function (data) {
+                     $('#rua').val(data.logradouro);
+                     $('#bairro').val(data.bairro);
+                     $('#estado').val(data.uf);
+                     $('#cidade').val(data.localidade);
+                }
+            });
+        });
+
+    });
+    
+    
+    
+</script>
