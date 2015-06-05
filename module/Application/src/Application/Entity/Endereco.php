@@ -46,7 +46,7 @@ class Endereco extends AbstractEntity{
 	private $cep;
 	
 	/**
-	 * @ORM\Column(name="complemento",type="string")
+	 * @ORM\Column(name="complemento_endereco",type="string")
 	 */
 	private $complemento;
 
@@ -178,6 +178,37 @@ class Endereco extends AbstractEntity{
 		$this->complemento = $complemento;
 	}
 
-	public function getInputFilter(){}
+	public function getInputFilter(){
+		if (!$this->inputFilter) {
+			$inputFilter = new \Zend\InputFilter\InputFilter();
+			$this->inputFilter = $inputFilter;
+		}
+
+		// acrescentar os outros filtros
+		$this->inputFilter->add(array(
+			'name' => 'cep',
+			'required' => true,
+			'validators' => array(
+				array(
+					'name' => 'NotEmpty',
+				)
+			)
+		));
+
+		return $this->inputFilter;
+	}
+
+	public function exchangeArray($array)
+	{
+		$this->id = $array['id'];
+		$this->bairro = $array['bairro'];
+		$this->numero = $array['numero'];
+		$this->cep = $array['cep'];
+		$this->logradouro = $array['logradouro'];
+		$this->uf = $array['uf'];
+		$this->municipio = $array['municipio'];
+		$this->complemento = $array['complemento'];
+	}
+
 }
 ?>

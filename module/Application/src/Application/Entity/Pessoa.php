@@ -79,10 +79,12 @@ class Pessoa extends AbstractEntity{
     /**
      * @var Endereco
      *
-     * @ORM\ManyToOne(targetEntity="Endereco")
-     * @ORM\JoinColumn(name="id_endereco", referencedColumnName="id_enderecos")
+     * @ORM\ManyToOne(targetEntity="Endereco", cascade={"persist", "merge"})
+     * @ORM\JoinColumn(name="id_endereco", referencedColumnName="id_enderecos" )
      **/
     private $idEndereco;
+
+
 
     /**
      * @return mixed
@@ -249,6 +251,21 @@ class Pessoa extends AbstractEntity{
         $this->telCel = $telCel;
     }
 
+    /**
+     * @return Endereco
+     */
+    public function getIdEndereco()
+    {
+        return $this->idEndereco;
+    }
+
+    /**
+     * @param Endereco $idEndereco
+     */
+    public function setIdEndereco($idEndereco)
+    {
+        $this->idEndereco = $idEndereco;
+    }
 
     public function getInputFilter(){
         if (!$this->inputFilter) {
@@ -280,5 +297,8 @@ class Pessoa extends AbstractEntity{
             $this->email = $array['email'];
             $this->foto = isset($array['foto']) ? $array['foto'] : '/img/data/sem-foto.jpg';
             $this->sexo = $array['sexo'];
+            $this->telCel = $array['telCel'];
+            $this->telFixo = $array['telFixo'];
+
     }
 }

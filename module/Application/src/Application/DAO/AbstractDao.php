@@ -48,6 +48,11 @@ class AbstractDao
         $this->entityManager->flush();
     }
 
+    public function update(AbstractEntity $entity){
+        $this->entityManager->merge($entity);
+        $this->entityManager->flush();
+    }
+
     public function findById($key, $entity)
     {
         $em = $this->entityManager;

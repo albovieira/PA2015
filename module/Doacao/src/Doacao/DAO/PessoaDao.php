@@ -24,18 +24,19 @@ class PessoaDao extends AbstractDao{
     public function selectPorUsuario($idUsuario){
             $qb = $this->em
                 ->createQueryBuilder()
-                ->select($this->getTbAlias())
+                ->select($this->getTbAlias(),'endereco')
                 ->from($this->getEntity(), $this->getTbAlias())
+                ->leftJoin('Application\Entity\Endereco', 'endereco' , 'IN', 'pes.idEndereco = endereco.id')
                 ->where('pes.usuario = :id')
                 ->setParameter('id',$idUsuario);
 
-        $arrayObjs = [];
         $result = $qb->getQuery()->getResult();
 
-        foreach($result as $itens){
-            $arrayObjs = $itens;
+        if($result){
+            return $result[0];
         }
-        return $arrayObjs;
+
+        return false;
 
     }
 

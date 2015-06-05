@@ -28,7 +28,7 @@ class EnderecoForm extends Form{
             )
         );
 
-        $element = new Hidden('id_endereco');
+        $element = new Hidden('id');
         $this->add($element);
 
         $this->add(array(
@@ -47,7 +47,7 @@ class EnderecoForm extends Form{
         ));
 
         $this->add(array(
-            'name' => 'rua',
+            'name' => 'logradouro',
             'options' => array(
                 'label' => 'Rua',
                 'label_attributes' => array(
@@ -58,7 +58,6 @@ class EnderecoForm extends Form{
                 'type' => 'text',
                 'id' => 'rua',
                 'class'=> 'form-control',
-                'disabled' => 'disabled'
             ),
         ));
 
@@ -74,7 +73,6 @@ class EnderecoForm extends Form{
                 'type' => 'text',
                 'id' => 'bairro',
                 'class'=> 'form-control',
-                'disabled' => 'disabled'
             ),
         ));
 
@@ -90,7 +88,6 @@ class EnderecoForm extends Form{
                 'type' => 'text',
                 'id' => 'cidade',
                 'class'=> 'form-control',
-                'disabled' => 'disabled'
             ),
         ));
 
@@ -106,7 +103,6 @@ class EnderecoForm extends Form{
                 'type' => 'text',
                 'id' => 'estado',
                 'class'=> 'form-control',
-                'disabled' => 'disabled'
             ),
         ));
 
@@ -141,14 +137,15 @@ class EnderecoForm extends Form{
         ));
 
         $this->add(array(
-            'name' => 'salvar',
+            'name' => 'salvar-endereco',
             'options' => array(
                 'label' => 'Salvar',
             ),
             'attributes' => array(
                 'type' => 'text',
                 'class'=> 'btn btn-primary',
-                'value' => 'salvar'
+                'value' => 'salvar',
+                'id' => 'salvar-endereco'
             ),
         ));
 

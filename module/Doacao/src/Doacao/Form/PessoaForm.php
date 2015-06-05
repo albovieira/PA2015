@@ -9,12 +9,8 @@
 namespace Doacao\Form;
 
 
-use Zend\Form\Element\File;
 use Zend\Form\Element\Hidden;
-use Zend\Form\Element\Radio;
-use Zend\Form\Element\Text;
 use Zend\Form\Form;
-use Zend\InputFilter\FileInput;
 use Zend\Stdlib\Hydrator\ClassMethods;
 
 class PessoaForm extends Form{
@@ -116,7 +112,8 @@ class PessoaForm extends Form{
             ),
             'attributes' => array(
                 'type' => 'text',
-                'class'=> 'form-control'
+                'class'=> 'form-control',
+                'id' => 'telCel'
             ),
         ));
 

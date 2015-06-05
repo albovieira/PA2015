@@ -4,7 +4,6 @@ namespace Doacao\Service;
 
 use Application\Entity\Instituicao;
 use Application\Entity\MinhaInstituicao;
-use Application\Entity\Pessoa;
 use Application\Service\AbstractService;
 use Doacao\Dao\PessoaDao;
 
@@ -99,6 +98,8 @@ class PessoaService extends AbstractService{
                     $arrInstituicao[$key]['email'] = $instituicao->getEmail();
                     $arrInstituicao[$key]['cnpj'] = $instituicao->getCnpj();
                     $arrInstituicao[$key]['site'] = $instituicao->getSite();
+                    $arrInstituicao[$key]['telCel'] = $instituicao->getSite();
+                    $arrInstituicao[$key]['telFixo'] = $instituicao->getSite();
                 }
             }
         }
@@ -134,8 +135,6 @@ class PessoaService extends AbstractService{
         $instituicao = null;
         if($this->getObjPessoa()){
             $objInstituicao = $this->pessoaDAO->instituicoesPessoaSegue($this->getObjPessoa()->getId());
-
-
             $instituicao = $this->bindInstituicao($objInstituicao);
         }
         return $instituicao;
@@ -150,8 +149,11 @@ class PessoaService extends AbstractService{
         return $data->format('d/m/Y');
     }
 
-    public function salvarPessoa(Pessoa $pessoa){
-        $this->pessoaDAO->salvar($pessoa);
+    public function salvar($entidade){
+        $this->pessoaDAO->salvar($entidade);
     }
 
+    public function update($entidade){
+        $this->pessoaDAO->update($entidade);
+    }
 }

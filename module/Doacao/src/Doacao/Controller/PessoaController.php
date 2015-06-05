@@ -9,6 +9,7 @@
 
 namespace Doacao\Controller;
 
+use Application\Entity\Endereco;
 use Application\Entity\Pessoa;
 use Application\Entity\TesteAnexo;
 use Components\MVC\Controller\AbstractDoctrineCrudController;
@@ -69,7 +70,6 @@ class PessoaController extends AbstractDoctrineCrudController
     public function dadosPessoaAction(){
         $this->layout()->setTemplate('layout/layout_modal');
         $formPessoa = new PessoaForm();
-        $formEndereco = new EnderecoForm();
         $request = $this->getRequest();
 
         /** @var Pessoa $pessoa */
@@ -79,6 +79,8 @@ class PessoaController extends AbstractDoctrineCrudController
         $img = '/img/data/sem-foto.jpg';
         if(null != $pessoa ){
             $formPessoa->bind($pessoa);
+
+            $formPessoa->get('telCel')->setValue($pessoa->getTelCel());
             $formPessoa->get('dataNasc')->setValue($pessoa->getDataNasc()->format('Y-m-d'));
             $img = $pessoa->getFoto();
         }
@@ -86,6 +88,7 @@ class PessoaController extends AbstractDoctrineCrudController
         if($request->isPost()){
             $post = $request->getPost();
             if(count($post) > 0){
+                //foi necessario instanciar a pessoa pois ainda nao temos classes especificas para filtro
                 $pessoa = new Pessoa();
                 $formPessoa->setInputFilter($pessoa->getInputFilter());
                 $formPessoa->setData($post);
@@ -98,9 +101,19 @@ class PessoaController extends AbstractDoctrineCrudController
                         $pessoa->exchangeArray($post);
                         $pessoa->setUsuario($this->getEntity($this->getIdUserLogado(), 'Application\Entity\User'));
                         $objpessoa = $pessoa;
+
                     }
-                    $this->pessoaService->salvarPessoa($objpessoa);
+                    $this->pessoaService->salvar($objpessoa);
                 }
+            }
+        }
+
+        //se tiver um endereco cadastrado o preenche
+        $formEndereco = new EnderecoForm();
+        if($pessoa){
+            if($pessoa->getIdEndereco()){
+                $endereco = $pessoa->getIdEndereco();
+                $formEndereco->bind($endereco);
             }
         }
 
@@ -199,9 +212,42 @@ class PessoaController extends AbstractDoctrineCrudController
         );
     }
 
+    public function salvarEnderecoAction(){
+
+        $post = $this->getRequest()->getPost();
+        $endereco = new Endereco();
+
+        $formEndereco = new EnderecoForm();
+        $formEndereco->setInputFilter($endereco->getInputFilter());
+        $formEndereco->setData($post);
+
+        /** @var Pessoa $objPessoa */
+        $objPessoa = $this->pessoaService->getObjPessoa();
+
+        if($formEndereco->isValid()){
+
+            $endereco->exchangeArray($formEndereco->getData());
+
+            if(empty($post['id'])){
+                $this->pessoaService->salvar($endereco);
+                $objPessoa->setIdEndereco($endereco);
+                $this->pessoaService->salvar($objPessoa);
+            }
+
+            else{
+                $this->pessoaService->update($endereco);
+            }
+
+        }
+
+        return new JsonModel(
+            array(
+                'id' => $endereco->getId()
+            )
+        );
+    }
+
     public function solicitacaoAjaxAction(){
-
-
 
         return new JsonModel(
             array(

@@ -6,6 +6,7 @@ var pessoaMinhaConta = {
         pessoaMinhaConta.bindViewPessoa();
         pessoaMinhaConta.bindViewAlterarSenha();
 
+
     },
     viewPessoa: function () {
         $.ajax({
@@ -38,24 +39,9 @@ var pessoaMinhaConta = {
         $('#alteraSenha').click(function () {
             pessoaMinhaConta.viewAlterarSenha();
         });
-    },
-
-    bindTabEndereco: function () {
-        $('#btn-busca-cep').click(function (e) {
-            e.preventDefault();
-            $.ajax({
-                type: 'GET',
-                data: '',
-                url:'http://cep.correiocontrol.com.br/' + $('#cep').val() + '.json',
-                success: function (data) {
-                    $('#rua').val(data.logradouro);
-                    $('#bairro').val(data.bairro);
-                    $('#estado').val(data.uf);
-                    $('#cidade').val(data.localidade);
-                }
-            });
-        });
     }
+
+
 
 
 };
