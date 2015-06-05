@@ -52,20 +52,7 @@ $evento = $this->evento;
 
 
 <script>
-
-    window.fbAsyncInit = function() {
-        FB.init({
-            appId      : '822464164514417',
-            xfbml      : true,
-            version    : 'v2.3'
-        });
-    };
-
-    (function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v2.3&appId=822464164514417";
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
+    $(document).ready(function () {
+        principal.facebook('comentario');
+    })
 </script>

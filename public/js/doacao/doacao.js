@@ -76,6 +76,37 @@ var principal = {
                     15000);
             }
         });
+    },
+    facebook: function (tipo) {
+        $.ajaxSetup({ cache: true });
+        $.getScript('//connect.facebook.net/pt_BR/sdk.js', function(){
+
+                FB.init({
+                    appId      : '822464164514417',
+                    xfbml      : true,
+                    version    : 'v2.3'
+                });
+
+        });
+
+        if(tipo == 'post'){
+            (function(d){
+                var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
+                js = d.createElement('script'); js.id = id; js.async = true;
+                js.src = "//connect.facebook.net/pt_BR/all.js";
+                d.getElementsByTagName('head')[0].appendChild(js);
+            }(document));
+        }
+        if(tipo == 'comentario'){
+            (function(d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s); js.id = id;
+                js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v2.3&appId=822464164514417";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        }
+
     }
 
 };
@@ -86,5 +117,6 @@ $(document).ready(function () {
     principal.ajustaRodape();
     principal.bindAjusteRodape();
     principal.openModalLogin();
+
    // principal.testeAjaxAviso();
 });

@@ -48,7 +48,7 @@ class AbstractDao
         $this->entityManager->flush();
     }
 
-    public function update(AbstractEntity $entity){
+    public function updateEntity(AbstractEntity $entity){
         $this->entityManager->merge($entity);
         $this->entityManager->flush();
     }

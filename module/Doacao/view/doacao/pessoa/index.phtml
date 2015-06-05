@@ -69,6 +69,7 @@
 </div>
 
 <script>
+    principal.facebook('post');
     //divulgacao-form
     $(document).ready(function () {
         $('#divulgacao-form').submit(function (e) {
@@ -86,12 +87,6 @@
         });
     });
 
-    window.fbAsyncInit = function() {
-        FB.init({
-            appId      : '822464164514417',
-            xfbml      : true,
-            version    : 'v2.3'
-        });
         $('#btnPublicar').click(function () {
             FB.ui(
                 {
@@ -108,12 +103,7 @@
                 }
             );
         });
-    };
-    (function(d){
-        var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
-        js = d.createElement('script'); js.id = id; js.async = true;
-        js.src = "//connect.facebook.net/pt_BR/all.js";
-        d.getElementsByTagName('head')[0].appendChild(js);
-    }(document));
+
+
 
 </script>

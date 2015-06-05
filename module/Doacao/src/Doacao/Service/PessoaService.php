@@ -154,6 +154,6 @@ class PessoaService extends AbstractService{
     }
 
     public function update($entidade){
-        $this->pessoaDAO->update($entidade);
+        $this->pessoaDAO->updateEntity($entidade);
     }
 }
