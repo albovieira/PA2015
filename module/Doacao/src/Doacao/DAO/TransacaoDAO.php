@@ -10,10 +10,10 @@ class TransacaoDAO extends AbstractDao{
 	}
 	
 	public function total($donativo){
-		$em = parent::getEntityManager();
+		$em = $this->getEntityManager();
 		
-		$dql = "SELECT SUM(quantidadeOfertada) FROM Application\Entity\Transacao t
-				 WHERE t.id_donativo = ?0";
+		$dql = "SELECT SUM(t.quantidadeOferta) FROM Application\Entity\Transacao t
+				 WHERE t.id = ?0";
 		$count = $em->createQuery($dql)
 					->setParameter(0,$donativo)
 					->getSingleScalarResult();
