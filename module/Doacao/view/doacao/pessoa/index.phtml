@@ -90,8 +90,9 @@
         $('#btnPublicar').click(function () {
             FB.ui(
                 {
-                    method: 'share',
-                    href: 'http://sisdo.com/'
+                    method: 'feed',
+                    link: 'https://developers.facebook.com/docs/',
+                    caption: 'An example caption'
                 },
                 // callback
                 function(response) {

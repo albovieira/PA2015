@@ -2,15 +2,7 @@
 namespace Application\Entity;
 
 use Components\Entity\AbstractEntity;
-use Components\InputFilter\InputFilter;
-use Zend\Filter\Int;
-use Zend\Filter\StringTrim;
-use Zend\Filter\StripTags;
-use Zend\Validator\NotEmpty;
-use Zend\Validator\StringLength;
-use Zend\Validator\Digits;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
@@ -62,16 +54,5 @@ class CategoriaDonativo extends AbstractEntity{
 		$this->descricao = $descricao;
 	}
 
-
-
-	public function __get($property){
-		return $this->$property;
-	}
-	
-	public function __set($property, $value){
-		$this->$property = $value;
-	}
-	
 	public function getInputFilter(){}
-	public function getArrayCopy(){}
 }

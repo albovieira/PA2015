@@ -2,15 +2,7 @@
 namespace Application\Entity;
 
 use Components\Entity\AbstractEntity;
-use Components\InputFilter\InputFilter;
-use Zend\Filter\Int;
-use Zend\Filter\StringTrim;
-use Zend\Filter\StripTags;
-use Zend\Validator\NotEmpty;
-use Zend\Validator\StringLength;
-use Zend\Validator\Digits;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  *@ORM\Entity
@@ -49,7 +41,13 @@ class Transacao extends AbstractEntity{
 	 * @ORM\JoinColumn(name="id_instituicao",referencedColumnName="id_instituicao")
 	 */
 	private $instituicao;
-	
+
+	/**
+	 * @ORM\ManyToOne(targetEntity="Pessoa")
+	 * @ORM\JoinColumn(name="id_pessoa",referencedColumnName="id")
+	 */
+	private $pessoa;
+
 	/**
 	 * @ORM\ManyToOne(targetEntity="Donativos")
 	 * @ORM\JoinColumn(name="id_donativo", referencedColumnName="id_dnv")
@@ -167,6 +165,24 @@ class Transacao extends AbstractEntity{
 	public function setDonativo($donativo) {
 		$this->donativo = $donativo;
 	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getPessoa()
+	{
+		return $this->pessoa;
+	}
+
+	/**
+	 * @param mixed $pessoa
+	 */
+	public function setPessoa($pessoa)
+	{
+		$this->pessoa = $pessoa;
+	}
+
+
 
 	/* (non-PHPdoc)
 	 * @see \Components\Entity\AbstractEntity::getInputFilter()

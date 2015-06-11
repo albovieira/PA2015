@@ -1,0 +1,34 @@
+<?php
+use Application\Entity\Donativos;
+
+$form = $this->form;
+$form->prepare();
+?>
+
+<?php
+/** @var Donativos $donativo */
+$donativo = $this->donativo;
+
+echo $donativo->getDescricao() . '<br>';
+echo $donativo->getDataInclu()->format('d/m/y') . '<br>';
+echo $donativo->getDataDesa()->format('d/m/y'). '<br>';
+echo $donativo->getIdCategoria()->getDescricao(). '<br>';
+echo $donativo->getInstituicao()->getNomeFantasia(). '<br>';
+echo $donativo->getInstituicao()->getCnpj();
+
+?>
+
+<?php echo $this->form()->openTag($form) ?>
+<?=$this->formInput($form->get('idTransacao'))?>
+<?=$this->formInput($form->get('idDonativo'))?>
+<?=$this->formInput($form->get('idInstituicao'))?>
+<?=$this->formInput($form->get('idPessoa'))?>
+<?=$this->formInput($form->get('dataTransacao'))?>
+
+
+<?=$this->formLabel($form->get('quantidadeOferecida'))?>
+<?=$this->formInput($form->get('quantidadeOferecida'))?>
+
+
+
+<?php echo $this->form()->closeTag($form) ?>

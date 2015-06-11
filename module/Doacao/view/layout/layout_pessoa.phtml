@@ -23,8 +23,9 @@
         <!-- Scripts -->
         <?php echo $this->headScript()
             ->prependFile($this->basePath() . '/js/doacao/doacao.js')
-            ->prependFile($this->basePath() . '/js/jquery-ui.js')
+            ->prependFile($this->basePath() . '/js/bootbox/bootbox.js')
             ->prependFile($this->basePath() . '/js/bootstrap.min.js')
+            ->prependFile($this->basePath() . '/js/jquery-ui.js')
             ->prependFile($this->basePath() . '/js/jquery.js')
             //->prependFile($this->basePath() . '/js/scripts.js')
             ->prependFile($this->basePath() . '/js/respond.min.js', 'text/javascript', array('conditional' => 'lt IE 9',))
@@ -107,3 +108,6 @@
 
 </html>
 
+<script>
+
+</script>

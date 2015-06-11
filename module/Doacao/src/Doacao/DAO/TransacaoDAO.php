@@ -2,10 +2,13 @@
 namespace Doacao\Dao;
 
 use Application\Dao\AbstractDao;
+
 class TransacaoDAO extends AbstractDao{
 	private static $em;
-	
-	public function __construc(){
+	protected $entity = 'Application\Entity\Transacao';
+	protected $tbalias = 'tran';
+
+	public function __construct(){
 		self::$em = parent::getEntityManager();
 	}
 	

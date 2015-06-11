@@ -8,7 +8,7 @@ var pessoaInstituicao = {
         this.bindFiltroMinhas();
         this.autocomplete();
         this.bindClickBuscaInstituicao();
-        this.instituicaoVerMais();
+        this.getDonativos();
     },
     bindFiltroTodos: function (){
         $('#todos').click(function () {
@@ -175,7 +175,7 @@ var pessoaInstituicao = {
         
     },
 
-    instituicaoVerMais: function(){
+    getDonativos: function(){
         //captura paramentro da url
         var $_GET = principal.getURLParam(document.location.search);
 
@@ -186,18 +186,18 @@ var pessoaInstituicao = {
             url:'/donativo/get-donativos',
             success: function (data) {
                 var html = '';
-
                 if(data.length > 0){
                     $.each( data, function( key, donativo) {
 
                             html += "" +
                                 "<div class='col-xs-12'>" +
                                 "<div class='list-group'>" +
+                                "<input class='id-donativo' type='hidden' value='"+ donativo.id +"' />" +
                                 "<a href='#' class='list-group-item '>" +
                                 "<h4 class='list-group-item-heading'>"+donativo.titulo+"</h4>" +
                                 "<p class='list-group-item-text'>"+ donativo.descricao+"</p><br>" +
-                                "<p class='list-group-item-text'><strong>Doação disponivel até: "+ donativo.dataDesa +"<strong></strong></p><br>" +
-                                "<button class='btn btn-primary'>Doar</button>" +
+                                "<p class='list-group-item-text'><strong>Doação disponivel até: "+ donativo.dataDesa +"</strong></p><br>" +
+                                "<button class='btn btn-primary btn-doar'>Doar</button>" +
                                 "</a>" +
                                 "</div>" +
                                 "</div>";
@@ -214,9 +214,27 @@ var pessoaInstituicao = {
                 }
 
                 $('#donativoConteudo').html(html);
+                pessoaInstituicao.bindDoar();
             }
         });
+    },
+    
+    bindDoar: function () {
+        $('.btn-doar').each(function (index,elemento) {
+            $(elemento).click(function (e) {
+                $.ajax({
+                    data: {'id_donativo': $(elemento).parents('.list-group').children('.id-donativo').val()},
+                    type: 'POST',
+                    url:'/transacao/nova-transacao',
+                    success: function (data) {
+                        $('.modal-body').html(data);
+                        $('#doacaoModal').modal('show');
+                    }
+                });
+            });
+        });
     }
+        
 
 }
 

@@ -64,7 +64,8 @@ class AbstractDao
         $em = $this->entityManager;
         return $em->getRepository($entity)->findAll();
     }
-    
+
+    // nao ficou legal isso nao, tente evitar usar qeuery nativa
     public function queryNativa($columns = null, $table){
     	    	
     	if($columns === null){

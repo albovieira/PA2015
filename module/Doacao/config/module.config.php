@@ -90,6 +90,17 @@ return array(
                 ),
             ),
 
+            'transacao' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route'    => '/transacao[/][/:action]',
+                    'defaults' => array(
+                        'controller' => 'Doacao\Controller\Transacao',
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
+
             // The following is a route to simplify getting started creating
             // new controllers and actions without needing to create a new
             // module. Simply drop new controllers in, and you can access them
@@ -149,6 +160,7 @@ return array(
             'Doacao\Controller\Evento' => 'Doacao\Controller\EventoController',
             'Doacao\Controller\Instituicao' => 'Doacao\Controller\InstituicaoController',
             'Doacao\Controller\Donativo' => 'Doacao\Controller\DonativoController',
+            'Doacao\Controller\Transacao' => 'Doacao\Controller\TransacaoController',
         ),
     ),
     'view_manager' => array(

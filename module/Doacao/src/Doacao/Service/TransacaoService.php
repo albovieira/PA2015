@@ -2,25 +2,24 @@
 namespace Doacao\Service;
 
 use Application\Service\AbstractService;
-use Doacao\Dao\TransacaoDAO;
 use Applicaton\Entity\Transacao;
+use Doacao\Dao\TransacaoDAO;
 
 class TransacaoService extends AbstractService{
 	
-	private $transacao;
-	private $dao;
+	private $transacaoDao;
 	
-	public function __construc(){
-		$this->dao = new TransacaoDAO();
-		$this->transacao = new Transacao();
+	public function __construct(){
+		$this->transacaoDao = new TransacaoDAO();
 	}
 	
+	public function criarTransacao(){
+
+	}
+
 	public function totalPorDonativo($id){
-		$dao = new TransacaoDAO();
-		
-		$quant = $dao->total($id);
+		$quant = $this->transacaoDao->total($id);
 		return $quant;
 	}
-	
 	
 }

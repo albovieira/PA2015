@@ -2,15 +2,7 @@
 namespace Application\Entity;
 
 use Components\Entity\AbstractEntity;
-use Components\InputFilter\InputFilter;
-use Zend\Filter\Int;
-use Zend\Filter\StringTrim;
-use Zend\Filter\StripTags;
-use Zend\Validator\NotEmpty;
-use Zend\Validator\StringLength;
-use Zend\Validator\Digits;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
@@ -54,9 +46,10 @@ class Donativos extends AbstractEntity{
 	 * @ORM\Column(name="id_instituicao",type="integer")
 	 */
 	private $idInstituicao;
-	
+
 	/**
-	 * @ORM\Column(name="id_categoria",type="integer")
+	 * @ORM\ManyToOne(targetEntity="Application\Entity\CategoriaDonativo" )
+	 * @ORM\JoinColumn(name="id_categoria", referencedColumnName="id_categoria")
 	 */
 	private $idCategoria;
 	
