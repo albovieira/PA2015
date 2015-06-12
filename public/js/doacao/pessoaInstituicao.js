@@ -185,7 +185,7 @@ var pessoaInstituicao = {
             type: 'GET',
             url:'/donativo/get-donativos',
             success: function (data) {
-                var html = '';
+                var html = '<h4 style="margin-left: 15px;width: 93%;">Donativos cadastrados</h4>';
                 if(data.length > 0){
                     $.each( data, function( key, donativo) {
 
@@ -196,7 +196,7 @@ var pessoaInstituicao = {
                                 "<a href='#' class='list-group-item '>" +
                                 "<h4 class='list-group-item-heading'>"+donativo.titulo+"</h4>" +
                                 "<p class='list-group-item-text'>"+ donativo.descricao+"</p><br>" +
-                                "<p class='list-group-item-text'><strong>Doação disponivel até: "+ donativo.dataDesa +"</strong></p><br>" +
+                                "<p class='list-group-item-text'><strong class='text-danger'>Doação disponivel até: "+ donativo.dataDesa +"</strong></p><br>" +
                                 "<button class='btn btn-primary btn-doar'>Doar</button>" +
                                 "</a>" +
                                 "</div>" +
@@ -223,19 +223,50 @@ var pessoaInstituicao = {
         $('.btn-doar').each(function (index,elemento) {
             $(elemento).click(function (e) {
                 $.ajax({
-                    data: {'id_donativo': $(elemento).parents('.list-group').children('.id-donativo').val()},
+                    data: {'idDonativo': $(elemento).parents('.list-group').children('.id-donativo').val()},
                     type: 'POST',
                     url:'/transacao/nova-transacao',
                     success: function (data) {
                         $('.modal-body').html(data);
                         $('#doacaoModal').modal('show');
+
+                        pessoaInstituicao.bindConfirmarDoacao();
                     }
                 });
             });
         });
-    }
-        
+    },
 
+    bindConfirmarDoacao: function(){
+        $('#donativo').submit(function (e) {
+            e.preventDefault();
+            $.ajax({
+                data: $('#donativo').serialize(),
+                type: 'POST',
+                url:'/transacao/nova-transacao',
+                success: function (data) {
+                    $('#doacaoModal').modal('show');
+                }
+            });
+        });
+    },
+        
+    bindOferecerDoar: function () {
+        $('#btn-oferecer').click(function () {
+            $.ajax({
+                //data: {'idDonativo': $(elemento).parents('.list-group').children('.id-donativo').val()},
+                type: 'POST',
+                //url:'/transacao/oferecer-doacao',
+                success: function (data) {
+                    $('.modal-body').html(data);
+                    $('#doacaoModal').modal('show');
+
+                    pessoaInstituicao.bindConfirmarDoacao();
+                }
+            });
+        })  
+    }
+    
 }
 
 $(document).ready(function () {

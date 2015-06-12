@@ -1,3 +1,12 @@
+<style>
+    .resumo-donativo{
+        background-color: #FAF9F9;
+        padding: 8px;
+        margin-bottom: 14px;
+        box-shadow: 0px 0px 1px #CCC;
+    }
+</style>
+
 <?php
 use Application\Entity\Donativos;
 
@@ -9,12 +18,22 @@ $form->prepare();
 /** @var Donativos $donativo */
 $donativo = $this->donativo;
 
-echo $donativo->getDescricao() . '<br>';
-echo $donativo->getDataInclu()->format('d/m/y') . '<br>';
-echo $donativo->getDataDesa()->format('d/m/y'). '<br>';
-echo $donativo->getIdCategoria()->getDescricao(). '<br>';
-echo $donativo->getInstituicao()->getNomeFantasia(). '<br>';
-echo $donativo->getInstituicao()->getCnpj();
+$instituicao = $donativo->getInstituicao()->getNomeFantasia();
+$cnpj = $donativo->getInstituicao()->getCnpj();
+$qtd = $donativo->getQuantidade();
+$dataDesa = $donativo->getDataDesa()->format('d/m/Y');
+$produto = $donativo->getTitulo();
+$categoria = $donativo->getIdCategoria()->getDescricao();
+
+echo '<div class="resumo-donativo">';
+echo '<p><strong class="text-info">Resumo Donativo</strong></p>';
+echo "<p><strong>Instituicao:</strong> $instituicao </p>";
+echo "<p><strong>CNPJ:</strong> $cnpj </p>";
+echo "<p><strong>Unidades:</strong> $qtd</p>";
+echo "<p><strong>Data desativação:</strong> $dataDesa</p>";
+echo "<p><strong>Produto:</strong> $produto</p>";
+echo "<p><strong>Categoria:</strong> $categoria</p>";
+echo '</div>';
 
 ?>
 
@@ -29,6 +48,9 @@ echo $donativo->getInstituicao()->getCnpj();
 <?=$this->formLabel($form->get('quantidadeOferecida'))?>
 <?=$this->formInput($form->get('quantidadeOferecida'))?>
 
-
+<div class="modal-footer">
+<button id="#btn-confirmar" type="submit" class="btn btn-success">Confirmar</button>
+<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+</div>
 
 <?php echo $this->form()->closeTag($form) ?>

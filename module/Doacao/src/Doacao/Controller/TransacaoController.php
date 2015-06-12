@@ -9,8 +9,8 @@
 
 namespace Doacao\Controller;
 
-use Application\Entity\Donativos;
 use Application\Entity\TesteAnexo;
+use Application\Entity\Transacao;
 use Components\MVC\Controller\AbstractDoctrineCrudController;
 use Doacao\Form\TransacaoForm;
 use Doacao\Service\DonativoService;
@@ -35,22 +35,28 @@ class TransacaoController extends AbstractDoctrineCrudController
     public function novaTransacaoAction(){
         $this->layout()->setTemplate('layout/layout_modal');
 
+        $post = $this->getRequest()->getPost();
+
         $donativoService = new DonativoService();
         $pessoaService = new PessoaService();
+        $donativos = $donativoService->getDonativoById($post['idDonativo']);
 
-        $post = $this->getRequest()->getPost();
-        if(isset($post['id_donativo'])){
-            /** @var Donativos $donativos */
-            $donativos = $donativoService->getDonativoById($post['id_donativo']);
-        }
         $formTransacao = new TransacaoForm();
-
         //seta manualmente os campos hidden
-        $data = new \DateTime('now');
-        $formTransacao->get('idDonativo')->setValue($donativos->getId());
-        $formTransacao->get('idInstituicao')->setValue($donativos->getInstituicao()->getId());
-        $formTransacao->get('idPessoa')->setValue($pessoaService->getObjPessoa()->getId());
-        $formTransacao->get('dataTransacao')->setValue($data->format('Y-m-d'));
+        if(!empty($post['quantidadeOferecida'])){
+            $transacao = new Transacao();
+            $formTransacao->setInputFilter($transacao->getInputFilter());
+            $formTransacao->setData($post);
+            if($formTransacao->isValid()){
+                $this->transacaoService->salvar($post,$transacao);
+            }
+        }else{
+            $data = new \DateTime('now');
+            $formTransacao->get('idDonativo')->setValue($donativos->getId());
+            $formTransacao->get('idInstituicao')->setValue($donativos->getInstituicao()->getId());
+            $formTransacao->get('idPessoa')->setValue($pessoaService->getObjPessoa()->getId());
+            $formTransacao->get('dataTransacao')->setValue($data->format('Y-m-d'));
+        }
 
         return new ViewModel(
             array(
@@ -59,4 +65,6 @@ class TransacaoController extends AbstractDoctrineCrudController
             )
         );
     }
+
+
 }
