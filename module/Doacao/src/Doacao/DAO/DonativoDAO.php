@@ -2,13 +2,14 @@
 namespace Doacao\DAO;
 
 use Application\Dao\AbstractDao;
-use Application\Entity\Donativos;
 use Doctrine\ORM\EntityManager;
 
 class DonativoDAO extends AbstractDao{
+	protected $entity = 'Application\Entity\Donativos';
+	protected $tbalias = 'don';
 	/** @var EntityManager em */
 	private $em;
-	
+
 	public function __construct(){
 		$this->em = parent::getEntityManager();
 	}
@@ -63,7 +64,16 @@ class DonativoDAO extends AbstractDao{
 		return $r;
 	}
 
+	public function findDonativo($id){
+		$qb = $this->em
+				->createQueryBuilder()
+				->select($this->getTbAlias(), 'categoria', 'tbinst')
+				->from($this->getEntity(), $this->getTbAlias())
+				->leftJoin('Application\Entity\CategoriaDonativo', 'categoria' , 'IN', 'don.idCategoria = categoria.id')
+				->leftJoin('Application\Entity\Instituicao', 'tbinst' , 'IN', 'don.idInstituicao = tbinst.id')
+				->where($this->getTbAlias(). ".id = {$id}");
+		$return = $qb->getQuery()->getResult();
+		return $return[0];
+	}
 
-	
-	
 }

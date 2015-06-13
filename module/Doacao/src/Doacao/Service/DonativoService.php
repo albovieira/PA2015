@@ -1,9 +1,9 @@
 <?php
 namespace Doacao\Service;
 
+use Application\Entity\Donativos;
 use Application\Service\AbstractService;
 use Doacao\DAO\DonativoDAO;
-use Application\Entity\Donativos;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 
 
@@ -82,6 +82,7 @@ class DonativoService extends AbstractService{
 		return $arrDonativo;
 	}
 
+	// passa isso para o dao
 	public function pagina($page){
 
 		$limit = 5;
@@ -92,7 +93,8 @@ class DonativoService extends AbstractService{
 		return $pagedDonativos;
 
 	}
-	
+
+	//passa isso para o dao
 	public function getPagedDonativos($offset = 0, $limit = 0){
 		$em = $this->dao->getEntityManager();
 		$qb = $em->createQueryBuilder();
@@ -119,5 +121,9 @@ class DonativoService extends AbstractService{
 		$response = $this->dao->delete('tb_donativo',array('id_dnv'=>$id));
 		return $response;
 	}
-	
+
+	public function getDonativoById($id){
+		return $this->dao->findDonativo($id);
+	}
+
 }

@@ -2,25 +2,54 @@
 namespace Doacao\Service;
 
 use Application\Service\AbstractService;
-use Doacao\Dao\TransacaoDAO;
 use Applicaton\Entity\Transacao;
+use Doacao\Dao\TransacaoDAO;
 
 class TransacaoService extends AbstractService{
 	
-	private $transacao;
-	private $dao;
+	private $transacaoDao;
 	
-	public function __construc(){
-		$this->dao = new TransacaoDAO();
-		$this->transacao = new Transacao();
+	public function __construct(){
+		$this->transacaoDao = new TransacaoDAO();
 	}
 	
+	public function criarTransacao(){
+
+	}
+
 	public function totalPorDonativo($id){
-		$dao = new TransacaoDAO();
-		
-		$quant = $dao->total($id);
+		$quant = $this->transacaoDao->total($id);
 		return $quant;
 	}
-	
+
+	public function salvar($post, $transacao){
+
+		$arrDependencias = $this->getDependencias($post);
+		$transacao->exchangeArray($post);
+		$transacao->setInstituicao($arrDependencias['instituicao']);
+		$transacao->setDonativo($arrDependencias['donativo']);
+		$transacao->setPessoa($arrDependencias['pessoa']);
+
+
+		if($transacao->getId()){
+			$this->transacaoDao->updateEntity($transacao);
+		}else{
+			$this->transacaoDao->salvar($transacao);
+		}
+	}
+
+	public function getDependencias($post){
+
+		$arrObjsDependencia = [];
+		$arrObjsDependencia['instituicao'] = $this->transacaoDao->findById($post['idInstituicao'], 'Application\Entity\Instituicao');
+		$arrObjsDependencia['pessoa'] = $this->transacaoDao->findById($post['idPessoa'], 'Application\Entity\Pessoa');
+		$arrObjsDependencia['donativo'] = $this->transacaoDao->findById($post['idDonativo'], 'Application\Entity\Donativos');
+
+		return $arrObjsDependencia;
+	}
+
+	public function getTransacaoPorPessoaeDonativo($idpessoa, $iddonativo){
+		return $this->transacaoDao->findTransacaoPorDonativosePessoa($idpessoa, $iddonativo);
+	}
 	
 }

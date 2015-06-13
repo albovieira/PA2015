@@ -2,10 +2,13 @@
 namespace Doacao\Dao;
 
 use Application\Dao\AbstractDao;
+
 class TransacaoDAO extends AbstractDao{
 	private static $em;
-	
-	public function __construc(){
+	protected $entity = 'Application\Entity\Transacao';
+	protected $tbalias = 'tran';
+
+	public function __construct(){
 		self::$em = parent::getEntityManager();
 	}
 	
@@ -19,6 +22,22 @@ class TransacaoDAO extends AbstractDao{
 					->getSingleScalarResult();
 		
 		return $count;
+	}
+
+	public function findTransacaoPorDonativosePessoa($pessoaId, $donativoId){
+		$qb = $this->getEntityManager()->createQueryBuilder()
+			->select($this->getTbAlias())
+			->from($this->getEntity(), $this->getTbAlias())
+			->where($this->getTbAlias(). ".idPessoa = {$pessoaId} AND " . $this->getTbAlias() .".idDonativo = {$donativoId}")
+			->andWhere($this->getTbAlias(). '.dataFinalizacao is null');
+		$retorno = $qb->getQuery()->getResult();
+
+		if(count($retorno)){
+			return $retorno[0];
+		}
+		return false;
+
+
 	}
 	
 	
