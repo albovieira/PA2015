@@ -42,11 +42,18 @@ echo '</div>';
 <?=$this->formInput($form->get('idDonativo'))?>
 <?=$this->formInput($form->get('idInstituicao'))?>
 <?=$this->formInput($form->get('idPessoa'))?>
+<?=$this->formInput($form->get('idMensagem'))?>
 <?=$this->formInput($form->get('dataTransacao'))?>
+<?=$this->formInput($form->get('dataEnvioMensagem'))?>
 
 
 <?=$this->formLabel($form->get('quantidadeOferecida'))?>
 <?=$this->formInput($form->get('quantidadeOferecida'))?>
+
+
+<?=$this->formLabel($form->get('mensagem'))?>
+<?=$this->formTextarea($form->get('mensagem'))?>
+
 
 <div class="modal-footer">
 <button id="#btn-confirmar" type="submit" class="btn btn-success">Confirmar</button>

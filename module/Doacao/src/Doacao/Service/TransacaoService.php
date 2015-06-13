@@ -1,6 +1,7 @@
 <?php
 namespace Doacao\Service;
 
+use Application\Entity\Mensagem;
 use Application\Service\AbstractService;
 use Applicaton\Entity\Transacao;
 use Doacao\Dao\TransacaoDAO;
@@ -30,12 +31,20 @@ class TransacaoService extends AbstractService{
 		$transacao->setDonativo($arrDependencias['donativo']);
 		$transacao->setPessoa($arrDependencias['pessoa']);
 
+		//adiciona dependencia mensagem
+		$mensagem = new Mensagem();
+		$arrDependencias['idMensagem'] = $post['idMensagem'];
+		$arrDependencias['mensagem'] = $post['mensagem'];
+		$data = new \DateTime('now');
+		$arrDependencias['dataEnvioMensagem'] = $data->format('Y-m-d h:m:s');
+		$mensagem->exchangeArray($arrDependencias);
 
 		if($transacao->getId()){
 			$this->transacaoDao->updateEntity($transacao);
 		}else{
 			$this->transacaoDao->salvar($transacao);
 		}
+		$this->transacaoDao->salvar($mensagem);
 	}
 
 	public function getDependencias($post){
@@ -50,6 +59,10 @@ class TransacaoService extends AbstractService{
 
 	public function getTransacaoPorPessoaeDonativo($idpessoa, $iddonativo){
 		return $this->transacaoDao->findTransacaoPorDonativosePessoa($idpessoa, $iddonativo);
+	}
+
+	public function getMensagensTransacao($transacao){
+
 	}
 	
 }

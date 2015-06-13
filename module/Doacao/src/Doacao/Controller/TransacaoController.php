@@ -62,6 +62,10 @@ class TransacaoController extends AbstractDoctrineCrudController
              $formTransacao->get('idPessoa')->setValue($jaTemTransacao->getIdPessoa());
              $formTransacao->get('dataTransacao')->setValue($data->format('Y-m-d'));
              $formTransacao->get('quantidadeOferecida')->setValue($jaTemTransacao->getQuantidadeOferta());
+
+             //var_dump($jaTemTransacao->getMensagem());die;
+             //pegar todas mensagens
+             //$mensagens = $this->transacaoService->getMensagensTransacao($jaTemTransacao);
          }
          else{
             //seta manualmente os campos hidden

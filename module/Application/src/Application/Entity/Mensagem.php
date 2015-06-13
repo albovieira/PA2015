@@ -51,7 +51,7 @@ class Mensagem extends AbstractEntity{
 	private $instituicao;
 
 	/**
-	 * @ORM\Column(name="id_instituicao", type="integer")
+	 * @ORM\Column(name="id_donativo", type="integer")
 	 */
 	private $idDonativo;
 
@@ -203,6 +203,17 @@ class Mensagem extends AbstractEntity{
 	public function setDonativo($donativo)
 	{
 		$this->donativo = $donativo;
+	}
+
+	public function exchangeArray($array)
+	{
+		$this->id = $array['idMensagem'];
+		$this->pessoa = $array['pessoa'];
+		$this->instituicao = $array['instituicao'];
+		$this->donativo = $array['donativo'];
+		$this->mensagem = $array['mensagem'];
+		$this->dataEnvio= $array['dataEnvioMensagem'];
+
 	}
 
 	public function getInputFilter(){}

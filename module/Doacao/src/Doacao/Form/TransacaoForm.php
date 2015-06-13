@@ -29,9 +29,18 @@ class TransacaoForm extends Form{
 			'name'=>'idPessoa',
 			'type'=>'Hidden'
 		));
+		$this->add(array(
+			'name'=>'idMensagem',
+			'type'=>'Hidden'
+		));
 
 		$this->add(array(
 			'name'=>'dataTransacao',
+			'type'=>'Hidden'
+		));
+
+		$this->add(array(
+			'name'=>'dataEnvioMensagem',
 			'type'=>'Hidden'
 		));
 
@@ -46,6 +55,21 @@ class TransacaoForm extends Form{
 			'attributes' => array(
 				'type' => 'number',
 				'class'=> 'form-control'
+			),
+		));
+
+		$this->add(array(
+			'name' => 'mensagem',
+			'type' => 'textarea',
+			'attributes' => array(
+				'class'=> 'form-control',
+				'rows' => '5'
+			),
+			'options' => array(
+				'label' => 'Mensagem',
+				'label_attributes' => array(
+					'class' => 'label-control'
+				)
 			),
 		));
 
