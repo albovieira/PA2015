@@ -1,107 +1,83 @@
 <?php
-use Doacao\View\Helper\PaginationHelper;
 use Doacao\Service\TransacaoService;
 
 $transacao = new TransacaoService ();
 
 ?>
-<br>
-<br>
-<br>
-<br>
-<div class="col-xs-12 padding-zero">
-	<div class="col-lg-5">
-		<div class="panel padding-zero panel-default">
-			<div class="list-group-item-special">
-				<div class="btn-group">
-					<button class="btn btn-xs btn-success">Ativos</button>
-					<button class="btn btn-xs btn-default">Desativados</button>
-					<button class="btn btn-xs btn-default">Encerrados</button>
+<div class="grid padding10">
+	<div class="row cells3">
+		<div class="cell">
+			<div class="panel set-border">
+				<div class="heading">
+					<span class="icon mif-tools"></span>
+					<span class="title">Gerenciar Donativos</span>
 				</div>
-			</div>
-			<li class="list-group-item-special"><b>Gerenciar donativos ativos</b>
-				<button data-toggle="modal"
-					data-item-url="<?php echo $this->url('donativo',array('action'=>'novo')); ?>"
-					data-target="#modal-item" class="btn btn-xs btn-success pull-right"
-					title="Adicionar Donativo" onclick="instituicao.open()">
-					Adicionar <span class="glyphicon glyphicon-plus"></span>
-				</button> <br> <sub>*No momento só é permitido até 5 solicitações
-					ativas.</sub></li>
-	            <?php
-													foreach ( $donativos as $item ) :
-														$id = $item->getId ();
-														$titulo = $item->getTitulo ();
-														$descricao = $item->getDescricao ();
-														$quantidade = $item->getQuantidade ();
-														$dataInclu = $item->getDataInclu ()->format ( 'd/m/Y' );
-														$dataDesa = $item->getDataDesa ()->format ( 'd/m/Y' );
-														$oferecidos = $transacao->totalPorDonativo ( $id );
-														
-														echo "<li class='list-group-item list-group-item-special' data-toggle='collapse' href='#donativo-{$id}' aria-expanded='false' aria-controls='perfilcollapse'>
-			            {$titulo}
-			            <br>
-			            <sub>Incluído em: {$dataInclu}</sub>
-			            <span class='badge pull-rigth'>Pedidos: {$quantidade}</span><span class='badge pull-rigth label-info'>Recebidos: {$oferecidos}</span>
-			            </li>
-			            <ul class='list-flat list-group in' data-toggle='collapse' id='donativo-{$id}'>
-			            <li class='list-group-item panel-body'>
-			            {$descricao}
-			            <br>
-			            <sub>Expira em: {$dataDesa}</sub>
-			            <div class='pull-right btn-group btn-group-sm'>
-			            <a class='btn btn-primary' onclick='instituicao.edita_donativo({$id})' data-toggle='modal'
-			            data-item-url='" . $this->url ( 'donativo', array (
-																'action' => 'editar' 
-														) ) . "' data-target='#modal-item' disable>Editar</a>
-			            <a class='btn btn-warning' onclick='instituicao.desativa_donativo({$id})'>Desativar</a>
-			            <a class='btn btn-danger' onclick='instituicao.exclui_donativo({$id})'>Excluir</a>
-			            </div>
-			            </li>
-			            </ul>
-			            ";
-													endforeach
-													;
-													?>
-	        </div>
-	</div>
-	<div class="col-lg-7">
-		<div class="panel padding-zero panel-success">
-			<div class="panel-body padding-zero">
-				<div class="list-group-item-special">
-					<b>Informações dos Donativos</b>
+				<div class="bg-white">
+					<div class="align-center padding10">
+						<button class="button small-button" onclick="util.windowModal('/donativo/novo')">Ativados</button>
+						<button class="button small-button">Desativados</button>
+						<button class="button small-button">Finalizados</button>
+						<button data-toggle="modal"
+								data-target="#modal-item"
+								data-item-url="<?php echo $this->url('donativo',array('action'=>'novo')); ?>"
+								class="small-button image-button success"
+								title="Adicionar Donativo" onclick="instituicao.open(this)">
+							Adicionar
+							<span class="icon mif-plus bg-darkGreen"></span>
+						</button>
+					</div>
 				</div>
-				<div class="col-lg-4 panel-body">
-					Pedidos totais: <font size="32px">145</font>
-				</div>
-				<div class="col-lg-4 panel-body">
-					Pedidos recebidos: <font size="32px">0</font>
-				</div>
-				<div class="col-lg-4 panel-body">
-					Pedidos desativados: <font size="32px">0</font>
+				<div class="content bg-white listview-outlook">
+					<?php
+						foreach($donativos as $item):
+							$id = $item->getId();
+							$titulo = $item->getTitulo();
+							$descricao = $item->getDescricao();
+							$quantidade = $item->getQuantidade();
+							$dataInclu = $item->getDataInclu()->format ( 'd/m/Y' );
+							$dataDesa = $item->getDataDesa()->format ( 'd/m/Y' );
+							$oferecidos = $transacao->totalPorDonativo( $id );
+
+							echo "
+								<div class='list marked bg-hover-white bg-active-white'>
+									<div class='list-content'>
+										<span class='list-title'>{$titulo}&nbsp;</span>
+										<span class='list-subtitle'>Data Inclusão: {$dataInclu}
+											<span>
+												<span class='mif-arrow-up'></span> {$quantidade}
+												<span class='mif-arrow-down'></span> {$oferecidos}
+											</span>
+										</span>
+										<span class='list-remark'>
+											{$descricao}
+										</span>
+										<span class='list-subtitle'>
+											Expira em: {$dataDesa}
+											<a onclick='instituicao.desativa_donativo({$id})' href='#' class='place-right'>
+												<span class='icon mif-blocked'></span>
+												Desativar
+											</a>
+											<span class='place-right'>&nbsp;</span>
+											<a onclick='instituicao.exclui_donativo({$id})' href='#' class='place-right'>
+												<span class='icon mif-bin'></span>
+												Excluir
+											</a>
+											<span class='place-right'>&nbsp;</span>
+											<a class='place-right' onclick='' href='#'>
+												<span class='icon mif-pencil'></span>
+												Editar
+											</a>
+										</span>
+									</div>
+								</div>
+							";
+						endforeach;
+					?>
 				</div>
 			</div>
 		</div>
-	</div>
-	<div class="col-lg-7">
-		<div class="panel padding-zero panel-success">
-			<div class="panel-body padding-zero">
-				<div class="list-group-item-special">
-					<b>Informações de doação</b>
-				</div>
-				<div class="col-lg-4 panel-body">
-					Doadores: <font size="32px">0</font>
-				</div>
-				<div class="col-lg-4 panel-body">
-					Seguidores: <font size="32px">0</font>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="modal fade" id="modal-item">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-body"></div>
-			</div>
+		<div class="cell colspan2">
+
 		</div>
 	</div>
 </div>

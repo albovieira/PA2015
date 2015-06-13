@@ -15,12 +15,12 @@ echo $this->headScript()->appendFile($this->basePath . '/js/doacao/donativo.js')
 	echo $this->form()->openTag($form);
 	echo $this->formHidden($form->get('id'));
 	echo $this->formHidden($form->get('dataInclu')->setValue($now->format('Y-m-d')));
-	echo "<div class='form-group'>".$this->formRow($form->get('titulo')).
-			$this->formRow($form->get('quantidade'))."</div>";
-	echo "<div class='form-group'>".$this->formRow($form->get('categorias'))."</div>";
-	echo "<div class='form-gorup'>".$this->formRow($form->get('tempo_maximo'))."</div>";
-	echo "<div class='form-group'>".$this->formRow($form->get('descricao'))."</div>";
-	echo "<div class='form-group'>".$this->formSubmit($form->get('submit'))."</div>";
+	echo "<div class='input-control text'>".$this->formRow($form->get('titulo'))."</div>";
+	echo "<div class='input-control number'>".$this->formRow($form->get('quantidade'))."</div>";
+	echo "<div class='input-control select'>".$this->formRow($form->get('categorias'))."</div>";
+	echo "<div class='input-control number'>".$this->formRow($form->get('tempo_maximo'))."</div>";
+	echo "<div class='input-control textarea'>".$this->formRow($form->get('descricao'))."</div>";
+	echo "<div class='input-control'>".$this->formSubmit($form->get('submit'))."</div>";
 	echo $this->form()->closeTag();
 	
 ?>
