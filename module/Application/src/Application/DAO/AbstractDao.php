@@ -23,6 +23,11 @@ class AbstractDao
         return $this->entityManager;
     }
 
+    public function validaPerfil($user){
+        $objUser = $this->entityManager->getRepository('Application\Entity\User')->findById($user);
+        return $objUser[0]->getPerfil();
+    }
+
     public function getEntity(){
         return $this->entity;
     }

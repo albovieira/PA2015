@@ -346,16 +346,16 @@ CREATE TABLE `tb_mensagem` (
   `mensagem` varchar(500) DEFAULT NULL,
   `id_pessoa` int(11) NOT NULL,
   `id_instituicao` int(11) NOT NULL,
-  `id_donativo` int(11) NOT NULL,
+  `id_transacao` int(11) NOT NULL,
   `id_remetente` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_mensagem_pessoa_idx` (`id_pessoa`),
-  KEY `fk_mensagem_donativo_idx` (`id_donativo`),
   KEY `fk_mensagem_instituicao_idx` (`id_instituicao`),
-  CONSTRAINT `fk_mensagem_donativo` FOREIGN KEY (`id_donativo`) REFERENCES `tb_donativo` (`id_dnv`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  KEY `fk_mensagem_transacao_idx` (`id_transacao`),
+  CONSTRAINT `fk_mensagem_transacao` FOREIGN KEY (`id_transacao`) REFERENCES `tb_transacao` (`id_transacao`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_mensagem_instituicao` FOREIGN KEY (`id_instituicao`) REFERENCES `tb_instbenef` (`id_instituicao`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_mensagem_pessoa` FOREIGN KEY (`id_pessoa`) REFERENCES `pessoas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -364,6 +364,7 @@ CREATE TABLE `tb_mensagem` (
 
 LOCK TABLES `tb_mensagem` WRITE;
 /*!40000 ALTER TABLE `tb_mensagem` DISABLE KEYS */;
+INSERT INTO `tb_mensagem` VALUES (5,'2015-06-13 08:06:20','dsdadsaadas',1,2,12,1);
 /*!40000 ALTER TABLE `tb_mensagem` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -442,7 +443,7 @@ CREATE TABLE `tb_transacao` (
   CONSTRAINT `transacao_donativo` FOREIGN KEY (`id_donativo`) REFERENCES `tb_donativo` (`id_dnv`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `transacao_instituicao` FOREIGN KEY (`id_instituicao`) REFERENCES `tb_instbenef` (`id_instituicao`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `transacao_pessoa` FOREIGN KEY (`id_pessoa`) REFERENCES `pessoas` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -451,7 +452,7 @@ CREATE TABLE `tb_transacao` (
 
 LOCK TABLES `tb_transacao` WRITE;
 /*!40000 ALTER TABLE `tb_transacao` DISABLE KEYS */;
-INSERT INTO `tb_transacao` VALUES (10,4,11,'2015-06-13 00:00:00',NULL,NULL,2,1);
+INSERT INTO `tb_transacao` VALUES (10,4,11,'2015-06-13 00:00:00',NULL,NULL,2,1),(12,4,11,'2015-06-13 00:00:00',NULL,NULL,2,1);
 /*!40000 ALTER TABLE `tb_transacao` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -524,4 +525,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-06-13 14:47:04
+-- Dump completed on 2015-06-13 15:19:25

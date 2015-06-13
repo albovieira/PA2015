@@ -51,15 +51,20 @@ class Mensagem extends AbstractEntity{
 	private $instituicao;
 
 	/**
-	 * @ORM\Column(name="id_donativo", type="integer")
+	 * @ORM\Column(name="id_transacao", type="integer")
 	 */
-	private $idDonativo;
+	private $idTransacao;
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="Donativos")
-	 * @ORM\JoinColumn(name="id_donativo", referencedColumnName="id_dnv")
+	 * @ORM\ManyToOne(targetEntity="Transacao",  cascade={"all"})
+	 * @ORM\JoinColumn(name="id_transacao", referencedColumnName="id_transacao")
 	 **/
-	private $donativo;
+	private $transacao;
+
+	/**
+	 * @ORM\Column(name="id_remetente", type="integer")
+	 */
+	private $idRemetente;
 
 	/**
 	 * @return mixed
@@ -176,43 +181,61 @@ class Mensagem extends AbstractEntity{
 	/**
 	 * @return mixed
 	 */
-	public function getIdDonativo()
+	public function getIdTransacao()
 	{
-		return $this->idDonativo;
+		return $this->idTransacao;
 	}
 
 	/**
-	 * @param mixed $idDonativo
+	 * @param mixed $idTransacao
 	 */
-	public function setIdDonativo($idDonativo)
+	public function setIdTransacao($idTransacao)
 	{
-		$this->idDonativo = $idDonativo;
+		$this->idTransacao = $idTransacao;
 	}
 
 	/**
 	 * @return mixed
 	 */
-	public function getDonativo()
+	public function getTransacao()
 	{
-		return $this->donativo;
+		return $this->transacao;
 	}
 
 	/**
-	 * @param mixed $donativo
+	 * @param mixed $transacao
 	 */
-	public function setDonativo($donativo)
+	public function setTransacao($transacao)
 	{
-		$this->donativo = $donativo;
+		$this->transacao = $transacao;
 	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getIdRemetente()
+	{
+		return $this->idRemetente;
+	}
+
+	/**
+	 * @param mixed $idRemetente
+	 */
+	public function setIdRemetente($idRemetente)
+	{
+		$this->idRemetente = $idRemetente;
+	}
+
+
 
 	public function exchangeArray($array)
 	{
 		$this->id = $array['idMensagem'];
 		$this->pessoa = $array['pessoa'];
 		$this->instituicao = $array['instituicao'];
-		$this->donativo = $array['donativo'];
 		$this->mensagem = $array['mensagem'];
 		$this->dataEnvio= $array['dataEnvioMensagem'];
+		$this->idRemetente = $array['idRemetente'];
 
 	}
 

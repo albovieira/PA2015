@@ -36,8 +36,13 @@ class TransacaoDAO extends AbstractDao{
 			return $retorno[0];
 		}
 		return false;
+	}
 
-
+	public function findMensagensTransacao($transacao){
+		//$qb= $this->getEntityManager()->createQueryBuilder()
+		///	 ->select('msg')
+			// ->from('Application\Entity\Mensagem', 'msg')
+			 //->where();
 	}
 	
 	

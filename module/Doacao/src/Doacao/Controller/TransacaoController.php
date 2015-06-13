@@ -65,7 +65,7 @@ class TransacaoController extends AbstractDoctrineCrudController
 
              //var_dump($jaTemTransacao->getMensagem());die;
              //pegar todas mensagens
-             //$mensagens = $this->transacaoService->getMensagensTransacao($jaTemTransacao);
+             $mensagens = $this->transacaoService->getMensagensTransacao($jaTemTransacao);
          }
          else{
             //seta manualmente os campos hidden

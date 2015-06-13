@@ -7,7 +7,10 @@ use Applicaton\Entity\Transacao;
 use Doacao\Dao\TransacaoDAO;
 
 class TransacaoService extends AbstractService{
-	
+
+	const PESSOA = '2';
+	const INSTITUICAO = '3';
+
 	private $transacaoDao;
 	
 	public function __construct(){
@@ -32,9 +35,22 @@ class TransacaoService extends AbstractService{
 		$transacao->setPessoa($arrDependencias['pessoa']);
 
 		//adiciona dependencia mensagem
+
+
+
 		$mensagem = new Mensagem();
 		$arrDependencias['idMensagem'] = $post['idMensagem'];
 		$arrDependencias['mensagem'] = $post['mensagem'];
+
+		$perfil = $this->transacaoDao->validaPerfil($this->getUserLogado());
+		if($perfil == self::PESSOA){
+			$post['idRemetente'] = $arrDependencias['pessoa']->getId();
+		}else{
+			$post['idRemetente'] = $arrDependencias['instituicao']->getId();
+		}
+		$arrDependencias['idRemetente'] = $post['idRemetente'];
+
+
 		$data = new \DateTime('now');
 		$arrDependencias['dataEnvioMensagem'] = $data->format('Y-m-d h:m:s');
 		$mensagem->exchangeArray($arrDependencias);
@@ -44,6 +60,8 @@ class TransacaoService extends AbstractService{
 		}else{
 			$this->transacaoDao->salvar($transacao);
 		}
+
+		$mensagem->setTransacao($transacao);
 		$this->transacaoDao->salvar($mensagem);
 	}
 
@@ -62,7 +80,7 @@ class TransacaoService extends AbstractService{
 	}
 
 	public function getMensagensTransacao($transacao){
-
+		//return $this->transacaoDao->''
 	}
 	
 }
