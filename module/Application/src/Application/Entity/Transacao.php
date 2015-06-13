@@ -68,6 +68,17 @@ class Transacao extends AbstractEntity{
 	 * @ORM\JoinColumn(name="id_donativo", referencedColumnName="id_dnv")
 	 */
 	private $donativo;
+
+	/**
+	 * @ORM\Column(name="id_mensagem",type="integer")
+	 */
+	private $idMensagem;
+
+	/**
+	 * @ORM\ManyToOne(targetEntity="Donativos")
+	 * @ORM\JoinColumn(name="id_mensagem", referencedColumnName="id")
+	 */
+	private $mensagem;
 	
 	/**
 	 *
@@ -243,6 +254,38 @@ class Transacao extends AbstractEntity{
 	public function setIdInstituicao($idInstituicao)
 	{
 		$this->idInstituicao = $idInstituicao;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getIdMensagem()
+	{
+		return $this->idMensagem;
+	}
+
+	/**
+	 * @param mixed $idMensagem
+	 */
+	public function setIdMensagem($idMensagem)
+	{
+		$this->idMensagem = $idMensagem;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getMensagem()
+	{
+		return $this->mensagem;
+	}
+
+	/**
+	 * @param mixed $mensagem
+	 */
+	public function setMensagem($mensagem)
+	{
+		$this->mensagem = $mensagem;
 	}
 
 

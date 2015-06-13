@@ -14,7 +14,6 @@ class TransacaoForm extends Form{
 		$this->add(array(
 			'name'=>'idTransacao',
 			'type'=>'Hidden',
-			'id' => 'idTransacao'
 		));
 		$this->add(array(
 			'name'=>'idDonativo',

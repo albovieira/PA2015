@@ -260,7 +260,7 @@ var pessoaInstituicao = {
             $.ajax({
                 //data: {'idDonativo': $(elemento).parents('.list-group').children('.id-donativo').val()},
                 type: 'POST',
-                //url:'/transacao/oferecer-doacao',
+                url:'/transacao/oferecer-doacao',
                 success: function (data) {
                     $('.modal-body').html(data);
                     $('#doacaoModal').modal('show');
@@ -269,7 +269,7 @@ var pessoaInstituicao = {
                 }
             });
         })  
-    }
+    },
     
 }
 
