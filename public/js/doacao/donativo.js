@@ -15,7 +15,7 @@ $(function(){
 			error: function(xhr,txt){
 				alert("Não foi possível validar a requisição.");
 				$('#modal').close();
-			},
+			}
 		});
 		return false;
 	});
