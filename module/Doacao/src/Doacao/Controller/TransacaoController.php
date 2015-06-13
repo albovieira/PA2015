@@ -42,16 +42,29 @@ class TransacaoController extends AbstractDoctrineCrudController
         $donativos = $donativoService->getDonativoById($post['idDonativo']);
 
         $formTransacao = new TransacaoForm();
-        //seta manualmente os campos hidden
-        if(!empty($post['quantidadeOferecida'])){
+        $data = new \DateTime('now');
+
+        /** @var Transacao $jaTemTransacao */
+        $jaTemTransacao =  $this->transacaoService->getTransacaoPorPessoaeDonativo($pessoaService->getObjPessoa()->getId(), $donativos->getId());
+
+         if(!empty($post['quantidadeOferecida'])){
             $transacao = new Transacao();
             $formTransacao->setInputFilter($transacao->getInputFilter());
             $formTransacao->setData($post);
             if($formTransacao->isValid()){
                 $this->transacaoService->salvar($post,$transacao);
             }
-        }else{
-            $data = new \DateTime('now');
+        }
+         else if($jaTemTransacao){
+             $formTransacao->get('idTransacao')->setValue($jaTemTransacao->getId());
+             $formTransacao->get('idDonativo')->setValue($jaTemTransacao->getIdDonativo());
+             $formTransacao->get('idInstituicao')->setValue($jaTemTransacao->getIdInstituicao());
+             $formTransacao->get('idPessoa')->setValue($jaTemTransacao->getIdPessoa());
+             $formTransacao->get('dataTransacao')->setValue($data->format('Y-m-d'));
+             $formTransacao->get('quantidadeOferecida')->setValue($jaTemTransacao->getQuantidadeOferta());
+         }
+         else{
+            //seta manualmente os campos hidden
             $formTransacao->get('idDonativo')->setValue($donativos->getId());
             $formTransacao->get('idInstituicao')->setValue($donativos->getInstituicao()->getId());
             $formTransacao->get('idPessoa')->setValue($pessoaService->getObjPessoa()->getId());

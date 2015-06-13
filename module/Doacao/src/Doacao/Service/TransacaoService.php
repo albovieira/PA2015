@@ -30,7 +30,12 @@ class TransacaoService extends AbstractService{
 		$transacao->setDonativo($arrDependencias['donativo']);
 		$transacao->setPessoa($arrDependencias['pessoa']);
 
-		$this->transacaoDao->salvar($transacao);
+
+		if($transacao->getId()){
+			$this->transacaoDao->updateEntity($transacao);
+		}else{
+			$this->transacaoDao->salvar($transacao);
+		}
 	}
 
 	public function getDependencias($post){
@@ -41,6 +46,10 @@ class TransacaoService extends AbstractService{
 		$arrObjsDependencia['donativo'] = $this->transacaoDao->findById($post['idDonativo'], 'Application\Entity\Donativos');
 
 		return $arrObjsDependencia;
+	}
+
+	public function getTransacaoPorPessoaeDonativo($idpessoa, $iddonativo){
+		return $this->transacaoDao->findTransacaoPorDonativosePessoa($idpessoa, $iddonativo);
 	}
 	
 }

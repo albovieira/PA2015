@@ -229,8 +229,12 @@ var pessoaInstituicao = {
                     success: function (data) {
                         $('.modal-body').html(data);
                         $('#doacaoModal').modal('show');
-
                         pessoaInstituicao.bindConfirmarDoacao();
+
+                        if($("input[name=idTransacao]").val() != ''){
+                            var p = "<p class='text-danger'>* Doação ainda pendente de finalização pela instituicao</p>";
+                            $('.resumo-donativo').prepend(p);
+                        }
                     }
                 });
             });
@@ -245,7 +249,7 @@ var pessoaInstituicao = {
                 type: 'POST',
                 url:'/transacao/nova-transacao',
                 success: function (data) {
-                    $('#doacaoModal').modal('show');
+                    $('#doacaoModal').modal('hide');
                 }
             });
         });

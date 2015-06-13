@@ -274,7 +274,7 @@ class Transacao extends AbstractEntity{
 
 	public function exchangeArray($array)
 	{
-		$this->id = $array['id'];
+		$this->id = $array['idTransacao'];
 		$this->quantidadeOferta = $array['quantidadeOferecida'];
 		$this->dataTransacao = new \DateTime($array['dataTransacao']) ;
 		$this->idDonativo = $array['idDonativo'];
