@@ -236,6 +236,7 @@ class Mensagem extends AbstractEntity{
 		$this->mensagem = $array['mensagem'];
 		$this->dataEnvio= $array['dataEnvioMensagem'];
 		$this->idRemetente = $array['idRemetente'];
+		$this->transacao = $array['transacao'];
 
 	}
 

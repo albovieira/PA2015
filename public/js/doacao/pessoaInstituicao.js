@@ -235,6 +235,8 @@ var pessoaInstituicao = {
                             var p = "<p class='text-danger'>* Doação ainda pendente de finalização pela instituicao</p>";
                             $('.resumo-donativo').prepend(p);
                         }
+
+                        pessoaInstituicao.showConversa();
                     }
                 });
             });
@@ -270,7 +272,20 @@ var pessoaInstituicao = {
             });
         })  
     },
-    
+    showConversa: function () {
+        $('#ver-historico').click(function () {
+
+            if(!$('.historico').hasClass('down')){
+                $('.historico').slideDown();
+                $('.historico').addClass('down');
+            }else{
+                $('.historico').slideUp();
+                $('.historico').removeClass('down');
+            }
+        })
+    }
+
+
 }
 
 $(document).ready(function () {

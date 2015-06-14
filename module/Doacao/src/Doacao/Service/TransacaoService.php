@@ -29,40 +29,22 @@ class TransacaoService extends AbstractService{
 	public function salvar($post, $transacao){
 
 		$arrDependencias = $this->getDependencias($post);
+
+		//preenche transacao
 		$transacao->exchangeArray($post);
 		$transacao->setInstituicao($arrDependencias['instituicao']);
 		$transacao->setDonativo($arrDependencias['donativo']);
 		$transacao->setPessoa($arrDependencias['pessoa']);
 
-		//adiciona dependencia mensagem
-
-
-
-		$mensagem = new Mensagem();
-		$arrDependencias['idMensagem'] = $post['idMensagem'];
-		$arrDependencias['mensagem'] = $post['mensagem'];
-
-		$perfil = $this->transacaoDao->validaPerfil($this->getUserLogado());
-		if($perfil == self::PESSOA){
-			$post['idRemetente'] = $arrDependencias['pessoa']->getId();
-		}else{
-			$post['idRemetente'] = $arrDependencias['instituicao']->getId();
-		}
-		$arrDependencias['idRemetente'] = $post['idRemetente'];
-
-
-		$data = new \DateTime('now');
-		$arrDependencias['dataEnvioMensagem'] = $data->format('Y-m-d h:m:s');
-		$mensagem->exchangeArray($arrDependencias);
-
 		if($transacao->getId()){
 			$this->transacaoDao->updateEntity($transacao);
 		}else{
+			//var_dump($transacao);die;
 			$this->transacaoDao->salvar($transacao);
 		}
-
-		$mensagem->setTransacao($transacao);
-		$this->transacaoDao->salvar($mensagem);
+		if(!empty($post['mensagem'])){
+			$this->salvarMensagem($arrDependencias,$post);
+		}
 	}
 
 	public function getDependencias($post){
@@ -75,12 +57,36 @@ class TransacaoService extends AbstractService{
 		return $arrObjsDependencia;
 	}
 
+	public function salvarMensagem($arrDependencias, $post){
+
+		$mensagem = new Mensagem();
+		$arrDependencias['idMensagem'] = $post['idMensagem'];
+		$arrDependencias['mensagem'] = $post['mensagem'];
+		$arrDependencias['transacao'] = $this->transacaoDao->findById($post['idTransacao'], $this->transacaoDao->getEntity());
+
+		//verifica o perfil do remetente para persistir
+		$perfil = $this->transacaoDao->validaPerfil($this->getUserLogado());
+		if($perfil == self::PESSOA){
+			$arrDependencias['idRemetente'] = $arrDependencias['pessoa']->getId();
+		}else{
+			$arrDependencias['idRemetente'] = $arrDependencias['instituicao']->getId();
+		}
+
+		//data e hora da mensagem
+		$data = new \DateTime('now');
+		$arrDependencias['dataEnvioMensagem'] = $data->format('Y-m-d h:m:s');
+		$mensagem->exchangeArray($arrDependencias);
+
+		$this->transacaoDao->salvar($mensagem);
+	}
+
 	public function getTransacaoPorPessoaeDonativo($idpessoa, $iddonativo){
 		return $this->transacaoDao->findTransacaoPorDonativosePessoa($idpessoa, $iddonativo);
 	}
 
-	public function getMensagensTransacao($transacao){
-		//return $this->transacaoDao->''
+	public function getMensagensTransacao($transacaoID){
+		return $this->transacaoDao->findMensagensTransacao($transacaoID);
 	}
-	
+
+
 }

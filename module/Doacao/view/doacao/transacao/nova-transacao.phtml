@@ -5,6 +5,15 @@
         margin-bottom: 14px;
         box-shadow: 0px 0px 1px #CCC;
     }
+    .historico{
+        background-color: rgb(242, 244, 252);
+        padding: 8px;
+        margin-bottom: 14px;
+        box-shadow: 0px 0px 1px #CCC;
+    }
+    form#donativo{
+        margin-top: 10px;
+    }
 </style>
 
 <?php
@@ -34,8 +43,32 @@ echo "<p><strong>Data desativação:</strong> $dataDesa</p>";
 echo "<p><strong>Produto:</strong> $produto</p>";
 echo "<p><strong>Categoria:</strong> $categoria</p>";
 echo '</div>';
-
 ?>
+
+<?php
+if($this->mensagens) {
+    echo '<a id="ver-historico" href="#" style="margin-bottom: 10px"><i class="glyphicon glyphicon-envelope"></i> Ver histórico</a>';
+}
+?>
+
+<div class="historico ocultar">
+<?php
+    if($this->mensagens){
+       foreach($this->mensagens as $mensagem){
+
+           if($mensagem->getPessoa()->getId() == $mensagem->getIdRemetente()){
+               echo '<p><strong>Você:</strong></p>';
+               echo '<p>'.$mensagem->getDataEnvio().'<p>';
+               echo '<p>'.$mensagem->getMensagem().'<p>';
+           }else{
+               echo '<p><strong>Instituicao:</strong></p>';
+               echo '<p>'.$mensagem->getDataEnvio().'<p>';
+               echo '<p>'.$mensagem->getMensagem().'</p>';
+           }
+       }
+    }
+?>
+</div>
 
 <?php echo $this->form()->openTag($form) ?>
 <?=$this->formInput($form->get('idTransacao'))?>

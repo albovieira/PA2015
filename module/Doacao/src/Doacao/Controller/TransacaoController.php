@@ -36,7 +36,7 @@ class TransacaoController extends AbstractDoctrineCrudController
         $this->layout()->setTemplate('layout/layout_modal');
 
         $post = $this->getRequest()->getPost();
-
+        $mensagens = null;
         $donativoService = new DonativoService();
         $pessoaService = new PessoaService();
         $donativos = $donativoService->getDonativoById($post['idDonativo']);
@@ -65,7 +65,7 @@ class TransacaoController extends AbstractDoctrineCrudController
 
              //var_dump($jaTemTransacao->getMensagem());die;
              //pegar todas mensagens
-             $mensagens = $this->transacaoService->getMensagensTransacao($jaTemTransacao);
+             $mensagens = $this->transacaoService->getMensagensTransacao($jaTemTransacao->getId());
          }
          else{
             //seta manualmente os campos hidden
@@ -78,7 +78,8 @@ class TransacaoController extends AbstractDoctrineCrudController
         return new ViewModel(
             array(
                 'form' => $formTransacao,
-                'donativo' =>  $donativos
+                'donativo' =>  $donativos,
+                'mensagens' => $mensagens,
             )
         );
     }
