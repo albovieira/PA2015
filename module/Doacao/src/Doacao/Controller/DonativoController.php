@@ -9,22 +9,13 @@
 
 namespace Doacao\Controller;
 
-use Application\Proxy\__CG__\Application\Entity\Instituicao;
-use Components\MVC\Controller\AbstractCrudController;
+use Application\Service\AbstractService;
 use Components\MVC\Controller\AbstractDoctrineCrudController;
-use Doacao\Service\ServiceInstituicao;
-use Doctrine\DBAL\Schema\View;
-use Zend\Authentication\AuthenticationService;
-use Zend\Paginator\Adapter\ArrayAdapter;
-use Zend\Paginator\Paginator;
-use Zend\View\Helper\Json;
-use Zend\View\Model\JsonModel;
-use Zend\View\Model\ViewModel;
-use Application\Entity\Donativos;
 use Doacao\Form\DonativoForm;
 use Doacao\Service\DonativoService;
-use Application\Service\AbstractService;
-use Doacao\Service\TransacaoService;
+use Doacao\Service\ServiceInstituicao;
+use Zend\View\Model\JsonModel;
+use Zend\View\Model\ViewModel;
 
 class DonativoController extends AbstractDoctrineCrudController
 {
@@ -144,5 +135,5 @@ class DonativoController extends AbstractDoctrineCrudController
 
 		return new JsonModel($donativos);
 	}
-	
+
 }

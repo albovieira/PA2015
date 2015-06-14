@@ -12,6 +12,7 @@ return array(
     'admin'=> array(
         'doacao',
         'pessoa',
+        'pessoa',
         'instituicao',
         'evento'
     ),

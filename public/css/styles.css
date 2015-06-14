@@ -172,3 +172,9 @@ footer{
 .ocultar{
   display: none;
 }
+
+.foto-perfil-feed{
+  width: 40px;
+  box-shadow: 1px 1px 2px gray;
+  margin-right: 10px;
+}

@@ -250,7 +250,7 @@ var pessoaInstituicao = {
                 type: 'POST',
                 url:'/transacao/nova-transacao',
                 success: function (data) {
-                    //$('#doacaoModal').modal('hide');
+                    $('#doacaoModal').modal('hide');
                 }
             });
         });

@@ -57,12 +57,10 @@ if($this->mensagens) {
        foreach($this->mensagens as $mensagem){
 
            if($mensagem->getPessoa()->getId() == $mensagem->getIdRemetente()){
-               echo '<p><strong>Você:</strong></p>';
-               echo '<p>'.$mensagem->getDataEnvio().'<p>';
+               echo "<p><strong>Você {$mensagem->getDataEnvio()} :</strong></p>";
                echo '<p>'.$mensagem->getMensagem().'<p>';
            }else{
-               echo '<p><strong>Instituicao:</strong></p>';
-               echo '<p>'.$mensagem->getDataEnvio().'<p>';
+               echo "<p><strong>Instituicao {$mensagem->getDataEnvio()} :</strong></p>";
                echo '<p>'.$mensagem->getMensagem().'</p>';
            }
        }

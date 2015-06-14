@@ -19,6 +19,7 @@ use Doacao\Form\PessoaForm;
 use Doacao\Service\EventoService;
 use Doacao\Service\PessoaService;
 use Doacao\Service\ServiceInstituicao;
+use Doacao\Service\TransacaoService;
 use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
 
@@ -39,8 +40,11 @@ class PessoaController extends AbstractDoctrineCrudController
 
          $doacoes = null;
          if(!$doacoes){
-             $doacoes = "Não há doações, siga instituições e doe.<br><a href='/pessoa/instituicao' class='btn btn-success'>Ver Instituicoes </a>";
+             $doacoes = "Não há doações finalizadas, siga instituições e doe.<br><a href='/pessoa/instituicao' class='btn btn-success'>Ver Instituicoes </a>";
          }
+
+         $transacaoService = new TransacaoService();
+         $transacoes = $transacaoService->getTransacaoPorPessoa($this->pessoaService->getObjPessoa()->getId());
 
          $eventoService = new EventoService();
          $campanhas = $eventoService->getEventosInstituicoesRecentes();
@@ -55,6 +59,7 @@ class PessoaController extends AbstractDoctrineCrudController
          return new ViewModel(
              array(
                  'doacoes' => $doacoes,
+                 'transacoes' => $transacoes,
                  'campanhas' => $campanhas,
                  'dadosPessoa' => $dadosPessoa,
                  'formDivulgacao' => $formDivulgacao
@@ -252,6 +257,9 @@ class PessoaController extends AbstractDoctrineCrudController
 
     public function solicitacaoAjaxAction(){
 
+        $pessoaLogada = $this->pessoaService->getObjPessoa();
+        //$donativo = $th
+
         return new JsonModel(
             array(
 
@@ -260,7 +268,7 @@ class PessoaController extends AbstractDoctrineCrudController
     }
 
     //implementar busca generica
-    public function buscaGenerica(){
+    public function buscaGenericaAction(){
         $termo = $this->params()->fromQuery('term');
         $retorno = $this->pessoaService->getPesquisaInstituicaoPorNome($termo);
 

@@ -84,6 +84,10 @@ class TransacaoService extends AbstractService{
 		return $this->transacaoDao->findTransacaoPorDonativosePessoa($idpessoa, $iddonativo);
 	}
 
+	public function getTransacaoPorPessoa($idpessoa){
+		return $this->transacaoDao->findTransacaoPorPessoa($idpessoa);
+	}
+
 	public function getMensagensTransacao($transacaoID){
 		return $this->transacaoDao->findMensagensTransacao($transacaoID);
 	}

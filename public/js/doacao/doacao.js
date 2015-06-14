@@ -53,26 +53,27 @@ var principal = {
     },
 
     // funcao para callback de insercoes e atualizações
-    testeAjaxAviso: function () {
+    testeAjaxAviso: function (url) {
         $.ajax({
             type: "GET",
-            url: "/pessoa/solicitacaoAjax",
+            url: url,
 
             async: true,
             cache: false,
             timeout:50000,
+            global:false,
 
             success: function(data){
                 console.log(data);
                 setTimeout(
-                    principal.testeAjaxAviso,
-                    1000
+                    principal.testeAjaxAviso(url),
+                    5000
                 );
             },
             error: function(data){
                 console.log(data)
                 setTimeout(
-                    principal.testeAjaxAviso,
+                    principal.testeAjaxAviso(url),
                     15000);
             }
         });
@@ -107,6 +108,32 @@ var principal = {
             }(document, 'script', 'facebook-jssdk'));
         }
 
+    },
+
+    //busca do topo do sistema , o ideal e ser uma busca generica, por enquanto implementar busca por instituicao no caso de pessoa
+    autocompleteBuscaGenerica: function(){
+        $('#busca-generica').autocomplete({
+            minLength: 1,
+            source: function (request, response) {
+                var DTO = { "term": request.term };
+                $.ajax({
+                    global: false,
+                    data: DTO,
+                    type: 'GET',
+                    url:'/pessoa/busca-generica',
+                    success: function (data) {
+
+                        var arrInstituicoes = [];
+                        $.each( data, function( key, value ) {
+                            //arrInstituicoes.push('<a href="/pessoa/instituicao-page?id=' + value.idInstituicao + '">' +value.nomeFantasia +'</a>');
+                            arrInstituicoes.push(value.nomeFantasia);
+                        });
+                        console.log(response);
+                        return response(arrInstituicoes);
+                    }
+                });
+            }
+        });
     }
 
 };
@@ -117,6 +144,5 @@ $(document).ready(function () {
     principal.ajustaRodape();
     principal.bindAjusteRodape();
     principal.openModalLogin();
-
-   // principal.testeAjaxAviso();
+    principal.autocompleteBuscaGenerica();
 });

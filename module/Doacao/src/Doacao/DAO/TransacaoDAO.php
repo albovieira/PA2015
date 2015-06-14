@@ -24,6 +24,21 @@ class TransacaoDAO extends AbstractDao{
 		return $count;
 	}
 
+	public function findTransacaoPorPessoa($idpessoa){
+		$qb = $this->getEntityManager()->createQueryBuilder()
+			->select($this->getTbAlias(), 'donativo')
+			->from($this->getEntity(), $this->getTbAlias())
+			->leftJoin('Application\Entity\Donativos', 'donativo' , 'IN', 'tran.idDonativo = donativo.id')
+			->where($this->getTbAlias(). ".idPessoa = {$idpessoa}")
+			->orderBy($this->getTbAlias(). ".dataTransacao", 'DESC');
+		$retorno = $qb->getQuery()->getResult();
+
+		if(count($retorno)){
+			return $retorno;
+		}
+		return false;
+	}
+
 	public function findTransacaoPorDonativosePessoa($pessoaId, $donativoId){
 		$qb = $this->getEntityManager()->createQueryBuilder()
 			->select($this->getTbAlias())
