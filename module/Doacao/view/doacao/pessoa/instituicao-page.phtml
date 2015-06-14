@@ -8,7 +8,7 @@ $instituicao = $this->instituicao;
         height: 140px;
     }
     .img-local-inst{
-        width: 200px;
+        width: 300px;
         height: 200px;
         outline: 1px solid #222222;
         box-shadow: 1px 2px 3px #ccc;
@@ -20,10 +20,22 @@ $instituicao = $this->instituicao;
     <div class="row">
         <div class="col-xs-2">
             <img class="img foto img-circle" src="<?php echo $instituicao->getFoto()?>" />
-            <div><strong>Nome Fantasia: </strong><?php echo $instituicao->getNomeFantasia() ?></div>
-            <div><strong>Email: </strong><?php echo $instituicao->getEmail() ?></div>
-            <div><strong>Site: </strong><a href="<?php echo $instituicao->getSite()?>"><?php echo $instituicao->getSite()?></a></div>
-            <div><strong>CNPJ: </strong><?php echo $instituicao->getCnpj() ?></div>
+            <div><p><strong>Nome Fantasia: </strong><?php echo $instituicao->getNomeFantasia() ?></p></div>
+            <div><p><strong>Email: </strong><?php echo $instituicao->getEmail() ?></p></div>
+            <div><p><strong>Site: </strong><a href="<?php echo $instituicao->getSite()?>"><?php echo $instituicao->getSite()?></a></p></div>
+            <div><p><strong>CNPJ: </strong><?php echo $instituicao->getCnpj() ?></p></div>
+
+            <div style="margin-top: 10px">
+            <?php
+                if($this->seguir){
+                    echo '<button class="btn btn-danger parar-seguir">Parar de Seguir</button>';
+                }else{
+                    echo '<button class="btn btn-primary seguir">Seguir</button>';
+                }
+            ?>
+            </div>
+
+
         </div>
 
         <div class="col-xs-6">
@@ -70,3 +82,8 @@ $instituicao = $this->instituicao;
 
 
 <script src="/js/doacao/pessoaInstituicao.js"></script>
+<script>
+    $(document).ready(function () {
+        pessoaInstituicao.getDonativos();
+    })
+</script>

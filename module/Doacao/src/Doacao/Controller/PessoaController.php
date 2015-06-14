@@ -204,11 +204,13 @@ class PessoaController extends AbstractDoctrineCrudController
         $id = $this->params()->fromQuery('id');
         $instituicaoService = new ServiceInstituicao();
         $instituicao = $instituicaoService->buscaUmaInstituicao($id);
-        
+
+        $seguir = $this->pessoaService->jaPossuiInstituicao($this->pessoaService->getObjPessoa()->getId(), $id);
 
         return new ViewModel(
             array(
-                'instituicao' => $instituicao
+                'instituicao' => $instituicao,
+                'seguir' => $seguir
             )
         );
     }
@@ -257,4 +259,11 @@ class PessoaController extends AbstractDoctrineCrudController
         );
     }
 
+    //implementar busca generica
+    public function buscaGenerica(){
+        $termo = $this->params()->fromQuery('term');
+        $retorno = $this->pessoaService->getPesquisaInstituicaoPorNome($termo);
+
+        return new JsonModel($retorno);
+    }
 }

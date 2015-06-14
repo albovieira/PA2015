@@ -8,7 +8,6 @@ var pessoaInstituicao = {
         this.bindFiltroMinhas();
         this.autocomplete();
         this.bindClickBuscaInstituicao();
-        this.getDonativos();
     },
     bindFiltroTodos: function (){
         $('#todos').click(function () {
