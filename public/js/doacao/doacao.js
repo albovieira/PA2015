@@ -65,6 +65,8 @@ var principal = {
 
             success: function(data){
                 console.log(data);
+
+
                 setTimeout(
                     principal.testeAjaxAviso(url),
                     5000

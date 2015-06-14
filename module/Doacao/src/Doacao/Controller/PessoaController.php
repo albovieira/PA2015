@@ -257,12 +257,12 @@ class PessoaController extends AbstractDoctrineCrudController
 
     public function solicitacaoAjaxAction(){
 
-        $pessoaLogada = $this->pessoaService->getObjPessoa();
-        //$donativo = $th
+        $transacaoService = new TransacaoService();
+        $transacoes = $transacaoService->getTransacaoPorPessoa($this->pessoaService->getObjPessoa()->getId());
 
         return new JsonModel(
             array(
-
+                'transacoes' => $transacoes
             )
         );
     }

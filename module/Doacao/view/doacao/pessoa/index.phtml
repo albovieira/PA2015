@@ -21,83 +21,72 @@
 <!-- Colocar $this->formDivulgacao aqui-->
 <div class="row-fluid">
     <div class="col-xs-5">
-        <div class="well">
-            <h4>Divulgue campanhas com seus amigos no facebook</h4>
-            <?php
-                $form = $this->formDivulgacao;
-                $form->prepare();
-            ?>
-            <?=$this->form()->openTag($form)?>
-            <?=$this->formRow($form->get('idEvento'))?>
-            <?=$this->formRow($form->get('idPessoa'))?>
-            <div class="form-group" style="padding:14px;">
-                <?=$this->formRow($form->get('txtDivulgacao'))?><br>
-                <?=$this->formButton($form->get('publicar'))?>
-            </div>
-
-            <?=$this->form()->closeTag($form)?>
-        </div>
         <div class="row">
             <div class="container col-xs-12">
                 <div id="conteudo-atualizacao">
 
-                    <?php
-                        if($transacoes){
-                            foreach($transacoes as $transacao){
-                                if($transacao instanceof \Application\Entity\Transacao){
-                                        echo '<div class="well">';
-                                        echo "<a href='pessoa/instituicao-page?id={$transacao->getInstituicao()->getId()}'><h5><img class='foto-perfil-feed img' src={$transacao->getInstituicao()->getFoto()} /><strong> Instituicao {$transacao->getInstituicao()->getNomeFantasia()} - <span class='text-success'>Doação:{$transacao->getDonativo()->getTitulo()}</span></strong></h5></a>";
-                                        echo "<p>{$transacao->getDonativo()->getDescricao()}</p>";
-                                        echo "<p>Qtd:{$transacao->getDonativo()->getQuantidade()}</p>";
-                                        echo "<p>Você doou em :{$transacao->getDataTransacao()->format('d/m/Y')}</p>";
-                                        echo "<p class='text-danger'>* Aguarde finalização da doação pela instituicao</p>";
-                                        echo '<a id="ver-historico" href="#" style="margin-bottom: 10px"><i class="glyphicon glyphicon-envelope"></i> Ver histórico</a>';
-                                        echo '<div class="historico ocultar">';
-                                        echo 'aqui vai o historico';
-                                        echo '</div>';
+                    <div class="container-doacoes">
+                    <h3 class="down-doacao" style="cursor: pointer"><i class="glyphicon glyphicon-minus"></i> Doações</h3>
+                        <div class="doacoes div-slide down">
+                        <?php
+                            if($transacoes){
+                                foreach($transacoes as $transacao){
+                                    if($transacao instanceof \Application\Entity\Transacao){
+                                            echo '<div class="well">';
+                                            echo "<a href='pessoa/instituicao-page?id={$transacao->getInstituicao()->getId()}'><h5><img class='foto-perfil-feed img' src={$transacao->getInstituicao()->getFoto()} /><strong> Instituicao {$transacao->getInstituicao()->getNomeFantasia()} - <span class='text-success'>Doação:{$transacao->getDonativo()->getTitulo()}</span></strong></h5></a>";
+                                            echo "<p>{$transacao->getDonativo()->getDescricao()}</p>";
+                                            echo "<p>Qtd:{$transacao->getDonativo()->getQuantidade()}</p>";
+                                            echo "<p>Você doou em :{$transacao->getDataTransacao()->format('d/m/Y')}</p>";
+                                            echo "<p class='text-danger'>* Aguarde finalização da doação pela instituicao</p>";
+                                            echo '<a id="ver-historico" href="#" style="margin-bottom: 10px"><i class="glyphicon glyphicon-envelope"></i> Ver histórico</a>';
+                                            echo '<div class="historico ocultar">';
+                                            echo 'aqui vai o historico';
+                                            echo '</div>';
 
-                                        echo '</div>';
+                                            echo '</div>';
+                                    }
                                 }
                             }
-                        }
-                    ?>
+                        ?>
+                        </div>
+                    </div>
+
+                    </div>
+
                 </div>
             </div>
         </div>
     </div>
 
     <div class="col-xs-4">
-        <div class="well">
-            <h4>Últimas Doações:</h4>
-            <?php
-                if(!is_array($this->doacoes)){
-                    echo $this->doacoes;
-                }
-            ?>
-        </div>
-        <div class="well">
-            <h4>Últimas Campanhas</h4>
-            <?php
-            if(!is_array($this->campanhas)){
-                echo $this->campanhas;
-            }else{
-                foreach($campanhas as $campanha){
-                    echo "<div class='well text-capitalize'>";
-                    echo "<strong>Titulo:</strong> ".$campanha['tituloEvento'] . '<br>';
-                    echo "<strong>Instituicao:</strong> ".$campanha['nomeFantasia'] . '<br>';
-                    echo "<strong>Fim do evento:</strong> ".$campanha['dataFim'] . '<br>';
-                    echo "<a style='margin-top: 4%' class='btn btn-default btn-sm' href='/pessoa/instituicao-page?id={$campanha['idInstituicao']}'>Ver Mais</a>";
-                    echo "</div>";
-                }
-            }
-            ?>
-        </div>
+        <div class="container-eventos">
+            <h3 class="down-evento" style="cursor: pointer"><i class="glyphicon glyphicon-minus"></i> Eventos</h3>
+            <div class="eventos div-slide down">
+                <div class="well">
+                    <h4>Últimas Campanhas</h4>
+                    <?php
+                    if(!is_array($this->campanhas)){
+                        echo $this->campanhas;
+                    }else{
+                        foreach($campanhas as $campanha){
+                            echo "<div class='well text-capitalize'>";
+                            echo "<strong>Titulo:</strong> ".$campanha['tituloEvento'] . '<br>';
+                            echo "<strong>Instituicao:</strong> ".$campanha['nomeFantasia'] . '<br>';
+                            echo "<strong>Fim do evento:</strong> ".$campanha['dataFim'] . '<br>';
+                            echo "<a style='margin-top: 4%' class='btn btn-default btn-sm' href='/evento/evento-page?id={$campanha['id']}'>Ver Mais</a>";
+                            echo "</div>";
+                        }
+                    }
+                    ?>
+                </div>
+            </div>
     </div>
 </div>
 
 <script src="/js/doacao/pessoaPrincipal.js"></script>
 <script src="/js/doacao/pessoaInstituicao.js"></script>
 <script>
+
     /*
     principal.facebook('post');
     //divulgacao-form

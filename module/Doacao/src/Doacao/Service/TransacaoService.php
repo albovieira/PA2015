@@ -2,8 +2,8 @@
 namespace Doacao\Service;
 
 use Application\Entity\Mensagem;
+use Application\Entity\Transacao;
 use Application\Service\AbstractService;
-use Applicaton\Entity\Transacao;
 use Doacao\Dao\TransacaoDAO;
 
 class TransacaoService extends AbstractService{
@@ -85,7 +85,32 @@ class TransacaoService extends AbstractService{
 	}
 
 	public function getTransacaoPorPessoa($idpessoa){
+		//$objTransacao = $this->transacaoDao->findTransacaoPorPessoa($idpessoa);
 		return $this->transacaoDao->findTransacaoPorPessoa($idpessoa);
+		//return $this->bindTransacao($objTransacao);
+	}
+
+	// n usado por enquanto
+	public function bindTransacao($objTransacao){
+		$arrTransacao = [];
+		foreach($objTransacao as $key=>$transacao){
+
+			if($transacao instanceof Transacao) {
+				if ($transacao != null) {
+
+					$arrTransacao[$key]['id'] = $transacao->getId();
+					$arrTransacao[$key]['idInstituicao'] = $transacao->getInstituicao()->getId();
+					$arrTransacao[$key]['nomeFantasia'] = $transacao->getInstituicao()->getNomeFantasia();
+					$arrTransacao[$key]['fotoInstituicao'] = $transacao->getInstituicao()->getFoto();
+					$arrTransacao[$key]['dataTransacao'] = $transacao->getDataTransacao();
+					$arrTransacao[$key]['titulo'] = $transacao->getDonativo()->getTitulo();
+					$arrTransacao[$key]['descricao'] = $transacao->getDonativo()->getDescricao();
+					$arrTransacao[$key]['quantidadeOfertada'] = $transacao->getDonativo()->getQuantidade();
+
+				}
+			}
+		}
+		return $arrTransacao;
 	}
 
 	public function getMensagensTransacao($transacaoID){

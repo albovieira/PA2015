@@ -62,6 +62,4 @@ class TransacaoDAO extends AbstractDao{
 		return $qb->getQuery()->getResult();
 	}
 
-	
-	
 }
