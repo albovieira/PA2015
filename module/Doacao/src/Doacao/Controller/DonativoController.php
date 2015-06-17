@@ -9,10 +9,10 @@
 
 namespace Doacao\Controller;
 
-use Application\Service\AbstractService;
 use Components\MVC\Controller\AbstractDoctrineCrudController;
 use Doacao\Form\DonativoForm;
 use Doacao\Service\DonativoService;
+use Doacao\Service\HelperService;
 use Doacao\Service\ServiceInstituicao;
 use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
@@ -28,31 +28,30 @@ class DonativoController extends AbstractDoctrineCrudController
 	public function indexAction()
 	{
 		$this->layout()->setTemplate('layout/layout_menu_Instituicao');
-		$page = $this->params()->fromRoute('page',1);
-		$paginacao = self::$service->pagina($page);
 		$donativos = self::$service->donativosPorInstituicao();
-		
+		$desativados = self::$service->donativoDesativados();
+		$finalizados = self::$service->donativosFinalizados();
+
 		$vm = new ViewModel();
-		$vm->setVariable('page', $page);
-		$vm->setVariable('donativos', $paginacao);
+		$vm->setVariable('donativos', $donativos);
+		$vm->setVariable('desativados',$desativados);
+		$vm->setVariable('finalizados',$finalizados);
 		return $vm;
 		
 	}
 	
 	public function novoAction(){
 		$form = new DonativoForm();
-		$jsonRequest = true;
 		
 		return (new ViewModel())
 		->setTerminal($this->getRequest()->isXmlHttpRequest())
 		->setVariable('form', $form)
-		->setVariable('e_json', $jsonRequest)
 		->setVariable('userID', (new AbstractService())->getUserLogado())
-		->setVariable('now', self::$service->retornaData("now"));
+		->setVariable('now', (new HelperService())->retornaData("now"));
 		
 	}
 	
-	public function validaAjaxAction(){
+	public function insereAction(){
 		$request = $this->getRequest();
 		$response = $this->getResponse();
 
@@ -62,9 +61,9 @@ class DonativoController extends AbstractDoctrineCrudController
 			$status = self::$service->save($data); 
 			
 			if($status == ""){
-				$response = \Zend\Json\Json::encode(array('success'=>1));
+				$response = \Zend\Json\Json::encode('success');
 			}else{
-				$response = \Zend\Json\Json::encode(array('error'=>$status));
+				$response = \Zend\Json\Json::encode($status);
 			}
 			
 			$jm = new JsonModel();
@@ -90,6 +89,22 @@ class DonativoController extends AbstractDoctrineCrudController
 		
 		return $jm;
 	}
+
+	public function ativarAction(){
+		$request = $this->getRequest();
+		$response = $this->getResponse();
+		$id = $request->getPost();
+
+		if (self::$service->ativa($id->id)){
+			$response =  \Zend\Json\Json::encode(array("success"=>1));
+		}
+
+		$jm = new JsonModel();
+		$jm->setTerminal(true);
+		$jm->setVariable('data',$response);
+
+		return $jm;
+	}
 	
 	public function editarAction(){
 		
@@ -103,24 +118,12 @@ class DonativoController extends AbstractDoctrineCrudController
 		if(self::$service->exclui($id->id)){
 			$response = \Zend\Json\Json::encode(array("success"=>1));
 		}
+
 		$jm = new JsonModel();
 		$jm->setTerminal(true);
 		$jm->setVariable('data',$response);
 		
 		return $jm;
-	}
-	
-	public function doarAction(){
-		$request = $this->getRequest();
-		$response = $this->getRresponse();
-		$data = $request->getPost();
-		$pessoa = $data->pessoa;
-		$instituicao = $data->instituicao;
-		$donativo = $data->donativo;
-		$dataTransacao = $data->diaAbertura;
-		$dataExpiracao = $data->diaAbertura + 30; //Expira em X dias;
-		$quantidade = $data->quantidade;
-		
 	}
 
 	public function getDonativosAction(){
