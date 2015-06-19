@@ -84,15 +84,10 @@ class DonativoForm extends Form{
 	
 	private function selecaoCategoria(){
 		$categorias = (new DonativoService())->listaCategorias();
-		$newArray = array();
-		
-		foreach ($categorias as $one):
-				$newArray[$one['id_categoria']] = $one['desc_categoria'];
-		endforeach;
 		
 		$select = new Element\Select('categorias');
 		$select->setLabel('Categoria');
-		$select->setValueOptions($newArray);
+		$select->setValueOptions($categorias);
 		$select->setAttributes(array(
 				'class'=>'form-control',
 		));

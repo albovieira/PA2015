@@ -5,40 +5,44 @@ $transacao = new TransacaoService ();
 
 ?>
 <div class="grid padding10">
-	<div class="row cells3">
+	<div class="row cells2">
 		<div class="cell">
-			<div class="panel set-border">
-				<div class="heading">
+			<div class="panel set-border" data-role="panel">
+				<div class="heading no-shadow">
 					<span class="icon mif-tools"></span>
 					<span class="title">Gerenciar Donativos</span>
 				</div>
-				<div class="bg-white">
-					<div class="align-center padding10">
-						<button class="button small-button" onclick="util.windowModal('/donativo/novo')">Ativados</button>
-						<button class="button small-button">Desativados</button>
-						<button class="button small-button">Finalizados</button>
-						<button data-toggle="modal"
-								data-target="#modal-item"
-								data-item-url="<?php echo $this->url('donativo',array('action'=>'novo')); ?>"
-								class="small-button image-button success"
-								title="Adicionar Donativo" onclick="instituicao.open(this)">
-							Adicionar
-							<span class="icon mif-plus bg-darkGreen"></span>
-						</button>
-					</div>
-				</div>
-				<div class="content bg-white listview-outlook">
-					<?php
-						foreach($donativos as $item):
-							$id = $item->getId();
-							$titulo = $item->getTitulo();
-							$descricao = $item->getDescricao();
-							$quantidade = $item->getQuantidade();
-							$dataInclu = $item->getDataInclu()->format ( 'd/m/Y' );
-							$dataDesa = $item->getDataDesa()->format ( 'd/m/Y' );
-							$oferecidos = $transacao->totalPorDonativo( $id );
+				<div class="tabcontrol margin10 no-margin-left no-margin-right no-margin-bottom" data-role="tabControl">
+					<ul class="tabs">
+						<li><a href="#frame1">Ativos</a> </li>
+						<li><a href="#frame2">Desativados</a></li>
+						<li><a href="#frame3">Finalizados</a></li>
+						<li class="place-right">
+							<button data-toggle="modal"
+									data-target="#modal-item"
+									data-item-url="<?php echo $this->url('donativo',array('action'=>'novo')); ?>"
+									class="small-button image-button success"
+									title="Adicionar Donativo" onclick="instituicao.open(this)">
+								Adicionar
+								<span class="icon mif-plus bg-darkGreen"></span>
+							</button>
+						</li>
+					</ul>
+					<div class="frames">
+						<!--INICIO Para Donativos ATIVADOS-->
+						<div class="frame no-padding" id="frame1">
+							<div class="content listview-outlook bg-white">
+								<?php
+								foreach($donativos as $item):
+									$id = $item->getId();
+									$titulo = $item->getTitulo();
+									$descricao = $item->getDescricao();
+									$quantidade = $item->getQuantidade();
+									$dataInclu = $item->getDataInclu()->format( 'd/m/Y' );
+									$dataDesa = $item->getDataDesa()->format( 'd/m/Y' );
+									$oferecidos = $transacao->totalPorDonativo( $id );
 
-							echo "
+									echo "
 								<div class='list marked bg-hover-white bg-active-white'>
 									<div class='list-content'>
 										<span class='list-title'>{$titulo}&nbsp;</span>
@@ -54,8 +58,54 @@ $transacao = new TransacaoService ();
 										<span class='list-subtitle'>
 											Expira em: {$dataDesa}
 											<a onclick='instituicao.desativa_donativo({$id})' href='#' class='place-right'>
-												<span class='icon mif-blocked'></span>
-												Desativar
+												<span class='icon mif-lock'></span>
+												Bloquear
+											</a>
+											<span class='place-right'>&nbsp;</span>
+											<a class='place-right' onclick='' href='#'>
+												<span class='icon mif-pencil'></span>
+												Editar
+											</a>
+										</span>
+									</div>
+								</div>
+							";
+								endforeach;
+								?>
+							</div>
+						</div>
+						<!--FIM Para Donativos Ativados-->
+						<!--INICIO Para Donativos DESATIVADOS-->
+						<div class="frame no-padding" id="frame2">
+							<div class="content listview-outlook bg-white">
+								<?php
+								foreach($desativados as $item):
+									$id = $item->getId();
+									$titulo = $item->getTitulo();
+									$descricao = $item->getDescricao();
+									$quantidade = $item->getQuantidade();
+									$dataInclu = $item->getDataInclu()->format( 'd/m/Y' );
+									$dataDesa = $item->getDataDesa()->format( 'd/m/Y' );
+									$oferecidos = $transacao->totalPorDonativo( $id );
+
+									echo "
+								<div class='list marked bg-hover-white bg-active-white'>
+									<div class='list-content'>
+										<span class='list-title'>{$titulo}&nbsp;</span>
+										<span class='list-subtitle'>Data Inclusão: {$dataInclu}
+											<span>
+												<span class='mif-arrow-up'></span> {$quantidade}
+												<span class='mif-arrow-down'></span> {$oferecidos}
+											</span>
+										</span>
+										<span class='list-remark'>
+											{$descricao}
+										</span>
+										<span class='list-subtitle'>
+											Expira em: {$dataDesa}
+											<a onclick='instituicao.ativa_donativo({$id})' href='#' class='place-right'>
+												<span class='icon mif-unlock'></span>
+												Desbloquear
 											</a>
 											<span class='place-right'>&nbsp;</span>
 											<a onclick='instituicao.exclui_donativo({$id})' href='#' class='place-right'>
@@ -71,13 +121,61 @@ $transacao = new TransacaoService ();
 									</div>
 								</div>
 							";
-						endforeach;
-					?>
+								endforeach;
+								?>
+							</div>
+						</div>
+						<!--FIM Para Donativos DESATIVADOS-->
+						<!--INICIO Para Donativos FINALIZADOS-->
+						<div class="frame no-padding" id="frame3">
+							<div class="content listview-outlook bg-white">
+								<?php
+								foreach($finalizados as $item):
+									$id = $item->getId();
+									$titulo = $item->getTitulo();
+									$descricao = $item->getDescricao();
+									$quantidade = $item->getQuantidade();
+									$dataInclu = $item->getDataInclu()->format( 'd/m/Y' );
+									$dataDesa = $item->getDataDesa()->format( 'd/m/Y' );
+									$oferecidos = $transacao->totalPorDonativo( $id );
+
+									echo "
+								<div class='list marked bg-hover-white bg-active-white'>
+									<div class='list-content'>
+										<span class='list-title'>{$titulo}&nbsp;</span>
+										<span class='list-subtitle'>Data Inclusão: {$dataInclu}
+											<span>
+												<span class='mif-arrow-up'></span> {$quantidade}
+												<span class='mif-arrow-down'></span> {$oferecidos}
+											</span>
+										</span>
+										<span class='list-remark'>
+											{$descricao}
+										</span>
+										<span class='list-subtitle'>
+											Expira em: {$dataDesa}
+										</span>
+									</div>
+								</div>
+							";
+								endforeach;
+								?>
+							</div>
+						</div>
+						<!--FIM Para Donativos DESATIVADOS-->
+					</div>
 				</div>
+
 			</div>
 		</div>
-		<div class="cell colspan2">
-
+		<!-- Exibição das estatisticas envolvendo os donativos -->
+		<div class="cell">
+			<div class="panel set-border">
+				<div class="heading bg-grayLight no-shadow">
+					<span class="icon mif-chart-line bg-green"></span>
+					<span class="title">Medições</span>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

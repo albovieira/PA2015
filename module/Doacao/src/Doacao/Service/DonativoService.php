@@ -1,7 +1,9 @@
 <?php
 namespace Doacao\Service;
 
+use Application\Entity\CategoriaDonativo;
 use Application\Entity\Donativos;
+use Application\Entity\Status;
 use Application\Service\AbstractService;
 use Doacao\DAO\DonativoDAO;
 use Doctrine\ORM\Tools\Pagination\Paginator;
@@ -11,57 +13,73 @@ class DonativoService extends AbstractService{
 	private $dao;
 	private $donativo;
 	private $instituicao;
+	private $helper;
 	
 	public function __construct(){
 		$this->dao = new DonativoDAO();
 		$this->donativo = new Donativos();
 		$this->instituicao = (new ServiceInstituicao())->getObjInstituicao();
+		$this->helper = new HelperService();
 	}
 	
 	public function save($data){
-		$resposta = false;
-		$dataResposta = $this->retornaData($data->dataInclu);
+		$resposta = "";
+
+		$dataResposta = $this->helper->retornaData($data->dataInclu);
 		$tempo = $data->tempo_maximo;
+		$categoria = $this->dao->findById($data->categorias,'\Application\Entity\CategoriaDonativo');
+
 
 		//Seta todos os dados da entity
 		$this->donativo->setTitulo($data->titulo);
 		$this->donativo->setDescricao($data->descricao);
 		$this->donativo->setQuantidade($data->quantidade);
-		$this->donativo->setDataInclu($dataResposta);
+		$this->donativo->setDataInclu($this->retornaData($data->dataInclu));
 		$this->donativo->setInstituicao($this->instituicao);
-		$this->donativo->setIdCategoria($data->categorias);
-		$this->donativo->setDataDesa($this->calculaDataEntrega($dataResposta, $tempo));
+		$this->donativo->setIdCategoria($categoria);
+		$this->donativo->setDataDesa($this->helper->adicionarDias($dataResposta, $tempo));
+		$this->donativo->setStatus((new StatusService())->ativado());
 
-		if($this->dao->save($this->donativo)){
-			$resposta = true;
-		}
+		$resposta = $this->dao->save($this->donativo);
 
 		return $resposta;
 
 
 	}
-	
-	public function retornaData($data){
-		return new \DateTime($data, new \DateTimeZone('America/Sao_Paulo'));
-	}
-	
-	private function calculaDataEntrega($data,$tempo){
-		return $data->add(new \DateInterval("P{$tempo}D"));
-	}
-	
+
 	public function listaCategorias(){
-		$categoriaList = array();
-		foreach($this->dao->categorias() as $item){
-			array_push($categoriaList,$item);
+		$c = $this->dao->categorias();
+		$list = array();
+
+		foreach($c as $item){
+			$list[$item->getId()] = $item->getDescricao();
 		}
-		return $categoriaList;
+
+		return $list;
 	}
-	
+
+	/**
+	 * @return array
+     */
 	public function donativosPorInstituicao(){
 		$id = $this->instituicao->getId();
 		return $this->dao->donativosInstituicao($id);	
 	}
 
+	public function donativoDesativados(){
+		$donativos = $this->dao->donativosPorStatus($this->instituicao,(new StatusService())->desativado());
+		return $donativos;
+	}
+
+	public function  donativosFinalizados(){
+		$donativos = $this->dao->donativosPorStatus($this->instituicao,(new StatusService())->finalizado());
+		return $donativos;
+	}
+
+	/**
+	 * @param $id
+	 * @return array
+     */
 	public function donativosInstituicaoById($id){
 		/** @var Donativos $objDonativo */
 		$objDonativo = $this->dao->donativosInstituicao($id);
@@ -81,39 +99,18 @@ class DonativoService extends AbstractService{
 
 		return $arrDonativo;
 	}
-
-	// passa isso para o dao
-	public function pagina($page){
-
-		$limit = 5;
-		$offset = ($page == 0) ? 0 : ($page - 1) * $limit;
-		$em = $this->dao->getEntityManager();
-		$pagedDonativos = $this->getPagedDonativos($offset,$limit);
-
-		return $pagedDonativos;
-
-	}
-
-	//passa isso para o dao
-	public function getPagedDonativos($offset = 0, $limit = 0){
-		$em = $this->dao->getEntityManager();
-		$qb = $em->createQueryBuilder();
-
-		$qb->select('d')
-			->from('\Application\Entity\Donativos','d')
-			->where('d.instituicao = ?0')
-			->setMaxResults($limit)
-			->setFirstResult($offset)
-			->setParameter(0,$this->instituicao);
-		$query = $qb->getQuery();
-
-		$paginator = new Paginator($query);
-
-		return $paginator;
-	}
 	
 	public function desativa($id){
-		$response = $this->dao->update('tb_donativo',array('dt_desativacao_dnv'=>'1900-01-01 00:00:00'),array('id_dnv'=>$id));
+		$donativo = $this->dao->buscaDonativo($id);
+		$donativo->setStatus((new StatusService())->desativado());
+		$response = $this->dao->update($donativo);
+		return $response;
+	}
+
+	public function ativa($id){
+		$donativo = $this->dao->buscaDonativo($id);
+		$donativo->setStatus((new StatusService())->ativado());
+		$response = $this->dao->update($donativo);
 		return $response;
 	}
 	

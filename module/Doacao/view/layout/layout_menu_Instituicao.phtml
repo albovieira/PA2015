@@ -14,15 +14,15 @@
                         ->prependStylesheet($this->basePath() . '/css/metro.css')
                         ->prependStylesheet($this->basePath() . '/css/metro-icons.css')
                         ->prependStylesheet($this->basePath() . '/css/bootstrap-modal.css')
-                        ->prependStylesheet($this->basePath() . '/css/jquery-ui.css')
-                        ->prependStylesheet($this->basePath() . '/css/jquery-ui.structure.css')
-                        ->prependStylesheet($this->basePath() . '/css/jquery-ui.theme.css') ?>
+                        //->prependStylesheet($this->basePath() . '/css/jquery-ui.css')
+                        //->prependStylesheet($this->basePath() . '/css/jquery-ui.structure.css')
+                        //->prependStylesheet($this->basePath() . '/css/jquery-ui.theme.css') ?>
 
         <!-- Scripts -->
         <?php echo $this->headScript()
-            ->prependFile($this->basePath() . '/js/doacao/doacao.js')
+            //->prependFile($this->basePath() . '/js/doacao/doacao.js')
             ->prependFile($this->basePath() . '/js/doacao/instituicao.js')
-            ->prependFile($this->basePath() . '/js/jquery-ui.js')
+            //->prependFile($this->basePath() . '/js/jquery-ui.js')
             ->prependFile($this->basePath() . '/js/metro.js')
             ->prependFile($this->basePath() . '/js/bootstrap.min.js')
             ->prependFile($this->basePath() . '//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js')
@@ -40,12 +40,15 @@
                 <img src="/img/logo.png" class="logo"/>
             </a>
             <ul class="app-bar-menu">
-                <li><a href="<?php echo $this->url('instituicao',array('action'=>'index'));?>">Minha Página</a></li>
-                <li><a href="#">Meus Doadores</a></li>
+                <li><a href="<?php echo $this->url('instituicao',array('action'=>'index'));?>">Painel</a></li>
+                <li><a href="<?php echo $this->url('transacao'); ?>">Recebidos</a></li>
                 <li><a href="#loginModal">Eventos</a></li>
-                <li><a href="<?php echo $this->url('donativo');?>">Donativos</a></li>
+                <li><a href="<?php echo $this->url('donativo');?>">Gerenciar</a></li>
                 <li><a href="#aboutModal">Denunciar Abusos</a></li>
             </ul>
+            <div class="app-bar-element place-right">
+                <a href="/user/logout" title="Sair"><span class="mif-exit fg-white"></span></a>
+            </div>
         </div>
             <!-- ul class="btn-group btn-group-lg pull-right">
                 <li class="btn">
@@ -70,7 +73,7 @@
             </ul-->
     </header>
 
-    <div class="container-flid" id="main">
+    <div class="grid" id="main">
             <?php echo $this->content; ?>
     </div> <!-- /container -->
         <footer>
@@ -80,7 +83,7 @@
         </footer>
     <div class="modal fade" id="modal-item">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div class="modal-content bg-grayLighter">
                 <div class="modal-body"></div>
             </div>
         </div>

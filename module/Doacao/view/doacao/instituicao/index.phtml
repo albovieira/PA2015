@@ -1,126 +1,92 @@
-<br><br><br><br>
-<div class="col-xs-12">
-    <div class="col-lg-3">
-    	<?php 
-    	$id = $perfil->getId();
-    	$razaoSocial = $perfil->getRazaoSocial();
-    	$nomeFantasia = $perfil->getNomeFantasia();
-    	$descricao = $perfil->getDescricao();
-    	$email = $perfil->getEmail();
-    	$site = $perfil->getSite();
-    	$foto = $perfil->getFoto();
-    	$dataCadastro = $perfil->getDataCadastro();
-    	
-    	echo "
-		<div class='sidebar-flat-perfil panel label-primary'>
-            <br>
-            <div class='emulate-img label-default center-block img-circle'></div>
-            <br>
-            <li class='list-group-item-special' data-toggle='collapse' href='#perfilcollapse' aria-expanded='false' aria-controls='perfilcollapse'>
-				<b>Perfil <i class='caret'></i></b>
-			</li>
-            <ul class='list-group list-flat in' id='perfilcollapse' data-toggle='collapse'>
-                <li class='list-group-item'><span class='glyphicon glyphicon-user'></span> {$razaoSocial}</li>
-                <li class='list-group-item'><span class='glyphicon glyphicon-credit-card'></span> {$nomeFantasia}</li>
-                <li class='list-group-item'><span class='glyphicon glyphicon-envelope'></span> {$email}</li>
-                <li class='list-group-item'><span class='glyphicon glyphicon-link'></span> {$site}</li>
-                <li class='list-group-item'><span class='glyphicon glyphicon-calendar'></span> Membro desde {$dataCadastro->format('d/m/Y')}</li>
-                <li class='list-group-item'><span class='glyphicon glyphicon-book'></span> {$descricao}</li>
-            </ul>
-        </div>
-		";?>
-    </div>
-    <div class="col-lg-5">
-        <div class="panel padding-zero panel-default">
-            <i></i>
-            <li class="list-group-item-special">
-                <b>Donativos</b>
-                <button data-toggle="modal" data-item-url="<?php echo $this->url('donativo',array('action'=>'novo')); ?>"
-                		data-target="#modal-item" class="btn btn-xs btn-success pull-right" title="Adicionar Donativo"
-                		onclick="instituicao.open()">
-                	<span class="glyphicon glyphicon-plus"></span>
-                </button>
-            </li>
-            <?php 
-            foreach ($donativos as $item):
-	            $id = $item->getId();
-	            $titulo = $item->getTitulo();
-	            $descricao = $item->getDescricao();
-	            $quantidade = $item->getQuantidade();
-	            $dataInclu = $item->getDataInclu()->format('d/m/Y');
-	            $dataDesa = $item->getDataDesa()->format('d/m/Y');
-	            echo
-		            "<li class='list-group-item list-group-item-special' data-toggle='collapse' href='#donativo-{$id}' aria-expanded='false' aria-controls='perfilcollapse'>
-		            {$titulo}
-		            <br>
-		            <sub>Incluído em: {$dataInclu}</sub>
-		            <span class='badge pull-rigth'>Pedidos: {$quantidade}</span><span class='badge pull-rigth label-info'>Doados: 36</span>
-		            </li>
-		            <ul class='list-flat list-group in' data-toggle='collapse' id='donativo-{$id}'>
-		            <li class='list-group-item panel-body'>
-		            {$descricao}
-		            <br>
-		            <sub>Expira em: {$dataDesa}</sub>
-		            <div class='pull-right btn-group btn-group-sm'>
-		            <a class='btn btn-warning' href=".$this->url('donativo',array('action'=>'ditar')).">Gerenciar</a>
-		            <a class='btn btn-danger' onclick='instituicao.desativa_donativo({$id})'>Desativar</a>
-		            </div>
-		            </li>
-		            </ul>
-		            ";
-            endforeach;
-            
-            ?>
-        </div>
-    </div>
-    <div class="col-lg-4">
-        <div class="panel padding-zero panel-success">
-            <i></i>
-            <li class="list-group-item-special">
-                <b>Doadores Recentes</b>
-            </li>
-            <li class="list-group-item list-group-item-special">
-                <b>Quantidade: <span class="badge" title="Quantidade doada">12</span>
-                    <a class="btn btn-xs btn-primary pull-right">Recebido <i class="glyphicon glyphicon-ok"></i></a></b>
-            </li>
-            <ul class="list-flat list-group">
-                <li class="list-group-item list-group-item-special">
-                    Hebert Alves da Silva <br>
-                    <sub>Data doação: 24/04/2015</sub>
-                    <sub>Expira em: 24/05/2015</sub>
-                </li>
-            </ul>
-            <li class="list-group-item list-group-item-special">
-                <b>Quantidade: <span class="badge" title="Quantidade doada">12</span>
-                    <a class="btn btn-xs btn-primary pull-right">Recebido <i class="glyphicon glyphicon-ok"></i></a></b>
-            </li>
-            <ul class="list-flat list-group">
-                <li class="list-group-item list-group-item-special">
-                    Albos Borges <br>
-                    <sub>Data doação: 24/04/2015</sub>
-                    <sub>Expira em: 24/05/2015</sub>
-                </li>
-            </ul>
-            <li class="list-group-item list-group-item-special">
-                <b>Quantidade: <span class="badge" title="Quantidade doada">12</span>
-                    <a class="btn btn-xs btn-primary pull-right">Recebido <i class="glyphicon glyphicon-ok"></i></a></b>
-            </li>
-            <ul class="list-flat list-group">
-                <li class="list-group-item list-group-item-special">
-                    Wesley Fernando <br>
-                    <sub>Data doação: 24/04/2015</sub>
-                    <sub>Expira em: 24/05/2015</sub>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <div class="modal fade" id="modal-item">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-body">
-                Corpo Modal Detalhes Contato
+<div class="grid padding10">
+    <div class="row cells4">
+        <div class="cell">
+            <div class="panel set-border">
+                <div class="heading no-shadow ribbed-amber">
+                    <span class="icon mif-profile bg-darkOrange"></span>
+                    <span class="title">Perfil</span>
+                </div>
+                <div class="content bg-white">
+                    <?php
+                    $id = $perfil->getId();
+                    $razaoSocial = $perfil->getRazaoSocial();
+                    $nomeFantasia = $perfil->getNomeFantasia();
+                    $descricao = $perfil->getDescricao();
+                    $email = $perfil->getEmail();
+                    $site = $perfil->getSite();
+                    $foto = $perfil->getFoto();
+                    $dataCadastro = $perfil->getDataCadastro();
+
+                    echo "
+                    <div class='image-container image-format-cycle' style='width: 100%'>
+                        <div class='frame bg-transparent padding10'>
+                            <div class='img-circle bg-gray centraliza-componente' style='background-image:url({$foto});background-size: cover; height: 171px; width:171px'></div>
+                        </div>
+                    </div>
+                    <br>
+                    <h5><span class='mif-user'></span> {$razaoSocial}</h5>
+                    <h5><span class='mif-spell-check'></span> {$nomeFantasia}</h5>
+                    <h5><span class='mif-calendar'></span> {$dataCadastro->format('d/m/Y')}</h5>
+                    <h5><span class='mif-mail'></span> {$email}</h5>
+                    <h5><span class='mif-home'></span> {$site}</h5>
+                    <h5><span class='mif-books'></span> {$descricao}</h5>
+                    ";
+                    ?>
+                </div>
             </div>
-          </div>
+        </div>
+        <div class="cell colspan2">
+            <div class="tile bg-red fg-white">
+                <div class="tile-content iconic">
+                    <span class="icon mif-gift">
+                    </span>
+                    <span class="tile-label">
+                        Arrecadados
+                    </span>
+                    <span class="tile-badge bg-black">
+                        <?php echo $estatisticas['totalRecebido'][1]?>
+                    </span>
+                </div>
+            </div>
+            <div class="tile bg-blue fg-white">
+                <div class="tile-content iconic">
+                    <span class="icon mif-shopping-basket2">
+                    </span>
+                    <span class="tile-label">
+                        Pedidos
+                    </span>
+                    <span class="tile-badge bg-black">
+                        <?php echo $estatisticas['totalRecebido'][1]?>
+                    </span>
+                </div>
+            </div>
+            <div class="tile bg-green fg-white">
+                <div class="tile-content iconic">
+                    <span class="icon mif-checkmark">
+                    </span>
+                    <span class="tile-label">
+                        Finalizados
+                    </span>
+                    <span class="tile-badge bg-black">
+                        <?php echo $estatisticas['totalRecebido'][1]?>
+                    </span>
+                </div>
+            </div>
+            <div class="tile bg-amber fg-white">
+                <div class="tile-content iconic">
+                    <span class="icon mif-loop2 mif-ani-spin">
+                    </span>
+                    <span class="tile-label">
+                        Pendentes
+                    </span>
+                    <span class="tile-badge bg-black">
+                        <?php echo $estatisticas['totalRecebido'][1]?>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="cell" id="transacoes" onload="transacao.index()">
+
+        </div>
     </div>
-	</div>
 </div>

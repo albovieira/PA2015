@@ -5,6 +5,7 @@ use Application\Entity\Mensagem;
 use Application\Entity\Transacao;
 use Application\Service\AbstractService;
 use Doacao\Dao\TransacaoDAO;
+use Doctrine\ORM\ORMException;
 
 class TransacaoService extends AbstractService{
 
@@ -117,5 +118,49 @@ class TransacaoService extends AbstractService{
 		return $this->transacaoDao->findMensagensTransacao($transacaoID);
 	}
 
+	public function buscaTransacaoPendente(&$pessoa,&$donativo,&$transacao,$offset,$limit){
+		$pessoa = array();
+		$transacao = array();
+		$donativo = array();
+		$erro = "";
+
+		$busca = $this->transacaoDao->buscaTransacaoPendente((new ServiceInstituicao())->getObjInstituicao(),$pessoa,$donativo,$transacao,$offset,$limit);
+
+		if($busca != "" ){
+			$erro = $busca;
+		}
+
+		return $erro;
+	}
+
+	public function buscaTransacaoEfetivadas(&$pessoa,&$donativo,&$transacao,$offset,$limit){
+		$pessoa = array();
+		$transacao = array();
+		$donativo = array();
+		$erro = "";
+		$busca = $this->transacaoDao->buscaTransacaoEfetivada((new ServiceInstituicao())->getObjInstituicao(),$pessoa,$donativo,$transacao,$offset,$limit);
+
+		if($busca != "" ){
+			$erro = $busca;
+		}
+
+		return $erro;
+	}
+
+	public function donativoRecebido($id){
+
+		$transacao = $this->transacaoDao->getEntityManager()->getRepository('\Application\Entity\Transacao')->find($id);
+		$transacao->setDataFinalizacao((new HelperService())->retornaData('now'));
+		try {
+			$this->transacaoDao->getEntityManager()->beginTransaction();
+			$this->transacaoDao->updateEntity($transacao);
+			$this->transacaoDao->getEntityManager()->commit();
+		}catch (ORMException $e){
+			$this->transacaoDao->getEntityManager()->rollback();
+			throw $e;
+		}
+
+		return "";
+	}
 
 }

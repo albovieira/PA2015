@@ -16,6 +16,7 @@ use Doacao\Service\HelperService;
 use Doacao\Service\ServiceInstituicao;
 use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
+use Application\Service\AbstractService;
 
 class DonativoController extends AbstractDoctrineCrudController
 {

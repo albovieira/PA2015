@@ -3032,6 +3032,9 @@ a.tag {
   width: 960px;
   margin: 0 auto;
 }
+.centraliza-componente{
+  margin: 0 auto;
+}
 @media screen and (min-width: 1401px) {
   .container:not(.no-responsive-future) {
     width: 1200px;

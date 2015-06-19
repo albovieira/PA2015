@@ -96,4 +96,3 @@ class MinhaInstituicao extends AbstractEntity{
 	public function getArrayCopy(){}
 
 }
-?>

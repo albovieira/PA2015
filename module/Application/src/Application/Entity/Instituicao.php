@@ -374,5 +374,42 @@ class Instituicao extends AbstractEntity{
 	
 	public function getArrayCopy(){}
 	public function getInputFilter(){}
+
+    /**
+     * Set enderecos
+     *
+     * @param \Application\Entity\Endereco $enderecos
+     *
+     * @return Instituicao
+     */
+    public function setEnderecos(\Application\Entity\Endereco $enderecos = null)
+    {
+        $this->enderecos = $enderecos;
+    
+        return $this;
+    }
+
+    /**
+     * Add donativo
+     *
+     * @param \Application\Entity\Donativos $donativo
+     *
+     * @return Instituicao
+     */
+    public function addDonativo(\Application\Entity\Donativos $donativo)
+    {
+        $this->donativos[] = $donativo;
+    
+        return $this;
+    }
+
+    /**
+     * Remove donativo
+     *
+     * @param \Application\Entity\Donativos $donativo
+     */
+    public function removeDonativo(\Application\Entity\Donativos $donativo)
+    {
+        $this->donativos->removeElement($donativo);
+    }
 }
-?>

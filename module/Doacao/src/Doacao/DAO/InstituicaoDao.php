@@ -53,5 +53,25 @@ class InstituicaoDao extends AbstractDao{
 
         return $arrayObjs;
     }
+
+    public function sumRecebidos($instituicao){
+        $qb = $this->getEntityManager()->createQueryBuilder()
+            ->select('SUM(t.quantidadeOferta)')
+            ->from('\Application\Entity\Transacao','t')
+            ->where('t.instituicao = :instituicao')
+            ->setParameter('instituicao',$instituicao);
+
+        return $qb->getQuery()->getScalarResult();
+    }
+
+    public function sumDonativos($instituicao){
+        $qb = $this->getEntityManager()->createQueryBuilder()
+            ->select((new Expr())->sum('i','i.donativos'))
+            ->from('\Application\Entity\Instituicao','i')
+            ->where('i.id =: instituicao')
+            ->setParameter('instituicao',$instituicao);
+
+        return $qb->getQuery()->getResult();
+    }
     
 }

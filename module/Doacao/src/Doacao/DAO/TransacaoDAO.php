@@ -2,6 +2,12 @@
 namespace Doacao\Dao;
 
 use Application\Dao\AbstractDao;
+use Application\Entity\Donativos;
+use Application\Entity\Pessoa;
+use Application\Entity\Transacao;
+use Doctrine\ORM\ORMException;
+use Doctrine\DBAL\Query\ExpressionBuilder;
+use Doctrine\ORM\Query\Expr;
 
 class TransacaoDAO extends AbstractDao{
 	private static $em;
@@ -10,6 +16,96 @@ class TransacaoDAO extends AbstractDao{
 
 	public function __construct(){
 		self::$em = parent::getEntityManager();
+	}
+
+	public function buscaTransacaoPendente($instituicao,&$pessoa,&$donativo,&$transacao,$offset,$limit){
+		$qb = $this->getEntityManager()->createQueryBuilder()
+			->select(array('t','p','d'))
+			->from('\Application\Entity\Transacao','t')
+			->join('Application\Entity\Pessoa','p','WITH','t.pessoa = p.id')
+			->join('Application\Entity\Donativos','d','WITH','t.donativo = d.id')
+			->andWhere((new Expr())->eq('t.instituicao',$instituicao->getId()),(new Expr())->isNull('t.dataFinalizacao'))
+			->setFirstResult($offset)
+			->setMaxResults($limit)
+			;
+		try {
+			$stmt = $qb->getQuery()->getResult();
+		}catch (ORMException $e){
+			throw $e;
+		}
+
+
+		foreach($stmt as $objects){
+			if($objects instanceof Transacao){
+				array_push($transacao,$objects);
+			}elseif($objects instanceof Pessoa){
+				array_push($pessoa,$objects);
+			}elseif($objects instanceof Donativos){
+				array_push($donativo,$objects);
+			}
+		}
+
+		return "";
+	}
+
+	public function buscaTransacaoEfetivada($instituicao,&$pessoa,&$donativo,&$transacao,$offset,$limit){
+		$qb = $this->getEntityManager()->createQueryBuilder()
+			->select(array('t','p','d'))
+			->from('\Application\Entity\Transacao','t')
+			->join('Application\Entity\Pessoa','p','WITH','t.pessoa = p.id')
+			->join('Application\Entity\Donativos','d','WITH','t.donativo = d.id')
+			->andWhere((new Expr())->eq('t.instituicao',$instituicao->getId()),(new Expr())->isNotNull('t.dataFinalizacao'))
+			->setFirstResult($offset)
+			->setMaxResults($limit)
+		;
+		try {
+			$stmt = $qb->getQuery()->getResult();
+		}catch (ORMException $e){
+			throw $e;
+		}
+
+		foreach($stmt as $objects){
+			if($objects instanceof Transacao){
+				array_push($transacao,$objects);
+			}elseif($objects instanceof Pessoa){
+				array_push($pessoa,$objects);
+			}elseif($objects instanceof Donativos){
+				array_push($donativo,$objects);
+			}
+		}
+
+		return "";
+	}
+
+	public function buscaTransacaoExpirada($instituicao,&$pessoa,&$donativo,&$transacao,$offset,$limit){
+		//Para esta função considerar que a data de expiração deve estar preenchida e a data de expiração menor que  hoje já expirou
+		//data de finalização NULL
+		$qb = $this->getEntityManager()->createQueryBuilder()
+			->select(array('t','p','d'))
+			->from('\Application\Entity\Transacao','t')
+			->join('Application\Entity\Pessoa','p','WITH','t.pessoa = p.id')
+			->join('Application\Entity\Donativos','d','WITH','t.donativo = d.id')
+			->andWhere((new Expr())->eq('t.instituicao',$instituicao->getId()))
+			->setFirstResult($offset)
+			->setMaxResults($limit)
+		;
+		try {
+			$stmt = $qb->getQuery()->getResult();
+		}catch (ORMException $e){
+			throw $e;
+		}
+
+		foreach($stmt as $objects){
+			if($objects instanceof Transacao){
+				array_push($transacao,$objects);
+			}elseif($objects instanceof Pessoa){
+				array_push($pessoa,$objects);
+			}elseif($objects instanceof Donativos){
+				array_push($donativo,$objects);
+			}
+		}
+
+		return "";
 	}
 	
 	public function total($donativo){
