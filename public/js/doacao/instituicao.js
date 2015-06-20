@@ -121,14 +121,40 @@ var transacao = {
 	efetivados:function(){
 		$('#transacoes').load('/transacao/efetivados');
 	},
-	index:function(){
-		$('#transacoes').load('/transacao/pendentes');
+	index:function(o,l){
+		$.ajax({
+			url:'/transacao/pendentes',
+			data:{offset:o,limit:l},
+			type:'POST',
+			success:function(data,txt){
+				$('#transacoes-index').html(data);
+			},
+			error:function(){
+				util.dialog(util.ERROR,"Erro",'Ocorreu erro ao contactar o serviço')
+			}
+		})
+	},
+	totais:function(){
+		setInterval(function(){
+			$.ajax({
+				url:'/instituicao/totais',
+				dataType: 'json',
+				success:function(data,txt){
+					$('#arrecadados').html(data.totais.recebidos);
+					$('#finalizados').html(data.totais.finalizados);
+					$('#pendentes').html(data.totais.pendentes);
+					$('#pedidos').html(data.totais.donativos);
+				}
+			})
+		},10000)
 	}
 }
 
 var init = {
 	components:function(){
 		util.dialogPut();
+		transacao.index(0,3);
+		transacao.totais();
 	}
 };
 

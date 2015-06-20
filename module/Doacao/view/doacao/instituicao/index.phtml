@@ -43,8 +43,7 @@
                     <span class="tile-label">
                         Arrecadados
                     </span>
-                    <span class="tile-badge bg-black">
-                        <?php echo $estatisticas['totalRecebido'][1]?>
+                    <span class="tile-badge bg-black" id="arrecadados">
                     </span>
                 </div>
             </div>
@@ -55,8 +54,7 @@
                     <span class="tile-label">
                         Pedidos
                     </span>
-                    <span class="tile-badge bg-black">
-                        <?php echo $estatisticas['totalRecebido'][1]?>
+                    <span class="tile-badge bg-black" id="pedidos">
                     </span>
                 </div>
             </div>
@@ -67,25 +65,23 @@
                     <span class="tile-label">
                         Finalizados
                     </span>
-                    <span class="tile-badge bg-black">
-                        <?php echo $estatisticas['totalRecebido'][1]?>
+                    <span class="tile-badge bg-black" id="finalizados">
                     </span>
                 </div>
             </div>
             <div class="tile bg-amber fg-white">
                 <div class="tile-content iconic">
-                    <span class="icon mif-loop2 mif-ani-spin">
+                    <span class="icon mif-loop2">
                     </span>
                     <span class="tile-label">
                         Pendentes
                     </span>
-                    <span class="tile-badge bg-black">
-                        <?php echo $estatisticas['totalRecebido'][1]?>
+                    <span class="tile-badge bg-black" id="pendentes">
                     </span>
                 </div>
             </div>
         </div>
-        <div class="cell" id="transacoes" onload="transacao.index()">
+        <div class="cell" id="transacoes-index">
 
         </div>
     </div>

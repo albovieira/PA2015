@@ -110,10 +110,8 @@ class TransacaoController extends AbstractDoctrineCrudController
         $vm->setTerminal($this->getRequest()->isXmlHttpRequest());
         $offset = 0;
         $limit = 5;
-
         $request = $this->getRequest();
-
-        if(isset($request)){
+        if($request->isPost()){
             $data = $request->getPost();
             if(isset($data)){
                 $limit = $data->limit;

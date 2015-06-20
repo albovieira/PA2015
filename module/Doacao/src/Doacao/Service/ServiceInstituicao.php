@@ -51,8 +51,20 @@ class ServiceInstituicao extends AbstractService{
 		return $this->instituicaoDao->sumRecebidos($instituicao);
 	}
 
+	public function finalizados($instituicao){
+		return $this->instituicaoDao->countFinalizados($instituicao);
+	}
+
 	public function donativos($instituicao){
 		return $this->instituicaoDao->sumDonativos($instituicao);
+	}
+
+	public function pendentes($instituicao){
+		return $this->instituicaoDao->countPendentes($instituicao);
+	}
+
+	public function donativosAtivos($instituicao){
+		return $this->instituicaoDao->countDonativos($instituicao);
 	}
 
 }
