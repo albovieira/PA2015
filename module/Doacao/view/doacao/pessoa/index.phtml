@@ -25,8 +25,17 @@
             <div class="container col-xs-12">
                 <div id="conteudo-atualizacao">
 
+                    <div class="container-doacoes-finalizadas">
+                        <h3 class="down-doacao-finalizada text-info" style="cursor: pointer"><i class="glyphicon glyphicon-minus"></i>Doações Finalizadas</h3>
+                        <div class="doacao-finalizada div-slide down">
+                            <?php
+                                echo 'doacoes finalizadas';
+                            ?>
+                        </div>
+                    </div>
+
                     <div class="container-doacoes">
-                    <h3 class="down-doacao text-info" style="cursor: pointer"><i class="glyphicon glyphicon-minus"></i> Doações</h3>
+                    <h3 class="down-doacao text-info" style="cursor: pointer"><i class="glyphicon glyphicon-minus"></i> Doações Pendentes</h3>
                         <div class="doacoes div-slide down">
                         <?php
                             if($transacoes){
@@ -46,6 +55,8 @@
                                             echo '</div>';
                                     }
                                 }
+                            }else{
+                                echo 'Não há doações pendentes';
                             }
                         ?>
                         </div>

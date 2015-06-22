@@ -8,6 +8,7 @@ var pessoaPrincipal = {
         pessoaInstituicao.showConversa();
         this.show('.down-doacao');
         this.show('.down-evento');
+        this.show('.down-doacao-finalizada');
     },
 
     atualizaPaginaAjax: function () {

@@ -47,7 +47,7 @@ class PessoaController extends AbstractDoctrineCrudController
          $transacoes = $transacaoService->getTransacaoPorPessoa($this->pessoaService->getObjPessoa()->getId());
 
          $eventoService = new EventoService();
-         $campanhas = $eventoService->getEventosInstituicoesRecentes();
+         $campanhas = $eventoService->getEventosInstituicoes();
          if(!$campanhas){
              $campanhas = "No momento nenhuma instituicao que voce segue tem campanhas.<br>";
          }
