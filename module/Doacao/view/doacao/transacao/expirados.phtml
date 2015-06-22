@@ -1,0 +1,29 @@
+<?php
+$cd = count($donativo);
+$ct = count($transacao);
+for($id = 0; $id < $cd;$id++):
+    $d = $donativo[$id];
+    $p = $pessoa[0];
+    for($it = 0; $it < $ct;$it++):
+        $t = $transacao[$it];
+        ?>
+        <div class="tile-wide bg-amber fg-white">
+            <div class="tile-content slide-left-2">
+                <div class="slide padding10">
+                    <span class="icon mif-gift place-right mif-2x"></span>
+                    <h5><span class="mif-calendar"></span> Inclusão: <?php echo $d->getDataInclu()->format('d/m/Y') ?></h5>
+                    <h5><span class="mif-plus"></span> Pedidos: <?php echo $d->getQuantidade() ?></h5>
+                </div>
+                <div class="slide-over bg-gray padding10">
+                    <div class="place-right" style="background-image: url(<?php echo $p->getFoto()?>);width: 50px;height: 50px;background-size: cover;border-radius: 50%"></div>
+                    <h5><span class="fg-white"><span class="mif-user"></span> <?php echo $p->getNome()?></span></h5>
+                    <h5><span class="fg-white"><span class="mif-calendar"></span> Doado em:<?php echo $t->getDataTransacao()->format('d/m/Y')?></span></h5>
+                    <h5><button class="button small-button success" onclick="transacao.confirmar(<?php echo $t->getId()?>)"><span class="mif-thumbs-up"></span> Recebido</button></h5>
+                </div>
+                <span class="tile-label"><?php echo $d->getTitulo() ?></span>
+                <span class="tile-badge bg-gray"><?php echo "Quantidade: ".$t->getQuantidadeOferta() ?></span>
+            </div>
+
+        </div>
+    <?php endfor;
+endfor;?>

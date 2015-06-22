@@ -2,19 +2,23 @@ $(function(){
 	$('form#formdonativos').submit(function(){
 		var dataSerial = $('form').serialize();
 		$.ajax({
-			url : 'https://sisdo.com/donativo/validaajax',
+			url : '/donativo/insere',
 			type: 'POST',
 			dataType: 'json',
 			data: dataSerial,
 			success: function(data,textStatus){
-				if(data){
-					alert('Donativo cadastrado com sucesso');
+
+				if(data.data == '"success"'){
+					util.dialog(util.SUCCESS,'Êxito!','Você cadastrou um novo donativo com sucesso');
+					setTimeout(function(){
+						window.location.reload();
+					},3000)
+				}else{
+					util.dialog(util.ERROR,"Erro!",data.data);
 				};
-				window.location.reload();
 			},
 			error: function(xhr,txt){
-				alert("Não foi possível validar a requisição.");
-				$('#modal').close();
+				util.dialog(util.ERROR,'Erro!',xhr + txt);
 			}
 		});
 		return false;

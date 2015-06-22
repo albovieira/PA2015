@@ -86,6 +86,5 @@ class AbstractDao
     	
     	return $result_set;
     }
-   
 
 }

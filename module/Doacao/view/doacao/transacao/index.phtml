@@ -1,0 +1,40 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: Hebert
+ * Date: 16/06/2015
+ * Time: 22:58
+ */
+
+if(isset($erro))
+var_dump(($erro));
+
+?>
+<div class="grid condensed no-margin">
+    <div class="row cells6">
+        <div class="cell">
+           <ul class="sidebar2 dark no-border charm left-side bg-grayDark" data-role="tabControl" style="z-index: 0">
+                <li class="margin50 no-margin-left no-margin-right no-margin-bottom"><a href="#transacoes" onclick="transacao.pendentes()">
+                        <span class="icon mif-spinner2 mif-ani-spin"></span>
+                        <span class="title v-align-middle">Pendentes</span>
+                    </a>
+                </li>
+               <li><a href="#transacoes" onclick="transacao.efetivados()">
+                       <span class="icon mif-event-available"></span>
+                       <span class="title v-align-middle">Efetivados</span>
+                   </a>
+               </li>
+               <li><a href="#transacoes)" onclick="transacao.expirados()">
+                       <span class="icon mif-event-busy"></span>
+                       <span class="title v-align-middle">Expirados</span>
+                   </a>
+               </li>
+           </ul>
+        </div>
+        <div class="cell colspan5 padding10" id="transacoes">
+            <div id="transacoes-body">
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -53,5 +53,46 @@ class InstituicaoDao extends AbstractDao{
 
         return $arrayObjs;
     }
+
+    public function sumRecebidos($instituicao){
+        $qb = $this->getEntityManager()->createQueryBuilder()
+            ->select('SUM(t.quantidadeOferta)')
+            ->from('\Application\Entity\Transacao','t')
+            ->where('t.instituicao = :instituicao',(new Expr())->isNotNull('t.dataFinalizacao'))
+            ->setParameter('instituicao',$instituicao);
+        $result = (int)$qb->getQuery()->getSingleScalarResult();
+        return $result;
+    }
+
+    public function countDonativos($instituicao){
+        $qb = $this->getEntityManager()->createQueryBuilder()
+            ->select("COUNT(1)")
+            ->from('\Application\Entity\Donativos','d')
+            ->where('d.instituicao = :instituicao AND d.status = :status')
+            ->setParameters(array('instituicao'=>$instituicao,'status'=>1));
+        $result = (int)$qb->getQuery()->getSingleScalarResult();
+        return $result;
+    }
+
+    public function countFinalizados($instituicao){
+        $qb = $this->getEntityManager()->createQueryBuilder()
+            ->select("COUNT(1)")
+            ->from('\Application\Entity\Transacao','t')
+            ->where('t.instituicao = :instituicao',(new Expr())->isNotNull('t.dataFinalizacao'))
+            ->setParameter('instituicao',$instituicao);
+        $result = (int)$qb->getQuery()->getSingleScalarResult();
+        return $result;
+    }
+
+    public function countPendentes($instituicao){
+        $qb = $this->getEntityManager()->createQueryBuilder()
+            ->select("COUNT(1)")
+            ->from('\Application\Entity\Transacao','t')
+            ->where('t.instituicao = :instituicao',(new Expr())->isNull('t.dataFinalizacao'))
+            ->setParameter('instituicao',$instituicao);
+
+        $result = (int)$qb->getQuery()->getSingleScalarResult();
+        return $result;
+    }
     
 }

@@ -47,12 +47,24 @@ class ServiceInstituicao extends AbstractService{
 		return $this->decompoeObjeto($instituicao->getDonativos());
 	}
 
-	protected function decompoeObjeto($objeto){
-		$associacao = array();
-		foreach($objeto as $instancia):
-			array_push($associacao, $instancia);
-		endforeach;
-		return $associacao;
+	public function recebidos($instituicao){
+		return $this->instituicaoDao->sumRecebidos($instituicao);
+	}
+
+	public function finalizados($instituicao){
+		return $this->instituicaoDao->countFinalizados($instituicao);
+	}
+
+	public function donativos($instituicao){
+		return $this->instituicaoDao->sumDonativos($instituicao);
+	}
+
+	public function pendentes($instituicao){
+		return $this->instituicaoDao->countPendentes($instituicao);
+	}
+
+	public function donativosAtivos($instituicao){
+		return $this->instituicaoDao->countDonativos($instituicao);
 	}
 
 }

@@ -260,4 +260,18 @@ class DonativoOfertado extends AbstractEntity{
 	public function getInputFilter(){}
 	public function getArrayCopy(){}
 	
+
+    /**
+     * Set idInstituicao
+     *
+     * @param integer $idInstituicao
+     *
+     * @return DonativoOfertado
+     */
+    public function setIdInstituicao($idInstituicao)
+    {
+        $this->idInstituicao = $idInstituicao;
+    
+        return $this;
+    }
 }

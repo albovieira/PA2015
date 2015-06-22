@@ -14,8 +14,10 @@ use Application\Entity\Transacao;
 use Components\MVC\Controller\AbstractDoctrineCrudController;
 use Doacao\Form\TransacaoForm;
 use Doacao\Service\DonativoService;
+use Doacao\Service\HelperService;
 use Doacao\Service\PessoaService;
 use Doacao\Service\TransacaoService;
+use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
 
 class TransacaoController extends AbstractDoctrineCrudController
@@ -29,7 +31,9 @@ class TransacaoController extends AbstractDoctrineCrudController
     }
 
     public function indexAction(){
-        return new ViewModel();
+        $this->layout()->setTemplate('layout/layout_menu_instituicao');
+        $vm = new ViewModel();
+        return $vm;
     }
 
     public function novaTransacaoAction(){
@@ -80,6 +84,73 @@ class TransacaoController extends AbstractDoctrineCrudController
                 'mensagens' => $mensagens,
             )
         );
+    }
+
+    public function confirmaRecebimentoAction(){
+        $request = $this->getRequest();
+        $response = $this->getResponse();
+        $id = $request->getPost();
+
+        if ($this->transacaoService->donativoRecebido($id->id)){
+            $response =  \Zend\Json\Json::encode(1);
+        }else{
+            $response = \Zend\Json\Json::encode(0);
+        }
+
+        $jm = new JsonModel();
+        $jm->setTerminal(true);
+        $jm->setVariable('data',$response);
+
+        return $jm;
+
+    }
+
+    public function pendentesAction(){
+        $vm = new ViewModel();
+        $vm->setTerminal($this->getRequest()->isXmlHttpRequest());
+        $offset = 0;
+        $limit = 5;
+        $request = $this->getRequest();
+        if($request->isPost()){
+            $data = $request->getPost();
+            if(isset($data)){
+                $limit = $data->limit;
+            }
+        }
+
+        $pessoa = array();
+        $transacao = array();
+        $donativo = array();
+        $result = $this->transacaoService->buscaTransacaoPendente($pessoa,$donativo,$transacao,$offset, $limit);
+
+        if($result != ""){
+            $vm->setVariable('erro',$result);
+        }else{
+            $vm->setVariables(array('transacao'=>$transacao,'pessoa'=>$pessoa,'donativo'=>$donativo));
+        }
+
+        return $vm;
+    }
+
+    public function efetivadosAction(){
+        $vm = new ViewModel();
+        $vm->setTerminal($this->getRequest()->isXmlHttpRequest());
+        $pessoa = array();
+        $transacao = array();
+        $donativo = array();
+        $result = $this->transacaoService->buscaTransacaoEfetivadas($pessoa,$donativo,$transacao,0,5);
+        if($result != ""){
+            $vm->setVariable('erro',$result);
+        }else{
+            $vm->setVariables(array('transacao'=>$transacao,'pessoa'=>$pessoa,'donativo'=>$donativo));
+        }
+
+        return $vm;
+    }
+
+    public function expiradosAction(){
+        return (new ViewModel())
+            ->setTerminal($this->getRequest()->isXmlHttpRequest());
     }
 
 

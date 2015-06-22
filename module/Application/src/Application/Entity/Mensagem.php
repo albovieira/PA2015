@@ -242,4 +242,3 @@ class Mensagem extends AbstractEntity{
 
 	public function getInputFilter(){}
 }
-?>
