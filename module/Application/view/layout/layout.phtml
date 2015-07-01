@@ -1,4 +1,4 @@
-'<?php echo $this->doctype(); ?>
+<?php echo $this->doctype(); ?>
 
 <html lang="en">
     <head>
@@ -12,9 +12,12 @@
 
         <!-- Le styles -->
         <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
-                        ->prependStylesheet($this->basePath() . '/css/styles.css')
-                        ->prependStylesheet($this->basePath() . '/css/bootstrap-theme.min.css')
-                        ->prependStylesheet($this->basePath() . '/css/bootstrap.min.css') ?>
+                        //->prependStylesheet($this->basePath() . '/css/styles.css')
+                        //->prependStylesheet($this->basePath() . '/css/bootstrap-theme.min.css')
+                        ->prependStylesheet($this->basePath() . '/css/metro.css')
+                        ->prependStylesheet($this->basePath() . '/css/flat-style.css')
+                        ->prependStylesheet($this->basePath() . '/css/metro-icons.css')
+                        ->prependStylesheet($this->basePath() . '/css/bootstrap-modal.css') ?>
 
 
         <!-- Scripts -->
@@ -22,6 +25,7 @@
             ->prependFile($this->basePath() . '/js/doacao/doacao.js')
             ->prependFile($this->basePath() . '/js/jquery-ui.js')
             ->prependFile($this->basePath() . '/js/bootstrap.min.js')
+            ->prependFile($this->basePath() . '/js/metro.js')
             ->prependFile($this->basePath() . '/js/jquery.js')
             //->prependFile($this->basePath() . '/js/scripts.js')
             ->prependFile($this->basePath() . '/js/respond.min.js', 'text/javascript', array('conditional' => 'lt IE 9',))
@@ -29,10 +33,58 @@
         ; ?>
 
     </head>
-    <body>
+
+    <body class="bg-grayLighter">
+    <div class="app-bar fixed-top bg-white fg-black" data-role="appbar">
+        <div class="container">
+            <a class="app-bar-element branding bg-hover-transparent" href="">
+                <img class="logo" src="img/logo.png"/>
+            </a>
+            <ul class="app-bar-menu">
+                <li class="bg-hover-transparent">
+                    <a class="bg-hover-transparent">
+                        <span class="icon mif-home"></span>
+                        Inicio
+                    </a>
+                </li>
+                <li class="bg-hover-transparent">
+                    <a class="bg-hover-transparent">
+                        <span class="icon mif-users"></span>
+                        Quem Somos
+                    </a>
+                </li>
+                <li class="bg-hover-transparent">
+                    <a class="bg-hover-transparent">
+                        <span class="icon mif-shopping-basket2"></span>
+                        Porquê doar?
+                    </a>
+                </li>
+                <li class="bg-hover-transparent">
+                    <a class="bg-hover-transparent">
+                        <span class="icon mif-help"></span>
+                        FAQ
+                    </a>
+                </li>
+            </ul>
+            <div class="app-bar-pullbutton automatic bg-transparent fg-black"></div>
+            <a class="app-bar-element place-right" id="btnLogin" role="button">
+                <span class="minor-header">
+                    <span class="icon mif-enter"></span>
+                    Entrar
+                </span>
+            </a>
+            <a class="app-bar-element place-right" href="/user/register">
+                <span class="minor-header">
+                    <span class="icon mif-pencil"></span>
+                    Cadastrar
+                </span>
+            </a>
+        </div>
+    </div>
+
     <div class="container" style="margin-top: 6%;">
 
-        <nav class="navbar navbar-fixed-top header">
+        <nav class="navbar">
             <div class="col-md-12">
                 <div class="navbar-header">
                     <a href="/" class="navbar-brand padrao-header">Doação</a>
@@ -40,28 +92,6 @@
                 <div class="navbar-header  pull-right">
                     <button id="btnLogin" role="button"  class="navbar-brand btn btn-primary padrao-login">Já sou cadastrado</button>
                     <a href="/user/register" class="navbar-brand  padrao-login btn btn-info">Cadastre-se</a>
-                </div>
-            </div>
-
-            <div class="navbar navbar-default" id="subnav">
-                <div class="col-md-12">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse2">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-
-                    </div>
-                    <div class="collapse navbar-collapse" id="navbar-collapse2">
-                        <ul class="nav navbar-nav" style="margin-left: 8%;">
-                            <li class="active"><a href="/">Ínicio</a></li>
-                            <li><a href="#">Quem Somos?</a></li>
-                            <li><a href="#">Por que doar?</a></li>
-                            <li><a href="#">Dúvidas</a></li>
-                        </ul>
-                    </div>
                 </div>
             </div>
         </nav>
@@ -75,13 +105,12 @@
 
         <div id="loginModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h2 class="form-signin-heading text-center">Acesse e doe agora!</h2>
-                    </div>
+                <div class="modal-content bg-white no-shadow bd-lightBlue">
+                    <button class="button small-button no-margin place-right no-border" data-dismiss="modal" aria-hidden="true">
+                        <span class="mif-cross"></span>
+                    </button>
+                    <h3 class="form-signin-heading text-center align-center padding10">Acesse e doe agora!</h3>
                     <div class="modal-body">
-
                     </div>
                 </div>
             </div>

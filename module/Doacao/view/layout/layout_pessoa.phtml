@@ -14,16 +14,20 @@
         <!-- Le styles -->
         <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
                         ->prependStylesheet($this->basePath() . '/css/styles.css')
-                        ->prependStylesheet($this->basePath() . '/css/bootstrap-theme.min.css')
+                        //->prependStylesheet($this->basePath() . '/css/bootstrap-theme.min.css')
+                        ->prependStylesheet($this->basePath() . '/css/metro.css')
+                        ->prependStylesheet($this->basePath() . '/css/flat-style.css')
+                        ->prependStylesheet($this->basePath() . '/css/metro-icons.css')
                         ->prependStylesheet($this->basePath() . '/css/bootstrap.css')
-                        ->prependStylesheet($this->basePath() . '/css/jquery-ui.css')
-                        ->prependStylesheet($this->basePath() . '/css/jquery-ui.structure.css')
-                        ->prependStylesheet($this->basePath() . '/css/jquery-ui.theme.css') ?>
+                        //->prependStylesheet($this->basePath() . '/css/jquery-ui.css')
+                        //->prependStylesheet($this->basePath() . '/css/jquery-ui.structure.css')
+                        //->prependStylesheet($this->basePath() . '/css/jquery-ui.theme.css') ?>
 
         <!-- Scripts -->
         <?php echo $this->headScript()
             ->prependFile($this->basePath() . '/js/doacao/doacao.js')
-            ->prependFile($this->basePath() . '/js/bootbox/bootbox.js')
+            //->prependFile($this->basePath() . '/js/bootbox/bootbox.js')
+            ->prependFile($this->basePath() . '/js/metro.js')
             ->prependFile($this->basePath() . '/js/bootstrap.min.js')
             ->prependFile($this->basePath() . '/js/jquery-ui.js')
             ->prependFile($this->basePath() . '/js/jquery.js')
@@ -34,60 +38,29 @@
 
     </head>
     <body>
-
-    <nav class="navbar navbar-fixed-top header">
-        <div class="col-md-12">
-            <div class="navbar-header">
-
-                <a href="/pessoa" class="padrao-header"><img style="height:40px;margin-top: 5px" src="/img/logo.png" /></a>
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse1">
-                    <i class="glyphicon glyphicon-search"></i>
-                </button>
-
-            </div>
-            <div class="collapse navbar-collapse" id="navbar-collapse1">
-                <form class="navbar-form pull-left">
-                    <div class="input-group" style="max-width:470px;">
-                        <input type="text" class="form-control" placeholder="Pesquisar" name="busca-generica" id="busca-generica">
-                        <div class="input-group-btn">
-                            <button class="btn btn-default btn-primary" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-                        </div>
-                    </div>
-                </form>
-
-                <?php
-                $uri = $_SERVER['REQUEST_URI'];
-                ?>
-
-                <ul class="nav navbar-nav navbar-right">
-                    <li style="line-height: 50px;padding-right: 10px"><span><a class="link-layout" href="/pessoa/minha-conta" style="text-decoration: none;color: #fff;text-shadow: 1px 1px 2px #000">Bem Vindo <?php echo $this->zfcUserDisplayName()?></a></span></li>
-                    <!--<li><a class="" href="/" title="Notificações"><i class="glyphicon glyphicon-globe"></i></a></li>-->
-                    <li>
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-globe"></i></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#"><span class="badge pull-right">40</span>Link</a></li>
-                            <li><a href="#"><span class="badge pull-right">2</span>Link</a></li>
-                            <li><a href="#"><span class="badge pull-right">0</span>Link</a></li>
-                            <li><a href="#"><span class="label label-info pull-right">1</span>Link</a></li>
-                            <li><a href="#"><span class="badge pull-right">13</span>Link</a></li>
-                        </ul>
-                    </li>
-                    <li><a class="<?php echo  $uri == '/pessoa' ? 'ativo' : '' ?>" href="/pessoa" title="Inicio"><i class="glyphicon glyphicon-home"></i></a></li>
-                    <li><a class="<?php echo  $uri == '/pessoa/instituicao' ? 'ativo' : '' ?>" href="/pessoa/instituicao" title="Instituicões"><i class="glyphicon glyphicon-transfer"></i></a></li>
-                    <li><a class="<?php echo  $uri == '/evento' ? 'ativo' : '' ?>" href="/evento" title="Eventos"><i class="glyphicon glyphicon-th-large"></i></a></li>
-                    <li>
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="\pessoa\minha-conta"><i class="glyphicon glyphicon-cog"></i> Minha Conta</a></li>
-                            <li><a href="\pessoa\denunciar-abuso"><i class="glyphicon glyphicon-bookmark"></i> Denunciar Abusos</a></li>
-                            <li><a href="\user\logout"><i class="glyphicon glyphicon-log-out"></i> Sair</a></li>
-                        </ul>
-                    </li>
+    <div class="app-bar fixed-top bg-darkRed" data-role="appbar" data-flexstyle="sidebar2">
+        <a class="app-bar-element branding bg-darkRed" href="">
+            <img class="logo" src="/img/logo.png"/>
+        </a>
+        <a class="app-bar-element text-shadow" href="/pessoa/minha-conta">
+            <h5>Bem Vindo <?php echo $this->zfcUserDisplayName()?></h5>
+        </a>
+        <ul class="app-bar-menu centraliza-componente">
+            <li><a href="/"><span class="mif-home"></span> </a></li>
+            <li><a href="/evento"><span class="mif-event-available"></span> </a> </li>
+            <li><a href="/pessoa/instituicao"><span class="mif-library"></span> </a> </li>
+            <li><a href=""><span class="mif-tab"></span> </a></li>
+            <li>
+                <a class="dropdown-toggle"><span class="mif-user"></span></a>
+                <ul class="d-menu" data-role="dropdown">
+                    <li><a href="/pessoa/minha-conta"><span class="mif-cog"></span> Minha Conta</a></li>
+                    <li><a href="/pessoa/denunciar-abuso"><span class="mif-bookmark"></span> Denunciar Abusos</a></li>
+                    <li><a href="/user/logout"><span class="mif-exit"></span> Sair</a></li>
                 </ul>
-            </div>
-        </div>
-    </nav>
-    <div class="container-fluid" id="main">
+            </li>
+        </ul>
+    </div>
+    <div class="grid" id="main">
             <?php echo $this->content; ?>
         <footer>
 

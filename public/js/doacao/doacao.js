@@ -142,9 +142,8 @@ var principal = {
 
 $(document).ready(function () {
     principal.bindAjaxPreloader();
-
     principal.ajustaRodape();
     principal.bindAjusteRodape();
     principal.openModalLogin();
-    principal.autocompleteBuscaGenerica();
+    principal.autocompleteBuscaGenerica()
 });

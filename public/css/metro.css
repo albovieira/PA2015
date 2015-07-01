@@ -34,6 +34,7 @@ a:hover,
 a:active,
 .tile:active {
   outline: 0;
+  text-decoration: none;
 }
 sub,
 sup {

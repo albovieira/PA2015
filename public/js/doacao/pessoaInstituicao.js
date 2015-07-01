@@ -19,8 +19,8 @@ var pessoaInstituicao = {
                 success: function (data) {
                     var html="";
                     for(var i in data.instituicoes){
-                        html +="<div class='col-md-4 col-sm-6'> " +
-                        "<form class='formSeguir' method='post'>"+
+                        html +="<div class='tile-large bg-darkBlue'> " +
+                        "<form class='tile-content' method='post'>"+
                         "<input class='instituicaoID' type='hidden' name='id' value='"+data.instituicoes[i].id +"'>" +
                         "<div class='panel panel-default'>"+
                         "<div class='panel-heading'><a href='/pessoa/instituicao-page?id="+data.instituicoes[i].id + "' class='pull-right'>Ver mais</a> <h4>"+ data.instituicoes[i].nomeFantasia +"</h4></div>"+
@@ -53,19 +53,20 @@ var pessoaInstituicao = {
                     var html = "";
                     for(var i in data.instituicoes){
                         //console.log(data.instituicoes[i]);
-                        html +="<div class='col-md-4 col-sm-6'> " +
-                        "<form class='formSeguir' method='post'>"+
+                        html +="<div class='tile-large bg-lightBlue'> " +
+                        "<form class='tile-content slide-left-2' method='post'>"+
+                        "<div class='slide padding10'>" +
                         "<input class='instituicaoID' type='hidden' name='id' value='"+data.instituicoes[i].id +"'>" +
-                        "<div class='panel panel-default'>"+
-                        "<div class='panel-heading'><a href='/pessoa/instituicao-page?id="+data.instituicoes[i].id + "' class='pull-right'>Ver mais</a> <h4>"+ data.instituicoes[i].nomeFantasia +"</h4></div>"+
-                        "<div class='panel-body'>" +
-                        "<p>" + data.instituicoes[i].descricao +
-                        "<img src="+ data.instituicoes[i].foto + " class='img-circle pull-right img-profile'> <a href='#'></a></p>"+
-                        "<div class='clearfix'></div>"+
-                        "<hr>"+
-                        "<input type='button' class='btn btn-danger btn-seguir' value='Parar de Seguir'>"+
-                        "</div>"+
-                        "</div>"+
+                        "<img src="+ data.instituicoes[i].foto + " class='img-circle pull-right img-profile'>" +
+                        "</div>" +
+                        "<div class='slide-over padding10'>" +
+                        "<p class='text-justify'>" +
+                        data.instituicoes[i].descricao +
+                        "</p>" +
+                        "<a href=/pessoa/instituicao-page?id=" + data.instituicoes[i].id + " class=button small-button info>Ver mais</a>" +
+                        "<input type='button' class='button alert' value='Parar de Seguir'>"+
+                        "</div>" +
+                        "<span class='tile-label'><h4>"+ data.instituicoes[i].nomeFantasia +"</h4></span>"+
                         "</form>"+
                         "</div>";
                     }
