@@ -1,0 +1,56 @@
+<div class="grid">
+    <div class="row cells2">
+        <div class="cell">
+            <div class="panel">
+                <div class="heading">
+                    <span class="icon mif-home"></span>
+                    <span class="title">Doações Pendentes</span>
+                </div>
+                <div class="content">
+                    <?php
+
+
+                    ?>
+
+                    <?php
+                        foreach($this->transacaoPendente as $transacaoP){
+                            if($transacaoP instanceof \Application\Entity\Transacao) {
+
+
+                                    foreach($this->instPessoas as $minInst){
+                                        if($minInst['nomeFantasia'] == $transacaoP->getInstituicao()->getNomeFantasia()){
+                                            echo 'agrupa'. $minInst['nomeFantasia'];
+
+                                            echo $transacaoP->getInstituicao()->getNomeFantasia() .'<br>';
+                                            echo $transacaoP->getQuantidadeOferta()  .'<br>';
+                                            echo $transacaoP->getDonativo()->getDescricao()  .'<br>';
+                                            echo $transacaoP->getDonativo()->getTitulo()  .'<br>';
+                                            echo $transacaoP->getDonativo()->getDataInclu()->format('d/m/y')  .'<br>';
+                                        }
+                                    }
+
+                            }
+                        }
+                    ?>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="cell">
+            <div class="panel">
+                <div class="heading">
+                    <span class="icon mif-home"></span>
+                    <span class="title">Doações Finalizadas</span>
+                </div>
+                <div class="content">
+                    <?php
+                    var_dump($this->transacaoFinalizada);
+
+                    ?>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

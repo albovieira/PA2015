@@ -9,6 +9,34 @@ var pessoaInstituicao = {
         this.autocomplete();
         this.bindClickBuscaInstituicao();
     },
+
+    template: function (objInstituicao, btn) {
+        var html = '';
+        for(var i in objInstituicao){
+            //arrumar isso
+            if(!isNaN(i)){
+                html +="<div class='tile-large bg-lightBlue'> " +
+                "<form class='tile-content slide-left-2' method='post'>"+
+                "<div class='slide padding10'>" +
+                "<input class='instituicaoID' type='hidden' name='id' value='"+objInstituicao[i].id +"'>" +
+                "<img src="+ objInstituicao[i].foto + " class='img-circle pull-right img-profile'>" +
+                "</div>" +
+                "<div class='slide-over padding10'>" +
+                "<p class='text-justify'>" +
+                objInstituicao[i].descricao +
+                "</p>" +
+                "<a href=/pessoa/instituicao-page?id=" + objInstituicao[i].id + " class=button small-button info>Ver mais</a>" +
+                "<input type='button' class='button alert btn-seguir' value='"+btn+"'>"+
+                "</div>" +
+                "<span class='tile-label'><h4>"+ objInstituicao[i].nomeFantasia +"</h4></span>"+
+                "</form>"+
+                "</div>";
+            }
+        }
+
+        return html;
+    },
+
     bindFiltroTodos: function (){
         $('#todos').click(function () {
 
@@ -17,25 +45,8 @@ var pessoaInstituicao = {
                 type: 'GET',
                 url:'/pessoa/instituicao',
                 success: function (data) {
-                    var html="";
-                    for(var i in data.instituicoes){
-                        html +="<div class='tile-large bg-darkBlue'> " +
-                        "<form class='tile-content' method='post'>"+
-                        "<input class='instituicaoID' type='hidden' name='id' value='"+data.instituicoes[i].id +"'>" +
-                        "<div class='panel panel-default'>"+
-                        "<div class='panel-heading'><a href='/pessoa/instituicao-page?id="+data.instituicoes[i].id + "' class='pull-right'>Ver mais</a> <h4>"+ data.instituicoes[i].nomeFantasia +"</h4></div>"+
-                        "<div class='panel-body'>" +
-                        "<p>" + data.instituicoes[i].descricao +
-                        "<img src="+ data.instituicoes[i].foto + " class='img-circle pull-right img-profile'> <a href='#'></a></p>"+
-                        "<div class='clearfix'></div>"+
-                        "<hr>"+
-                        "<input type='button' class='btn btn-primary btn-seguir' value='Seguir'>"+
-                        "</div>"+
-                        "</div>"+
-                        "</form>"+
-                        "</div>";
-                    }
-                    //html
+
+                    var html = pessoaInstituicao.template(data.instituicoes, 'Seguir');
                     $('#containerInstituicao').html(html);
                     pessoaInstituicao.aplicaSeguir();
                 }
@@ -50,27 +61,7 @@ var pessoaInstituicao = {
                 url:'/pessoa/instituicao',
                 success: function (data) {
 
-                    var html = "";
-                    for(var i in data.instituicoes){
-                        //console.log(data.instituicoes[i]);
-                        html +="<div class='tile-large bg-lightBlue'> " +
-                        "<form class='tile-content slide-left-2' method='post'>"+
-                        "<div class='slide padding10'>" +
-                        "<input class='instituicaoID' type='hidden' name='id' value='"+data.instituicoes[i].id +"'>" +
-                        "<img src="+ data.instituicoes[i].foto + " class='img-circle pull-right img-profile'>" +
-                        "</div>" +
-                        "<div class='slide-over padding10'>" +
-                        "<p class='text-justify'>" +
-                        data.instituicoes[i].descricao +
-                        "</p>" +
-                        "<a href=/pessoa/instituicao-page?id=" + data.instituicoes[i].id + " class=button small-button info>Ver mais</a>" +
-                        "<input type='button' class='button alert' value='Parar de Seguir'>"+
-                        "</div>" +
-                        "<span class='tile-label'><h4>"+ data.instituicoes[i].nomeFantasia +"</h4></span>"+
-                        "</form>"+
-                        "</div>";
-                    }
-                    //html
+                    var html = pessoaInstituicao.template(data.instituicoes, 'Parar de Seguir');
                     $('#containerInstituicao').html(html);
                     pessoaInstituicao.aplicaSeguir();
 
@@ -135,33 +126,11 @@ var pessoaInstituicao = {
                 type: 'GET',
                 url:'/pessoa/pesquisar-instituicao',
                 success: function (data) {
-                    console.log(data);
-                    //return response(data);
-                    var html = "";
 
-                    for(var i in data.instituicoes){
-
-                        html +="<div class='col-md-4 col-sm-6'> " +
-                        "<form class='formSeguir' method='post'>"+
-                        "<input class='instituicaoID' type='hidden' name='id' value='"+data.instituicoes[i].id +"'>" +
-                        "<div class='panel panel-default'>"+
-                        "<div class='panel-heading'><a href='#' class='pull-right'>Ver mais</a> <h4>"+ data.instituicoes[i].nomeFantasia +"</h4></div>"+
-                        "<div class='panel-body'>" +
-                        "<p>" + data.instituicoes[i].descricao +
-                        "<img src="+data.instituicoes[i].foto +  " class='img-circle pull-right img-profile'> <a href='#'></a></p>"+
-                        "<div class='clearfix'></div>"+
-                        "<hr>"+
-                        "<input type='button' class='btn btn-primary btn-seguir' value='Seguir'>"+
-                        "</div>"+
-                        "</div>"+
-                        "</form>"+
-                        "</div>";
-                    }
+                    var html = pessoaInstituicao.template(data.instituicoes, 'Seguir');
                     //html
                     $('#containerInstituicao').html(html);
                     pessoaInstituicao.aplicaSeguir();
-
-
 
                 }
             });
@@ -176,7 +145,7 @@ var pessoaInstituicao = {
     },
 
     getDonativos: function(){
-        //captura paramentro da url
+        //cap   tura paramentro da url
         var $_GET = principal.getURLParam(document.location.search);
 
         var idInstituicao = {'id' : $_GET};
@@ -188,7 +157,7 @@ var pessoaInstituicao = {
                 var html = '<h4 style="margin-left: 15px;width: 93%;">Donativos cadastrados</h4>';
                 if(data.length > 0){
                     $.each( data, function( key, donativo) {
-
+                            console.log(donativo);
                             html += "" +
                                 "<div class='col-xs-12'>" +
                                 "<div class='list-group'>" +

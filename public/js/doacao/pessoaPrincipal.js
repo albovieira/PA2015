@@ -52,7 +52,6 @@ var pessoaPrincipal = {
     // passar isso para doacao.js
     show: function (elemento) {
         $(elemento).click(function () {
-
             var div = $(elemento).parent().find('.div-slide');
             if(!div.hasClass('down')){
                 $(elemento).children().removeClass('glyphicon glyphicon-plus');

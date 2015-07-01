@@ -137,7 +137,12 @@ class PessoaService extends AbstractService{
             $objInstituicao = $this->pessoaDAO->instituicoesPessoaSegue($this->getObjPessoa()->getId());
             $instituicao = $this->bindInstituicao($objInstituicao);
         }
+
         return $instituicao;
+    }
+
+    public function quantInstituicoesPessoaSegue(){
+        return $this->pessoaDAO->getQuantTotalMinhasInstituicoes($this->getObjPessoa()->getId());
     }
 
 

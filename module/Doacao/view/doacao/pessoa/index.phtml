@@ -1,3 +1,4 @@
+
 <div class="grid padding10">
     <div class="row cells4">
         <div class="cell">
@@ -10,7 +11,9 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="slide-over bg-darkRed">
+
                         <h3 class="padding10 fg-white">
                         <?php echo $dadosPessoa->getNome();
                         ?>
@@ -19,6 +22,10 @@
                             <?php echo $dadosPessoa->getEmail();
                             ?>
                         </h3>
+                        <h3 class="padding10 fg-white">
+                            <a href="/pessoa/minha-conta" >Alterar Conta</a>
+                        </h3>
+
                     </div>
                 </div>
             </div>
@@ -28,23 +35,47 @@
                         <span class="icon mif-shopping-basket"></span>
                     </div>
                     <div class="slide-over">
-                        <span>Totais</span>
-                        <span class="tile-badge">0</span>
+                        <span>Doações Pendentes</span>
+                        <span class="tile-badge"><?php echo $this->quantTransacoes['pendente'] ?></span>
                     </div>
                 </div>
             </div>
+            <div class="tile-small">
+                <div class="tile-content iconic slide-left">
+                    <div class="slide">
+                        <span class="icon mif-chart-line"></span>
+                    </div>
+                    <div class="slide-over">
+                        <span>Doações Feitas</span>
+                        <span class="tile-badge"><?php echo $this->quantTransacoes['finalizado'] ?></span>
+                    </div>
+                </div>
+            </div>
+            <div class="tile-small">
+                <div class="tile-content iconic slide-left">
+                    <div class="slide">
+                        <span class="icon mif-chart-line"></span>
+                    </div>
+                    <div class="slide-over">
+                        <span>Minhas Instituições</span>
+                        <span class="tile-badge"><?php echo $this->quantMinhasInstituicoes ?></span>
+                    </div>
+                </div>
+            </div>
+
+
         </div>
         <div class="cell colspan2">
             <?php
-            if($transacoes){
-                foreach($transacoes as $transacao){
-                    if($transacao instanceof \Application\Entity\Transacao){
+            if($transacoesPendentes){
+                foreach($transacoesPendentes as $transacaoPendente){
+                    if($transacaoPendente instanceof \Application\Entity\Transacao){
                         echo '<div class="tile-large bg-grayLighter">';
                         echo '<div class="tile-contente padding10">';
-                        echo "<a href='pessoa/instituicao-page?id={$transacao->getInstituicao()->getId()}'><h5><img class='foto-perfil-feed img' src={$transacao->getInstituicao()->getFoto()} /><strong> Instituicao {$transacao->getInstituicao()->getNomeFantasia()} - <span class='text-success'>Doação:{$transacao->getDonativo()->getTitulo()}</span></strong></h5></a>";
-                        echo "<p>{$transacao->getDonativo()->getDescricao()}</p>";
-                        echo "<p>Qtd:{$transacao->getDonativo()->getQuantidade()}</p>";
-                        echo "<p>Você doou em :{$transacao->getDataTransacao()->format('d/m/Y')}</p>";
+                        echo "<a href='pessoa/instituicao-page?id={$transacaoPendente->getInstituicao()->getId()}'><h5><img class='foto-perfil-feed img' src={$transacaoPendente->getInstituicao()->getFoto()} /><strong> Instituicao {$transacaoPendente->getInstituicao()->getNomeFantasia()} - <span class='text-success'>Doação:{$transacaoPendente->getDonativo()->getTitulo()}</span></strong></h5></a>";
+                        echo "<p>{$transacaoPendente->getDonativo()->getDescricao()}</p>";
+                        echo "<p>Qtd:{$transacaoPendente->getDonativo()->getQuantidade()}</p>";
+                        echo "<p>Você doou em :{$transacaoPendente->getDataTransacao()->format('d/m/Y')}</p>";
                         echo "<p class='text-danger'>* Aguarde finalização da doação pela instituicao</p>";
                         echo '<a id="ver-historico" href="#" style="margin-bottom: 10px"><i class="glyphicon glyphicon-envelope"></i> Ver histórico</a>';
                         echo '<div class="historico ocultar">';
@@ -53,6 +84,7 @@
                         echo '</div>';
 
                         echo '</div>';
+
                     }
                 }
             }
@@ -79,82 +111,5 @@
     </div>
 </div>
 
-<div class="row-fluid">
-
-</div>
-<!-- Colocar $this->formDivulgacao aqui-->
-<div class="row-fluid">
-    <div class="col-xs-5">
-        <div class="row">
-            <div class="container col-xs-12">
-                <div id="conteudo-atualizacao">
-
-                    <div class="container-doacoes">
-                    <h3 class="down-doacao text-info" style="cursor: pointer"><i class="glyphicon glyphicon-minus"></i> Doações</h3>
-                        <div class="doacoes div-slide down">
-
-                        </div>
-                    </div>
-
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-xs-4">
-        <div class="container-eventos">
-            <h3 class="down-evento text-info" style="cursor: pointer"><i class="glyphicon glyphicon-minus"></i>Eventos</h3>
-            <div class="eventos div-slide down">
-                <div class="well">
-
-                </div>
-            </div>
-    </div>
-</div>
-
 <script src="/js/doacao/pessoaPrincipal.js"></script>
 <script src="/js/doacao/pessoaInstituicao.js"></script>
-<script>
-
-    /*
-    principal.facebook('post');
-    //divulgacao-form
-    $(document).ready(function () {
-        $('#divulgacao-form').submit(function (e) {
-            e.preventDefault();
-
-            $.ajax({
-                data: $('#divulgacao-form').serialize(),
-                type: 'POST',
-                url:'/evento/publicar',
-                success: function (data) {
-
-                }
-            });
-
-        });
-    });
-
-        $('#btnPublicar').click(function () {
-            FB.ui(
-                {
-                    method: 'feed',
-                    link: 'https://developers.facebook.com/docs/',
-                    caption: 'An example caption'
-                },
-                // callback
-                function(response) {
-                    if (response && !response.error_code) {
-                        alert('Posting completed.');
-                    } else {
-                        alert('Error while posting.');
-                    }
-                }
-            );
-        });
-
-        */
-
-</script>

@@ -5,8 +5,8 @@ use Application\Dao\AbstractDao;
 use Application\Entity\Donativos;
 use Application\Entity\Pessoa;
 use Application\Entity\Transacao;
-use Doctrine\ORM\ORMException;
 use Doctrine\DBAL\Query\ExpressionBuilder;
+use Doctrine\ORM\ORMException;
 use Doctrine\ORM\Query\Expr;
 
 class TransacaoDAO extends AbstractDao{
@@ -120,11 +120,31 @@ class TransacaoDAO extends AbstractDao{
 		return $count;
 	}
 
-	public function findTransacaoPorPessoa($idpessoa){
+	//retorna um array com as quantidades de doações pendentes e finalizadas
+	public function getQuantTransacoes($idpessoa){
+
+		$countArray = [];
+		$countArray['pendente'] =  $this->qbCountTransacao($idpessoa, 'IS NULL')->getQuery()->getSingleScalarResult();
+		$countArray['finalizado'] =  $this->qbCountTransacao($idpessoa, 'IS NOT NULL')->getQuery()->getSingleScalarResult();
+
+		return $countArray;
+	}
+
+	public function qbCountTransacao($id, $paramNull){
 		$qb = $this->getEntityManager()->createQueryBuilder()
-			->select($this->getTbAlias(), 'donativo')
+			->select('COUNT(tran.id)')
+			->from($this->getEntity(), $this->getTbAlias())
+			->where($this->getTbAlias(). ".idPessoa = {$id}")
+			->andWhere($this->getTbAlias(). ".dataFinalizacao {$paramNull}");
+		return $qb;
+	}
+
+	public function findTransacaoPendentePorPessoa($idpessoa){
+		$qb = $this->getEntityManager()->createQueryBuilder()
+			->select($this->getTbAlias(), 'donativo', 'inst')
 			->from($this->getEntity(), $this->getTbAlias())
 			->leftJoin('Application\Entity\Donativos', 'donativo' , 'IN', 'tran.idDonativo = donativo.id')
+			->leftJoin('Application\Entity\Instituicao', 'inst' , 'IN', 'tran.idInstituicao = inst.id')
 			->where($this->getTbAlias(). ".idPessoa = {$idpessoa}")
 			->andWhere($this->getTbAlias(). '.dataFinalizacao IS NULL')
 			->orderBy($this->getTbAlias(). ".dataTransacao", 'DESC');
@@ -135,6 +155,24 @@ class TransacaoDAO extends AbstractDao{
 		}
 		return false;
 	}
+
+	public function findTransacoesFinalizadas($idpessoa){
+		$qb = $this->getEntityManager()->createQueryBuilder()
+			->select($this->getTbAlias(), 'donativo', 'inst')
+			->from($this->getEntity(), $this->getTbAlias())
+			->leftJoin('Application\Entity\Donativos', 'donativo' , 'IN', 'tran.idDonativo = donativo.id')
+			->leftJoin('Application\Entity\Instituicao', 'inst' , 'IN', 'tran.idInstituicao = inst.id')
+			->where($this->getTbAlias(). ".idPessoa = {$idpessoa}")
+			->andWhere($this->getTbAlias(). '.dataFinalizacao IS NOT NULL')
+			->orderBy($this->getTbAlias(). ".dataTransacao", 'DESC');
+		$retorno = $qb->getQuery()->getResult();
+
+		if(count($retorno)){
+			return $retorno;
+		}
+		return false;
+	}
+
 
 	public function findTransacaoPorDonativosePessoa($pessoaId, $donativoId){
 		$qb = $this->getEntityManager()->createQueryBuilder()

@@ -1,12 +1,9 @@
 <?php
 namespace Doacao\Service;
 
-use Application\Entity\CategoriaDonativo;
 use Application\Entity\Donativos;
-use Application\Entity\Status;
 use Application\Service\AbstractService;
 use Doacao\DAO\DonativoDAO;
-use Doctrine\ORM\Tools\Pagination\Paginator;
 
 
 class DonativoService extends AbstractService{
@@ -83,6 +80,8 @@ class DonativoService extends AbstractService{
 	public function donativosInstituicaoById($id){
 		/** @var Donativos $objDonativo */
 		$objDonativo = $this->dao->donativosInstituicao($id);
+
+
 		$arrDonativo = [];
 		if($objDonativo != null){
 			$arrDonativo = [];

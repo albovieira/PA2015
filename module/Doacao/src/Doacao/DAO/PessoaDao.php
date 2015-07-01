@@ -71,6 +71,17 @@ class PessoaDao extends AbstractDao{
         return $result = $qb->getQuery()->getResult();
     }
 
+    public function getQuantTotalMinhasInstituicoes($idpessoa){
+        $qb = $this->em
+            ->createQueryBuilder()
+            ->select('sum(pes)')
+            ->from('Application\Entity\Pessoa', 'pes')
+            ->innerJoin('Application\Entity\MinhaInstituicao', 'm', 'WITH', 'pes.id = m.idPessoa')
+            ->where("m.idPessoa = {$idpessoa}");
+        ;
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
     public function todasInstituicoesQueNaoSegue($idpessoa){
 
         $qb  = $this->em->createQueryBuilder();

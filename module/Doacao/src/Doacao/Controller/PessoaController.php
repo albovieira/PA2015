@@ -13,7 +13,6 @@ use Application\Entity\Endereco;
 use Application\Entity\Pessoa;
 use Application\Entity\TesteAnexo;
 use Components\MVC\Controller\AbstractDoctrineCrudController;
-use Doacao\Form\DivulgacaoEventoForm;
 use Doacao\Form\EnderecoForm;
 use Doacao\Form\PessoaForm;
 use Doacao\Service\EventoService;
@@ -44,7 +43,12 @@ class PessoaController extends AbstractDoctrineCrudController
          }
 
          $transacaoService = new TransacaoService();
-         $transacoes = $transacaoService->getTransacaoPorPessoa($this->pessoaService->getObjPessoa()->getId());
+
+         //transacoes pendentes
+         $transacoesPendente = $transacaoService->getTransacaoPendentePorPessoa($this->pessoaService->getObjPessoa()->getId());
+
+         //quant transacoes pendentes e finalizadas
+         $quantTransacoes = $transacaoService->getQuantTransacoes($this->pessoaService->getObjPessoa()->getId());
 
          $eventoService = new EventoService();
          $campanhas = $eventoService->getEventosInstituicoes();
@@ -54,15 +58,16 @@ class PessoaController extends AbstractDoctrineCrudController
 
          $dadosPessoa = $this->pessoaService->getObjPessoa();
 
-         $formDivulgacao = new DivulgacaoEventoForm();
+         $quantMinhasInstituicoes = $this->pessoaService->quantInstituicoesPessoaSegue();
 
          return new ViewModel(
              array(
                  'doacoes' => $doacoes,
-                 'transacoes' => $transacoes,
+                 'transacoesPendentes' => $transacoesPendente,
+                 'quantTransacoes' => $quantTransacoes,
                  'campanhas' => $campanhas,
                  'dadosPessoa' => $dadosPessoa,
-                 'formDivulgacao' => $formDivulgacao
+                 'quantMinhasInstituicoes' => $quantMinhasInstituicoes,
              )
          );
      }
@@ -122,7 +127,6 @@ class PessoaController extends AbstractDoctrineCrudController
             }
         }
 
-
         return new ViewModel(
             array(
                 'form' => $formPessoa,
@@ -132,8 +136,22 @@ class PessoaController extends AbstractDoctrineCrudController
         );
     }
 
+    public function gerenciaTransacaoAction(){
+        $this->layout()->setTemplate('layout/layout_pessoa');
 
-    //
+        $transacaoService = new TransacaoService();
+        $transacoesFinalizadas = $transacaoService->getTransacoesFinalizadas($this->pessoaService->getObjPessoa()->getId());
+        $transacoesPendentes = $transacaoService->getTransacaoPendentePorPessoa($this->pessoaService->getObjPessoa()->getId());
+
+        $minhasInstituicoes = $this->pessoaService->instituicoesPessoaSegue();
+
+        return new ViewModel(array(
+            'transacaoPendente' => $transacoesPendentes,
+            'transacaoFinalizada' => $transacoesFinalizadas,
+            'instPessoas' => $minhasInstituicoes,
+        ));
+    }
+
     public function instituicaoAction(){
         $this->layout()->setTemplate('layout/layout_pessoa');
 
@@ -274,4 +292,5 @@ class PessoaController extends AbstractDoctrineCrudController
 
         return new JsonModel($retorno);
     }
+
 }

@@ -85,11 +85,21 @@ class TransacaoService extends AbstractService{
 		return $this->transacaoDao->findTransacaoPorDonativosePessoa($idpessoa, $iddonativo);
 	}
 
-	public function getTransacaoPorPessoa($idpessoa){
+	public function getTransacaoPendentePorPessoa($idpessoa){
 		//$objTransacao = $this->transacaoDao->findTransacaoPorPessoa($idpessoa);
-		return $this->transacaoDao->findTransacaoPorPessoa($idpessoa);
+		return $this->transacaoDao->findTransacaoPendentePorPessoa($idpessoa);
 		//return $this->bindTransacao($objTransacao);
 	}
+
+	public function getTransacoesFinalizadas($idpessoa){
+		return $this->transacaoDao->findTransacoesFinalizadas($idpessoa);
+	}
+
+	public function getQuantTransacoes($idpessoa){
+		return $this->transacaoDao->getQuantTransacoes($idpessoa);
+	}
+
+
 
 	// n usado por enquanto
 	public function bindTransacao($objTransacao){

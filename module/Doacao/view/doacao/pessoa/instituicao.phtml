@@ -23,31 +23,26 @@
         <div class="cell" id="containerInstituicao">
             <?php
             if($instituicoes){
-            foreach($instituicoes as $instituicao){
-            echo "
-            <div class='tile-large bg-darkblue'>
-                <div class='tile-content slide-left-2'>
-                    <div class='slide'>
-                    <form class='formSeguir' method='post'>
-                    <input class='instituicaoID' type='hidden' name='id' value='".$instituicao['id'] ."'>
-                    <div class='panel panel-default'>
-                        <div class='panel-heading'><a href='/pessoa/instituicao-page?id={$instituicao['id']}' class='pull-right'>Ver mais</a> <h4>". $instituicao['nomeFantasia']."</h4></div>
-                        <div class='panel-body'>
-                            <p>" . $instituicao['descricao'] ."<img src={$instituicao['foto']} class='img-circle pull-right img-profile'> <a href='#'></a></p>
-                            <div class='clearfix'></div>
-                            <hr>
-                            <input type='button' class='btn btn-primary btn-seguir' value='Seguir'>
-                        </div>
-                    </div>
-                </form>
-                    </div>
-                    <div class='slide-over'>
 
-                    </div>
-                </div>
-            </div>"
-            ;
-            }
+                foreach($instituicoes as $instituicao){
+                    echo"
+                        <div class='tile-large bg-lightBlue'>
+                            <form class='tile-content slide-left-2' method='post'>
+                            <div class='slide padding10'>
+                                <input class='instituicaoID' type='hidden' name='id' value=".$instituicao['id'] .">
+                                <img src=". $instituicao['foto'] ." class='img-circle pull-right img-profile'>
+                            </div>
+                            <div class='slide-over padding10'>
+                                <p class='text-justify'>
+                                    {$instituicao['descricao']}
+                                 </p>
+                                <a href=/pessoa/instituicao-page?id={$instituicao['id']}  class=button small-button info>Ver mais</a>
+                                <input type='button' class='button alert btn-seguir' value='Seguir'>
+                            </div>
+                            <span class='tile-label'><h4>" .$instituicao['nomeFantasia']."</h4></span>
+                            </form>
+                        </div> ";
+                }
             }
             else{
             echo '<div class="container">';
@@ -58,7 +53,4 @@
         </div>
     </div>
 </div>
-<!--Inicio Instituicao -->
-<!--Fim Instituicao -->
-
 <script src="/js/doacao/pessoaInstituicao.js"></script>
