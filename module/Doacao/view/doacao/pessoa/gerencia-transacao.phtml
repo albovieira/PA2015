@@ -2,33 +2,27 @@
     <div class="row cells2">
         <div class="cell">
             <div class="panel">
+
                 <div class="heading">
-                    <span class="icon mif-home"></span>
+                    <span class="icon mif-arrow-right"></span>
                     <span class="title">Doações Pendentes</span>
                 </div>
                 <div class="content">
                     <?php
 
-
-                    ?>
-
-                    <?php
                         foreach($this->transacaoPendente as $transacaoP){
                             if($transacaoP instanceof \Application\Entity\Transacao) {
 
-
-                                    foreach($this->instPessoas as $minInst){
-                                        if($minInst['nomeFantasia'] == $transacaoP->getInstituicao()->getNomeFantasia()){
-                                            echo 'agrupa'. $minInst['nomeFantasia'];
-
-                                            echo $transacaoP->getInstituicao()->getNomeFantasia() .'<br>';
-                                            echo $transacaoP->getQuantidadeOferta()  .'<br>';
-                                            echo $transacaoP->getDonativo()->getDescricao()  .'<br>';
-                                            echo $transacaoP->getDonativo()->getTitulo()  .'<br>';
-                                            echo $transacaoP->getDonativo()->getDataInclu()->format('d/m/y')  .'<br>';
-                                        }
-                                    }
-
+                                    echo '<div class="row padding10" style="box-shadow: 1px 1px 14px #747373;">';
+                                        echo '<div class="">';
+                                        echo '<strong><p>'.$transacaoP->getInstituicao()->getNomeFantasia().'</p></strong>' ;
+                                            echo '<p><strong>Donativo:</strong>'.$transacaoP->getDonativo()->getTitulo()  .'</p>';
+                                            echo '<p><strong>Quantidade Ofertada:</strong>'.$transacaoP->getQuantidadeOferta()  .'</p>';
+                                            echo '<p><strong>Descrição:</strong>'.$transacaoP->getDonativo()->getDescricao()  .'</p>';
+                                            echo '<p><strong>Data doação:</strong>'.$transacaoP->getDonativo()->getDataInclu()->format('d/m/y')  .'</p>';
+                                            echo '<p><strong>Data de expiração da doação:</strong>'.$transacaoP->getDonativo()->getDataInclu()->format('d/m/y')  .'</p>';
+                                        echo '</div>';
+                                    echo '</div>';
                             }
                         }
                     ?>
@@ -39,14 +33,37 @@
 
         <div class="cell">
             <div class="panel">
-                <div class="heading">
-                    <span class="icon mif-home"></span>
-                    <span class="title">Doações Finalizadas</span>
+                <div class="heading bg-grayLight">
+                    <span class="icon mif-arrow-right bg-grayLight"></span>
+                    <span class="title" style="text-shadow: 1px 1px 3px #000">Doações Finalizadas</span></span>
                 </div>
+
                 <div class="content">
                     <?php
-                    var_dump($this->transacaoFinalizada);
 
+                        foreach($this->transacaoFinalizada as $transacaoF){
+                            if($transacaoF instanceof \Application\Entity\Transacao) {
+
+                                echo '<div class="row padding10" style="box-shadow: 1px 1px 14px #747373;">';
+                                echo '<div class="">';
+                                echo '<strong><p>'.$transacaoF->getInstituicao()->getNomeFantasia().'</p></strong>' ;
+                                echo '<p><strong>Donativo:</strong>'.$transacaoF->getDonativo()->getTitulo()  .'</p>';
+                                echo '<p><strong>Data doação:</strong>'.$transacaoF->getDonativo()->getDataInclu()->format('d/m/y')  .'</p>';
+                                echo '<p><strong>Finalizado em:</strong>'.$transacaoF->getDonativo()->getDataInclu()->format('d/m/y')  .'</p>';
+
+                                echo '<div class="div-slide">';
+                                echo '<p class="show"></p>';
+
+                                echo '<div class="ocultar">';
+                                echo '<p><strong>Quantidade Ofertada:</strong>'.$transacaoF->getQuantidadeOferta()  .'</p>';
+                                echo '<p><strong>Descrição:</strong>'.$transacaoF->getDonativo()->getDescricao()  .'</p>';
+                                echo '</div>';
+
+                                echo '</div>';
+                                echo '</div>';
+                                echo '</div>';
+                            }
+                        }
                     ?>
                 </div>
             </div>
@@ -54,3 +71,15 @@
         </div>
     </div>
 </div>
+
+
+<script src="/js/doacao/pessoaPrincipal.js"></script>
+<script>
+    $(document).ready(function () {
+
+        $('.btn-seguir').each(function (index,elemento) {
+            pessoaPrincipal.show(elemento)
+        });
+    });
+
+</script>

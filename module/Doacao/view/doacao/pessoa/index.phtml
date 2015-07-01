@@ -1,5 +1,4 @@
-
-<div class="grid padding10">
+<div class="grid padding10" xmlns="http://www.w3.org/1999/html">
     <div class="row cells4">
         <div class="cell">
             <div class="tile-large bg-blue"">
@@ -30,39 +29,41 @@
                 </div>
             </div>
             <div class="tile-small">
-                <div class="tile-content iconic slide-left">
+                <div class="tile-content iconic slide-down">
                     <div class="slide">
                         <span class="icon mif-shopping-basket"></span>
                     </div>
-                    <div class="slide-over">
-                        <span>Doações Pendentes</span>
-                        <span class="tile-badge"><?php echo $this->quantTransacoes['pendente'] ?></span>
+                    <div class="slide-over bg-gray padding5 fg-white" style="font-size: 12px">
+                        <p><strong>Doações Pendentes</strong></p>
+                        <span class="tile-badge" style="font-size: 14px"><strong><?php echo $this->quantTransacoes['pendente'] ?></strong></span>
                     </div>
                 </div>
-            </div>
-            <div class="tile-small">
-                <div class="tile-content iconic slide-left">
-                    <div class="slide">
-                        <span class="icon mif-chart-line"></span>
-                    </div>
-                    <div class="slide-over">
-                        <span>Doações Feitas</span>
-                        <span class="tile-badge"><?php echo $this->quantTransacoes['finalizado'] ?></span>
-                    </div>
-                </div>
-            </div>
-            <div class="tile-small">
-                <div class="tile-content iconic slide-left">
-                    <div class="slide">
-                        <span class="icon mif-chart-line"></span>
-                    </div>
-                    <div class="slide-over">
-                        <span>Minhas Instituições</span>
-                        <span class="tile-badge"><?php echo $this->quantMinhasInstituicoes ?></span>
-                    </div>
-                </div>
-            </div>
 
+
+            </div>
+            <div class="tile-small">
+                <div class="tile-content iconic slide-down">
+                    <div class="slide">
+                        <span class="icon mif-chart-line"></span>
+                    </div>
+                    <div class="slide-over bg-gray padding5 fg-white" style="font-size: 12px">
+                        <p><strong><span>Doações Finalizadas</span></strong></p>
+                        <span class="tile-badge" style="font-size: 14px"><?php echo $this->quantTransacoes['finalizado'] ?></span>
+                    </div>
+                </div>
+            </div>
+            <div class="tile-small">
+                <div class="tile-content iconic slide-down">
+                    <div class="slide">
+                        <span class="icon mif-chart-line"></span>
+                    </div>
+                    <div class="slide-over bg-gray padding5 fg-white" style="font-size: 12px">
+                        <p><strong>Minhas Instituições</p></strong>
+                        <span class="tile-badge" style="font-size: 14px"><?php echo $this->quantMinhasInstituicoes ?></span>
+
+                    </div>
+                </div>
+            </div>
 
         </div>
         <div class="cell colspan2">
@@ -97,7 +98,7 @@
             }else{
                 foreach($campanhas as $campanha){
                     echo "<div class='tile-wide bg-amber'>";
-                    echo "<div class='tile-content'>";
+                    echo "<div class='tile-content padding10'>";
                     echo "<strong>Titulo:</strong> ".$campanha['tituloEvento'] . '<br>';
                     echo "<strong>Instituicao:</strong> ".$campanha['nomeFantasia'] . '<br>';
                     echo "<strong>Fim do evento:</strong> ".$campanha['dataFim'] . '<br>';
