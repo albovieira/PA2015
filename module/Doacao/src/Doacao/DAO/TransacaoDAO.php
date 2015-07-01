@@ -126,6 +126,7 @@ class TransacaoDAO extends AbstractDao{
 			->from($this->getEntity(), $this->getTbAlias())
 			->leftJoin('Application\Entity\Donativos', 'donativo' , 'IN', 'tran.idDonativo = donativo.id')
 			->where($this->getTbAlias(). ".idPessoa = {$idpessoa}")
+			->andWhere($this->getTbAlias(). '.dataFinalizacao IS NULL')
 			->orderBy($this->getTbAlias(). ".dataTransacao", 'DESC');
 		$retorno = $qb->getQuery()->getResult();
 
